@@ -22,4 +22,6 @@ Pod::Spec.new do |s|
   
   s.frameworks = 'StoreKit'
   s.dependency 'SwiftyStoreKit', '~> 0.14'
+  s.swift_version = '4.2'
+
 end
