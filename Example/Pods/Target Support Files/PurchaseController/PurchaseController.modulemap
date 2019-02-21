@@ -1,0 +1,6 @@
+framework module PurchaseController {
+  umbrella header "PurchaseController-umbrella.h"
+
+  export *
+  module * { export * }
+}

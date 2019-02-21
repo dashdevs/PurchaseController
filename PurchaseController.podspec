@@ -9,34 +9,17 @@
 Pod::Spec.new do |s|
   s.name             = 'PurchaseController'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of PurchaseController.'
+  s.summary          = 'A helpful and convenient In App purchases framework'
 
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
-
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
-
-  s.homepage         = 'https://github.com/kirill.u@itomy.ch/PurchaseController'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
+  s.homepage         = 'http://dashdevs.com'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'kirill.u@itomy.ch' => 'kirill.u@itomy.ch' }
-  s.source           = { :git => 'https://github.com/kirill.u@itomy.ch/PurchaseController.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.author           = { 'dashdevs llc' => 'hello@dashdevs.com' }
+  s.source           = { :git => 'https://bitbucket.org/itomych/purchasecontroller.git', :tag => s.version }
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '10.0'
 
   s.source_files = 'PurchaseController/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'PurchaseController' => ['PurchaseController/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.frameworks = 'StoreKit'
+  s.dependency 'SwiftyStoreKit', '~> 0.14'
 end

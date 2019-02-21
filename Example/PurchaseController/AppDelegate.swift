@@ -2,8 +2,7 @@
 //  AppDelegate.swift
 //  PurchaseController
 //
-//  Created by kirill.u@itomy.ch on 02/21/2019.
-//  Copyright (c) 2019 kirill.u@itomy.ch. All rights reserved.
+//  Copyright © 2019 dashdevs.com. All rights reserved.
 //
 
 import UIKit

@@ -1,0 +1,6 @@
+framework module Pods_PurchaseController_Example {
+  umbrella header "Pods-PurchaseController_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}
