@@ -26,14 +26,19 @@ public enum PurchaseActionResult {
 }
 
 public protocol PurchaseStateHandler {
-    var state: PurchaseActionState { get set }
-    func update(newState: PurchaseActionState)
+    func update(newState: PurchaseActionState, from state: PurchaseActionState)
 }
 
 public final class PurchaseController {
     private(set) var sessionReceipt: ReceiptInfo?
     private var persistor: PurchasePersistor
     private var stateHandler: PurchaseStateHandler?
+    private var purchaseActionState: PurchaseActionState {
+        willSet {
+            stateHandler?.update(newState: newValue, from: purchaseActionState)
+        }
+    }
+    
     public static var defaultPersistor: PurchasePersistor = {
         return PurchasePersistorImplementation()
     }()
@@ -41,6 +46,7 @@ public final class PurchaseController {
     public init(stateHandler: PurchaseStateHandler?, persistor: PurchasePersistor = defaultPersistor) {
         self.persistor = persistor
         self.stateHandler = stateHandler
+        self.purchaseActionState = .none
     }
     
     // MARK: - Public
@@ -54,43 +60,43 @@ public final class PurchaseController {
     }
     
     public func retrieve(products: Set<String>) {
-        stateHandler?.state = .loading
+        self.purchaseActionState = .loading
         SwiftyStoreKit.retrieveProductsInfo(products) { [unowned self] (results) in
             if let error = results.error {
-                self.stateHandler?.state = .finish(PurchaseActionResult.error(error.asPurchaseError()))
+                self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
                 return
             }
             self.persistor.persist(products: Array(results.retrievedProducts))
             if results.invalidProductIDs.count > 0 {
-                self.stateHandler?.state = .finish(PurchaseActionResult.retrieveSuccessInvalidProducts)
+                self.purchaseActionState = .finish(PurchaseActionResult.retrieveSuccessInvalidProducts)
                 return
             }
-            self.stateHandler?.state = .finish(PurchaseActionResult.retrieveSuccess)
+            self.purchaseActionState = .finish(PurchaseActionResult.retrieveSuccess)
         }
     }
     
     public func restore() {
-        stateHandler?.state = .loading
+        self.purchaseActionState = .loading
         SwiftyStoreKit.restorePurchases { [unowned self] (results) in
             let items = results.restoredPurchases.makeItems(with: self.persistor)
             if items.isEmpty {
-                self.stateHandler?.state = .finish(PurchaseActionResult.error(.restoreFailed))
+                self.purchaseActionState = .finish(PurchaseActionResult.error(.restoreFailed))
                 return
             }
             self.persistor.persistPurchased(products: items)
             if let error = results.restoreFailedPurchases.first?.0 {
-                self.stateHandler?.state = .finish(PurchaseActionResult.error(error.asPurchaseError()))
+                self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
                 return
             }
-            self.stateHandler?.state = .finish(PurchaseActionResult.restoreSuccess)
+            self.purchaseActionState = .finish(PurchaseActionResult.restoreSuccess)
         }
     }
     
     public func purchase(with identifier: String) {
-        stateHandler?.state = .loading
+        self.purchaseActionState = .loading
         guard let localСompared = try? localProducts(by: { $0.productIdentifier == identifier }),
             let product = localСompared.first else {
-            self.stateHandler?.state = .finish(PurchaseActionResult.error(.noLocalProduct))
+            self.purchaseActionState = .finish(PurchaseActionResult.error(.noLocalProduct))
             return 
         }
         SwiftyStoreKit.purchaseProduct(product) { [unowned self] (results) in
@@ -98,33 +104,32 @@ public final class PurchaseController {
             case .success(let purchase):
                 let item = PurchaseItem(purchaseDeatils: purchase)
                 self.persistor.persistPurchased(products: [item])
-                self.stateHandler?.state = .finish(PurchaseActionResult.purchaseSuccess)
+                self.purchaseActionState = .finish(PurchaseActionResult.purchaseSuccess)
             case .error(let error):
-                self.stateHandler?.state = .finish(PurchaseActionResult.error(error.asPurchaseError()))
+                self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
             }
         }
-        
     }
     
     public func verifyReceipt(sharedSecret: String, isSandbox: Bool = true) {
-        stateHandler?.state = .loading
+        self.purchaseActionState = .loading
         let appleValidator = AppleReceiptValidator(service: isSandbox ? .sandbox : .production,
                                                    sharedSecret: sharedSecret)
         SwiftyStoreKit.verifyReceipt(using: appleValidator) { [unowned self] result in
             switch result {
             case .success(let receipt):
                 self.sessionReceipt = receipt
-                self.stateHandler?.state = .finish(PurchaseActionResult.receiptValidationSuccess)
+                self.purchaseActionState = .finish(PurchaseActionResult.receiptValidationSuccess)
             case .error(let error):
-                self.stateHandler?.state = .finish(PurchaseActionResult.error(error.asPurchaseError()))
+                self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
             }
         }
     }
     
     public func validateSubscription(productID: String, type: SubscriptionType) {
-        stateHandler?.state = .loading
+        self.purchaseActionState = .loading
         guard let receipt = self.sessionReceipt else {
-            self.stateHandler?.state = .finish(PurchaseActionResult.error(PurchaseError.noReceiptData))
+            self.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.noReceiptData))
             return
         }
         
@@ -138,18 +143,18 @@ public final class PurchaseController {
                 return lo.purchaseDate.timeIntervalSince1970 > ro.purchaseDate.timeIntervalSince1970
             })
             guard let latestActualSubscription = sorted.first else {
-                self.stateHandler?.state = .finish(PurchaseActionResult.error(.noActiveSubscription))
+                self.purchaseActionState = .finish(PurchaseActionResult.error(.noActiveSubscription))
                 return
             }
-            self.stateHandler?.state = .finish(PurchaseActionResult.subscriptionValidationSucess(latestActualSubscription))
+            self.purchaseActionState = .finish(PurchaseActionResult.subscriptionValidationSucess(latestActualSubscription))
         case .notPurchased, .expired(_, _):
-            self.stateHandler?.state = .finish(PurchaseActionResult.error(.noActiveSubscription))
+            self.purchaseActionState = .finish(PurchaseActionResult.error(.noActiveSubscription))
         }
     }
     
     public func completeTransactions() {
         SwiftyStoreKit.completeTransactions(completion: { [unowned self] (_) in
-             self.stateHandler?.state = .finish(PurchaseActionResult.completionSuccess)
+             self.purchaseActionState = .finish(PurchaseActionResult.completionSuccess)
         })
     }
 }

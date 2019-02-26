@@ -19,26 +19,19 @@ import PurchaseController
     @objc func validateSubscription()
 }
 
-class MainViewController: UITableViewController, PurchaseStateHandler {
-    
+class MainViewController: UITableViewController {
     lazy var tableController = { return MainTableController(presentableDelegate: self) }()
     lazy var purchaseController = { return PurchaseController(stateHandler: self) }()
-    
-    var state: PurchaseActionState = .none {
-        willSet {
-            update(newState: newValue)
-        }
-    }
     
     override func viewDidLoad() {
         self.tableView.dataSource = tableController
         self.tableView.delegate = tableController
         purchaseController.completeTransactions()
     }
+}
 
-    // MARK: - PurchaseStateHandler
-    
-    func update(newState: PurchaseActionState) {
+extension MainViewController: PurchaseStateHandler {
+    func update(newState: PurchaseActionState, from state: PurchaseActionState) {
         switch (state, newState) {
             
         case ( .loading, .finish(let result)):
