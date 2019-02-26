@@ -17,7 +17,7 @@ pod 'PurchaseController'
 
 ## Author
 
-kirill.u@itomy.ch, kirill.u@itomy.ch
+dashdevs LLC, hello@dashdevs.com
 
 ## License
 
