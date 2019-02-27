@@ -49,6 +49,7 @@ public protocol PurchaseStateHandler {
     func update(newState: PurchaseActionState, from state: PurchaseActionState)
 }
 
+@available(iOS 10.0, *)
 public final class PurchaseController {
     
     /// receipt dictionary. Availadble ONLY after verifyReceipt(sharedSecret: isSandbox:) call.
@@ -61,7 +62,6 @@ public final class PurchaseController {
         }
     }
     
-    @available(iOS 10.0, *)
     /// Initializer with default non-sequre persistor
     ///
     /// - Parameter stateHandler: Any object for state handling, should implement PurchaseStateHandler protocol
@@ -71,7 +71,6 @@ public final class PurchaseController {
         self.purchaseActionState = .none
     }
     
-    @available(iOS 10.0, *)
     /// Initializer with user's persistor
     ///
     /// - Parameter stateHandler: Any object for state handling, should implement PurchaseStateHandler protocol
@@ -84,7 +83,6 @@ public final class PurchaseController {
     
     // MARK: - Public
     
-    @available(iOS 10.0, *)
     /// Filter function, used to access to local purchased products
     ///
     /// - Parameter filter: filter closure, used to comparing to PurchaseItem objects
@@ -94,7 +92,6 @@ public final class PurchaseController {
         return try persistor.fetchPurchasedProducts().filter(filter)
     }
     
-    @available(iOS 10.0, *)
     /// Filter function, used to access to local products
     ///
     /// - Parameter filter: filter closure, used to comparing to SKProduct objects
@@ -104,7 +101,6 @@ public final class PurchaseController {
         return try persistor.fetchProducts().filter(filter)
     }
     
-    @available(iOS 10.0, *)
     /// Function, used to retrieve available products from Apple side.
     /// Result items is storing to persistor.
     ///
@@ -132,7 +128,6 @@ public final class PurchaseController {
         }
     }
     
-    @available(iOS 10.0, *)
     /// Function, used to restore available products from Apple side.
     /// Result items is storing to persistor.
     ///
@@ -158,7 +153,6 @@ public final class PurchaseController {
         }
     }
     
-    @available(iOS 10.0, *)
     /// Function, used to add product to purchase queue
     /// Result items is storing to persistor.
     ///
@@ -188,7 +182,6 @@ public final class PurchaseController {
         }
     }
     
-    @available(iOS 10.0, *)
     /// Function, used to verify receipt with validator
     /// Receipt is stored on appStoreReceiptURL path
     /// Validated Receipt dict is stroed in sessionReceipt
@@ -217,7 +210,6 @@ public final class PurchaseController {
         }
     }
     
-    @available(iOS 10.0, *)
     /// Function, used to validate subscription with validator
     ///
     /// Notify handler with .noActiveSubscription if no aactive subscription presents for given id (did not purchased or expired)
@@ -253,7 +245,6 @@ public final class PurchaseController {
         }
     }
     
-    @available(iOS 10.0, *)
     /// Function, used to complete previous transactions
     ///
     /// Notify handler with .completionSuccess when complete
