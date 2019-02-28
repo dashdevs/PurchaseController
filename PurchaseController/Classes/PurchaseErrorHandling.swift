@@ -11,17 +11,17 @@ import SwiftyStoreKit
 /// PurchaseError types
 ///
 /// - unknown: client is not allowed to issue the request, etc.
-/// - clientInvalid: user cancelled the request, etc.
+/// - clientInvalid: invalid client data (payment method, not enough funds, etc).
 /// - paymentCancelled: user cancelled the request, etc.
 /// - paymentInvalid: purchase identifier was invalid, etc.
 /// - paymentNotAllowed: this device is not allowed to make the payment
 /// - storeProductNotAvailable: product is not available in the current storefront
-/// - cloudServicePermissionDenied: user has not allowed access to cloud service information
+/// - cloudServicePermissionDenied: user has not allowed to access cloud service information
 /// - cloudServiceNetworkConnectionFailed: the device could not connect to the nework
 /// - cloudServiceRevoked: user has revoked permission to use this cloud service
 /// - noLocalProduct: product wasn't retrieved
 /// - networkError: operation failed due to network error
-/// - noReceiptData: no receipt data, try validate local receipt
+/// - noReceiptData: no receipt data, try to validate local receipt
 /// - noRemoteData: no remote data received
 /// - requestBodyEncodeError: error when encoding HTTP body into JSON
 /// - receiptJsonDecodeError: error when decoding response
@@ -51,6 +51,9 @@ public enum PurchaseError: Int {
 }
 
 public extension Error {
+    /// Error convert function
+    ///
+    /// - Returns: converted self to PurchaseError
     func asPurchaseError() -> PurchaseError {
         if (self as NSError).code == NSURLErrorNotConnectedToInternet {
             return .networkError
@@ -60,6 +63,9 @@ public extension Error {
 }
 
 public extension SKError {
+    /// Error convert function
+    ///
+    /// - Returns: converted self to PurchaseError
     func asPurchaseError() -> PurchaseError {
         switch (self as SKError).code {
         case .unknown: return .unknown
@@ -76,6 +82,9 @@ public extension SKError {
 }
 
 public extension ReceiptError {
+    /// Error convert function
+    ///
+    /// - Returns: converted self to PurchaseError
     func asPurchaseError() -> PurchaseError {
         switch self {
         case .noReceiptData: return .noReceiptData

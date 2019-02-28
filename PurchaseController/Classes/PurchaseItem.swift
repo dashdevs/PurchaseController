@@ -8,13 +8,22 @@
 import StoreKit
 import SwiftyStoreKit
 
+/// Item describes avaible to purchase object
 public struct PurchaseItem {
+    /// Purchase identifier - unique id of purchase object from appstore connect
     let productId: String
+    /// Amount of purchased items
     let quantity: Int
+    /// StoreKit representation of product
     let product: SKProduct
+    /// Object that describes transaction item
     let transaction: PaymentTransaction
+    /// Object that describes original transaction item (used for subscriptions)
     let originalTransaction: PaymentTransaction?
     
+    /// PurchaseItem initializer
+    ///
+    /// - Parameter purchaseDeatils: SwiftyStoreKit representation of purchased product
     init(purchaseDeatils: PurchaseDetails) {
         self.productId = purchaseDeatils.productId
         self.product = purchaseDeatils.product
@@ -23,6 +32,14 @@ public struct PurchaseItem {
         self.originalTransaction = purchaseDeatils.originalTransaction
     }
     
+    /// PurchaseItem initializer
+    ///
+    /// - Parameters:
+    ///   - productId: Purchase identifier - unique id of purchase from appstore connect
+    ///   - quantity: Amount of purchased items
+    ///   - product: StoreKit representation of product
+    ///   - transaction: Object describes transaction item
+    ///   - originalTransaction: Object describes original transaction item (used for subscriptions)
     init(productId: String,
          quantity: Int,
          product: SKProduct,
@@ -35,6 +52,12 @@ public struct PurchaseItem {
         self.originalTransaction = originalTransaction
     }
     
+    /// Function for purchase creation
+    ///
+    /// - Parameters:
+    ///   - purchase: SwiftyStoreKit restored product
+    ///   - persistance: Object that conforms to persistance protocol
+    /// - Returns: Describes item available to purchase
     static func create(with purchase: Purchase,
                        persistance: PurchasePersistor) -> PurchaseItem? {
         guard let product = persistance.fetchProducts().first(where: { $0.productIdentifier == purchase.productId}) else {
@@ -51,7 +74,7 @@ public struct PurchaseItem {
 
 
 extension Collection where Element == Purchase {
-    func makeItems(with persistance: PurchasePersistor) -> [PurchaseItem] {
+    internal func makeItems(with persistance: PurchasePersistor) -> [PurchaseItem] {
         return self.compactMap { (purchase) -> PurchaseItem? in
             return PurchaseItem.create(with: purchase, persistance: persistance)
         }
@@ -59,6 +82,12 @@ extension Collection where Element == Purchase {
 }
 
 extension PurchaseItem: Hashable {
+    /// Compares two PurchaseItem using productId, transactionIdentifier and product.productIdentifier
+    ///
+    /// - Parameters:
+    ///   - lhs: left value to compare
+    ///   - rhs: right value to compare
+    /// - Returns: Equatable value
     public static func == (lhs: PurchaseItem, rhs: PurchaseItem) -> Bool {
         return lhs.productId == rhs.productId &&
             lhs.transaction.transactionIdentifier == rhs.transaction.transactionIdentifier &&
