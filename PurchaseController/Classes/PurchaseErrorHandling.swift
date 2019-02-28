@@ -51,6 +51,9 @@ public enum PurchaseError: Int {
 }
 
 public extension Error {
+    /// Convert function
+    ///
+    /// - Returns: converted self to PurchaseError
     func asPurchaseError() -> PurchaseError {
         if (self as NSError).code == NSURLErrorNotConnectedToInternet {
             return .networkError
@@ -60,6 +63,9 @@ public extension Error {
 }
 
 public extension SKError {
+    /// Convert function
+    ///
+    /// - Returns: converted self to PurchaseError
     func asPurchaseError() -> PurchaseError {
         switch (self as SKError).code {
         case .unknown: return .unknown
@@ -76,6 +82,9 @@ public extension SKError {
 }
 
 public extension ReceiptError {
+    /// Convert function
+    ///
+    /// - Returns: converted self to PurchaseError
     func asPurchaseError() -> PurchaseError {
         switch self {
         case .noReceiptData: return .noReceiptData
