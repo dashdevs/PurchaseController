@@ -9,28 +9,28 @@ import StoreKit
 import SwiftyStoreKit
 
 public protocol PurchasePersistor {
-    /// Func that store SKProduct to persistor (should be used for retrieved objects)
+    /// Function that store SKProduct to persistor (should be used for retrieved objects)
     ///
     /// - Parameter products: Array of retrieved SKProduct
     func persist(products: [SKProduct])
-    /// Func that extract SKProduct from persistor (should be used for retrieved objects)
+    /// Function that extracts SKProduct from persistor (should be used for retrieved objects)
     ///
     /// - Parameter products: products: Array of retrieved SKProduct to extract
     func extract(products: [SKProduct])
-    /// Func that fetch SKProducts from persistor (should be used for retrieved objects)
+    /// Function that fetches SKProducts from persistor (should be used for retrieved objects)
     ///
     /// - Returns: array of SKProducts, stored in persistor
     func fetchProducts() -> [SKProduct]
     
-    /// Func that store PurchaseItem to persistor (should be used for purchased objects)
+    /// Function that stores PurchaseItem to persistor (should be used for purchased objects)
     ///
     /// - Parameter products: Array of retrieved PurchaseItem
     func persistPurchased(products: [PurchaseItem])
-    /// Func that extract PurchaseItem from persistor (should be used for purchased objects)
+    /// Function that extracts PurchaseItem from persistor (should be used for purchased objects)
     ///
     /// - Parameter products: Array of retrieved PurchaseItem to extract
     func extractPurchased(products: [PurchaseItem])
-    /// Func that fetch PurchaseItem from persistor (should be used for purchased objects)
+    /// Function that fetches PurchaseItem from persistor (should be used for purchased objects)
     ///
     /// - Returns: array of PurchaseItem, stored in persistor
     func fetchPurchasedProducts() -> [PurchaseItem]

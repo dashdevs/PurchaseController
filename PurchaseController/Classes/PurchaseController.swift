@@ -10,9 +10,9 @@ import SwiftyStoreKit
 
 ///  Defines action state
 ///
-/// - loading: Notify handler if any action was started
-/// - finish: Notify handler if action was finished
-/// - none: Notify handler if no current actions presents
+/// - loading: Notifies handler if any action was started
+/// - finish: Notifies handler if action was finished
+/// - none: Notifies handler if no current actions presents
 public enum PurchaseActionState {
     case loading
     case finish(PurchaseActionResult)
@@ -21,14 +21,14 @@ public enum PurchaseActionState {
 
 /// Defines action result state
 ///
-/// - error: Notify handler if any error presents
-/// - subscriptionValidationSucess: Notify handler if any subscription plan is valid
-/// - retrieveSuccess: Notify handler if more than one products retrieved
-/// - retrieveSuccessInvalidProducts: Notify handler of any retrieved invalid products
-/// - purchaseSuccess: Notify handler if purchase was successfull
-/// - restoreSuccess: Notify handler if restoring was successfull
-/// - completionSuccess: Notify handler if transaction completion was successfull
-/// - receiptValidationSuccess: Notify handler if receipt validation was successfull
+/// - error: Notifies handler if any error presents
+/// - subscriptionValidationSucess: Notifies handler if any subscription plan is valid
+/// - retrieveSuccess: Notifies handler if more than one products retrieved
+/// - retrieveSuccessInvalidProducts: Notifies handler of any retrieved invalid products
+/// - purchaseSuccess: Notifies handler if purchase was successfull
+/// - restoreSuccess: Notifies handler if restoring was successfull
+/// - completionSuccess: Notifies handler if transaction completion was successfull
+/// - receiptValidationSuccess: Notifies handler if receipt validation was successfull
 public enum PurchaseActionResult {
     case error(PurchaseError)
     case subscriptionValidationSucess(ReceiptItem)
@@ -62,7 +62,7 @@ public final class PurchaseController {
         }
     }
     
-    /// Initializer with default non-sequre persistor
+    /// Initializer with default non-secure persistor
     ///
     /// - Parameter stateHandler: Any object for state handling, should implement PurchaseStateHandler protocol
     public init(stateHandler: PurchaseStateHandler?)  {
@@ -74,7 +74,7 @@ public final class PurchaseController {
     /// Initializer with user's persistor
     ///
     /// - Parameter stateHandler: Any object for state handling, should implement PurchaseStateHandler protocol
-    ///   - persistor: Any object for persisting transactions anf products, should implement PurchasePersistor protocol
+    /// - Parameter persistor: Any object for persisting transactions and products, should implement PurchasePersistor protocol
     public init(stateHandler: PurchaseStateHandler?, persistor: PurchasePersistor)  {
         self.persistor = persistor
         self.stateHandler = stateHandler
@@ -85,31 +85,29 @@ public final class PurchaseController {
     
     /// Filter function, used to access to local purchased products
     ///
-    /// - Parameter filter: filter closure, used to comparing to PurchaseItem objects
+    /// - Parameter filter: filter closure used for comparing PurchaseItem objects
     /// - Returns: array of PurchaseItem after filter applying
-    /// - Throws: throws if no filter - compitable items exists
     public func localPurschasedProducts(by filter: (PurchaseItem) throws -> Bool) throws -> [PurchaseItem] {
         return try persistor.fetchPurchasedProducts().filter(filter)
     }
     
-    /// Filter function, used to access to local products
+    /// Filter function used to access to local products
     ///
     /// - Parameter filter: filter closure, used to comparing to SKProduct objects
     /// - Returns: array of SKProduct after filter applying
-    /// - Throws: throws if no filter - compitable items exists
     public func localProducts(by filter: (SKProduct) throws -> Bool) throws -> [SKProduct] {
         return try persistor.fetchProducts().filter(filter)
     }
     
-    /// Function, used to retrieve available products from Apple side.
-    /// Result items is storing to persistor.
+    /// Function used to retrieve available products from StoreKit.
+    /// Result items are storing using persistor object.
     ///
-    /// Notify handler with .retrieveSuccess if no error of invalid products retrieved
+    /// Notifies handler with .retrieveSuccess state if no error or invalid products retrieved
     ///
-    /// Notify handler with .retrieveSuccessInvalidProducts if any invalid products retrieved,
-    /// alog with storing valid products to persistor
+    /// Notifies handler with .retrieveSuccessInvalidProducts state if any invalid products retrieved,
+    /// along with storing valid products to persistor
     ///
-    /// Notify handler with .error if any error retrieved
+    /// Notifies handler with .error state if any error retrieved
     ///
     /// - Parameter products: Set of products identifiers, whose needs to be retrieved
     public func retrieve(products: Set<String>) {
@@ -129,13 +127,13 @@ public final class PurchaseController {
     }
     
     /// Function, used to restore available products from Apple side.
-    /// Result items is storing to persistor.
+    /// Result items are stored using persistor object.
     ///
-    /// Notify handler with .restoreFailed if no restored items presents
+    /// Notifies handler with .restoreFailed if no restored items presents
     ///
-    /// Notify handler with .finish(items) if success
+    /// Notifies handler with .finish(items) if success
     ///
-    /// Notify handler with .restoreFailed if any error presents
+    /// Notifies handler with .restoreFailed if any error presents
     public func restore() {
         self.purchaseActionState = .loading
         SwiftyStoreKit.restorePurchases { [unowned self] (results) in
@@ -153,14 +151,14 @@ public final class PurchaseController {
         }
     }
     
-    /// Function, used to add product to purchase queue
-    /// Result items is storing to persistor.
+    /// Function used to add product to purchase queue.
+    /// Result items are stored using persistor object.
     ///
-    /// Notify handler with .noLocalProduct if no local product with given identifier presents
+    /// Notifies handler with .noLocalProduct state if no local product with given identifier exists
     ///
-    /// Notify handler with .purchaseSuccess if items purchased
+    /// Notifies handler with .purchaseSuccess state if items purchased
     ///
-    /// Notify handler with .error if any error presents
+    /// Notifies handler with .error if any error occured
     ///
     /// - Parameter identifier: identifier of product to purchase
     public func purchase(with identifier: String) {
@@ -182,17 +180,17 @@ public final class PurchaseController {
         }
     }
     
-    /// Function, used to verify receipt with validator
-    /// Receipt is stored on appStoreReceiptURL path
-    /// Validated Receipt dict is stroed in sessionReceipt
-    /// More info here: https://developer.apple.com/library/archive/releasenotes/General/ValidateAppStoreReceipt
+    /// Function used to verify receipt using validator object.
+    /// Receipt is stored on appStoreReceiptURL path.
+    /// Validated receipt dict is stored in sessionReceipt.
+    /// More info here: https://developer.apple.com/library/archive/releasenotes/General/ValidateAppStoreReceipt.
     ///
-    /// Notify handler with .receiptValidationSuccess if no error presents
+    /// Notifies handler with .receiptValidationSuccess state if no error occured
     ///
-    /// Notify handler with .error if any error presents
+    /// Notifies handler with .error if any error occured
     ///
     /// - Parameters:
-    ///   - sharedSecret: shared secret from Appstore Connect
+    ///   - sharedSecret: shared secret from Appstore Connect.
     ///     More info here: https://www.appypie.com/faqs/how-can-i-get-shared-secret-key-for-in-app-purchase
     ///   - isSandbox: defines is there sandbox environment or not
     public func verifyReceipt(sharedSecret: String, isSandbox: Bool = true) {
@@ -210,11 +208,11 @@ public final class PurchaseController {
         }
     }
     
-    /// Function, used to validate subscription with validator
+    /// Function used to validate subscription using validatoro object.
     ///
-    /// Notify handler with .noActiveSubscription if no aactive subscription presents for given id (did not purchased or expired)
+    /// Notifies handler with .noActiveSubscription state if no active subscription exists for given id (did not purchased or expired)
     ///
-    /// Notify handler with .subscriptionValidationSucess if presents active subscription for given id
+    /// Notifies handler with .subscriptionValidationSucess state if presents active subscription for given id
     ///
     /// - Parameters:
     ///   - productID: product id of subscription plan
@@ -245,9 +243,9 @@ public final class PurchaseController {
         }
     }
     
-    /// Function, used to complete previous transactions
+    /// Function used to complete previous transactions
     ///
-    /// Notify handler with .completionSuccess when complete
+    /// Notifies handler with .completionSuccess state when complete
     public func completeTransactions() {
         SwiftyStoreKit.completeTransactions(completion: { [unowned self] (_) in
              self.purchaseActionState = .finish(PurchaseActionResult.completionSuccess)
