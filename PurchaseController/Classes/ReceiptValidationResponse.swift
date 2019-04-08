@@ -24,5 +24,5 @@ public struct ReceiptValidationResponse: Codable {
         case pendingRenewalInfo = "pending_renewal_info"
         case environment
     }
-    
+
 }
