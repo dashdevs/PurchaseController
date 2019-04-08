@@ -61,6 +61,7 @@ public final class PurchaseController {
             stateHandler?.update(newState: newValue, from: purchaseActionState)
         }
     }
+    private var receiptValidationResponse: ReceiptValidationResponse?
     
     /// Initializer with default non-secure persistor
     ///
@@ -194,6 +195,7 @@ public final class PurchaseController {
     ///     More info here: https://www.appypie.com/faqs/how-can-i-get-shared-secret-key-for-in-app-purchase
     ///   - isSandbox: defines is there sandbox environment or not
     public func verifyReceipt(sharedSecret: String, isSandbox: Bool = true) {
+
         self.purchaseActionState = .loading
         let appleValidator = AppleReceiptValidator(service: isSandbox ? .sandbox : .production,
                                                    sharedSecret: sharedSecret)
@@ -201,6 +203,16 @@ public final class PurchaseController {
             switch result {
             case .success(let receipt):
                 self.sessionReceipt = receipt
+                guard let data = try? JSONSerialization.data(withJSONObject: receipt) else {
+                    return
+                }
+                let decoder = JSONDecoder()
+                do {
+                    self.receiptValidationResponse = try decoder.decode(ReceiptValidationResponse.self, from: data)
+                } catch {
+                    print(error.localizedDescription)
+                }
+
                 self.purchaseActionState = .finish(PurchaseActionResult.receiptValidationSuccess)
             case .error(let error):
                 self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
