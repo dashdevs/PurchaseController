@@ -206,13 +206,7 @@ public final class PurchaseController {
                 guard let data = try? JSONSerialization.data(withJSONObject: receipt) else {
                     return
                 }
-                let decoder = JSONDecoder()
-                do {
-                    self.receiptValidationResponse = try decoder.decode(ReceiptValidationResponse.self, from: data)
-                } catch {
-                    print(error.localizedDescription)
-                }
-
+                self.receiptValidationResponse = RecipientValidationHelper.createRecipientValidation(from: data)
                 self.purchaseActionState = .finish(PurchaseActionResult.receiptValidationSuccess)
             case .error(let error):
                 self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
@@ -260,7 +254,7 @@ public final class PurchaseController {
     /// Notifies handler with .completionSuccess state when complete
     public func completeTransactions() {
         SwiftyStoreKit.completeTransactions(completion: { [unowned self] (_) in
-             self.purchaseActionState = .finish(PurchaseActionResult.completionSuccess)
+            self.purchaseActionState = .finish(PurchaseActionResult.completionSuccess)
         })
     }
 }

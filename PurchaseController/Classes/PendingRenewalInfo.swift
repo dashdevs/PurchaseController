@@ -23,26 +23,5 @@ struct PendingRenewalInfo: Codable {
         case productId = "product_id"
         case autoRenewStatus = "auto_renew_status"
     }
-
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        expirationIntent = try values.decode(String.self, forKey: .expirationIntent)
-        autoRenewProductId = try values.decode(String.self, forKey: .autoRenewProductId)
-        originalTransactionId = try values.decode(String.self, forKey: .originalTransactionId)
-        isInBillingRetryPeriod = try values.decode(String.self, forKey: .isInBillingRetryPeriod)
-        productId = try values.decode(String.self, forKey: .productId)
-        autoRenewStatus = try values.decode(String.self, forKey: .autoRenewStatus)
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(expirationIntent, forKey: .expirationIntent)
-        try container.encode(autoRenewProductId, forKey: .autoRenewProductId)
-        try container.encode(originalTransactionId, forKey: .originalTransactionId)
-        try container.encode(isInBillingRetryPeriod, forKey: .isInBillingRetryPeriod)
-        try container.encode(productId, forKey: .productId)
-        try container.encode(autoRenewStatus, forKey: .autoRenewStatus)
-
-    }
     
 }

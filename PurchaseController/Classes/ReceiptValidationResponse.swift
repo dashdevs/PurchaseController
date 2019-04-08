@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ReceiptValidationResponse: Codable {
+public struct ReceiptValidationResponse: Codable {
     
     let status: Int
     let environment: String
@@ -25,26 +25,4 @@ struct ReceiptValidationResponse: Codable {
         case environment
     }
     
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        status = try values.decode(Int.self, forKey: .status)
-        environment = try values.decode(String.self, forKey: .environment)
-        receipt = try values.decode(Receipt.self, forKey: .receipt)
-        latestReceiptInfo = try? values.decode([InApp].self, forKey: .latestReceiptInfo)
-        latestReceipt = try? values.decode(String.self, forKey: .latestReceipt)
-        pendingRenewalInfo = try? values.decode([PendingRenewalInfo].self, forKey: .pendingRenewalInfo)
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(status, forKey: .status)
-        try container.encode(environment, forKey: .environment)
-        try container.encode(receipt, forKey: .receipt)
-        try container.encode(latestReceiptInfo, forKey: .latestReceiptInfo)
-        try container.encode(latestReceipt, forKey: .latestReceipt)
-        try container.encode(pendingRenewalInfo, forKey: .pendingRenewalInfo)
-    }
 }
-
-
-

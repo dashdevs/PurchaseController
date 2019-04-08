@@ -14,10 +14,16 @@ struct InApp: Codable {
     let originalTransactionId: String
     let purchaseDateMs: Date?
     let originalPurchaseDateMs: Date?
-    let expiresDateMs: Date?
+    let originaPurchaseDate: Date?
+    let originalPurchaseDatePst: Date?
     let webOrderLineItemId: String?
     let isTrialPeriod: String
     let isInIntroOfferPeriod: String?
+    let expiresDate: Date?
+    let expiresDateMs: Date?
+    let expiresDatePst: Date?
+    let purchaseDate: Date?
+    let purchaseDatePst: Date?
     
     enum CodingKeys: String, CodingKey {
         case quantity
@@ -25,11 +31,17 @@ struct InApp: Codable {
         case transactionId = "transaction_id"
         case originalTransactionId = "original_transaction_id"
         case purchaseDateMs = "purchase_date_ms"
+        case purchaseDate = "purchase_date"
+        case purchaseDatePst = "purchase_date_pst"
         case originalPurchaseDateMs = "original_purchase_date_ms"
+        case originaPurchaseDate = "original_purchase_date"
+        case originalPurchaseDatePst = "original_purchase_date_pst"
         case expiresDateMs = "expires_date_ms"
         case webOrderLineItemId = "web_order_line_item_id"
         case isTrialPeriod = "is_trial_period"
         case isInIntroOfferPeriod = "is_in_intro_offer_period"
+        case expiresDate = "expires_date"
+        case expiresDatePst = "expires_date_pst"
     }
     
     init(from decoder: Decoder) throws {
@@ -44,7 +56,7 @@ struct InApp: Codable {
             purchaseDateMs = nil
         }
         if let originalPurchaseDate = try? values.decode(String.self, forKey: .originalPurchaseDateMs) {
-           originalPurchaseDateMs = originalPurchaseDate.date()
+            originalPurchaseDateMs = originalPurchaseDate.date()
         } else {
             originalPurchaseDateMs = nil
         }
@@ -56,19 +68,12 @@ struct InApp: Codable {
         webOrderLineItemId = try? values.decode(String.self, forKey: .webOrderLineItemId)
         isTrialPeriod = try values.decode(String.self, forKey: .isTrialPeriod)
         isInIntroOfferPeriod = try? values.decode(String.self, forKey: .isInIntroOfferPeriod)
+        expiresDate = Date()
+        expiresDatePst =  Date()
+        originaPurchaseDate = Date()
+        originalPurchaseDatePst = Date()
+        purchaseDate = Date()
+        purchaseDatePst = Date()
     }
     
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(quantity, forKey: .quantity)
-        try container.encode(productId, forKey: .productId)
-        try container.encode(transactionId, forKey: .transactionId)
-        try container.encode(originalTransactionId, forKey: .originalTransactionId)
-        try container.encode(purchaseDateMs, forKey: .purchaseDateMs)
-        try container.encode(originalPurchaseDateMs, forKey: .originalPurchaseDateMs)
-        try? container.encode(expiresDateMs, forKey: .expiresDateMs)
-        try? container.encode(webOrderLineItemId, forKey: .webOrderLineItemId)
-        try container.encode(isTrialPeriod, forKey: .isTrialPeriod)
-        try? container.encode(isInIntroOfferPeriod, forKey: .isInIntroOfferPeriod)
-    }
 }
