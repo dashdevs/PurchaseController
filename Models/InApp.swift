@@ -58,17 +58,4 @@ struct InApp: Codable {
         isInIntroOfferPeriod = try? values.decode(String.self, forKey: .isInIntroOfferPeriod)
     }
     
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(quantity, forKey: .quantity)
-        try container.encode(productId, forKey: .productId)
-        try container.encode(transactionId, forKey: .transactionId)
-        try container.encode(originalTransactionId, forKey: .originalTransactionId)
-        try container.encode(purchaseDateMs, forKey: .purchaseDateMs)
-        try container.encode(originalPurchaseDateMs, forKey: .originalPurchaseDateMs)
-        try? container.encode(expiresDateMs, forKey: .expiresDateMs)
-        try? container.encode(webOrderLineItemId, forKey: .webOrderLineItemId)
-        try container.encode(isTrialPeriod, forKey: .isTrialPeriod)
-        try? container.encode(isInIntroOfferPeriod, forKey: .isInIntroOfferPeriod)
-    }
 }

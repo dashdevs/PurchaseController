@@ -9,7 +9,6 @@ import Foundation
 
 struct Receipt: Codable {
     
-    //this is optional and maybe this need to skip
     let receiptCreationDate: String
     let receiptCreationDatePst: String
     let originalPurchaseDate: String
@@ -31,7 +30,6 @@ struct Receipt: Codable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        //this is optional and maybe this need to skip
         receiptCreationDate = try values.decode(String.self, forKey: .receiptCreationDate)
         receiptCreationDatePst = try values.decode(String.self, forKey: .receiptCreationDatePst)
         requestDatePst = try values.decode(String.self, forKey: .requestDatePst)
@@ -64,31 +62,7 @@ struct Receipt: Codable {
         inApp = try values.decode([InApp].self, forKey: .inApp)
     }
     
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(receiptCreationDate, forKey: .receiptCreationDate)
-        try container.encode(receiptCreationDatePst, forKey: .receiptCreationDatePst)
-        try container.encode(requestDatePst, forKey: .requestDatePst)
-        try container.encode(originalPurchaseDatePst, forKey: .originalPurchaseDatePst)
-        try container.encode(originalPurchaseDate, forKey: .originalPurchaseDate)
-        try container.encode(receiptType, forKey: .receiptType)
-        try container.encode(appItemId, forKey: .appItemId)
-        try container.encode(bundleId, forKey: .bundleId)
-        try container.encode(receiptCreationDateMs, forKey: .receiptCreationDateMs)
-        try container.encode(originalPurchaseDateMs, forKey: .originalPurchaseDateMs)
-        try container.encode(adamId, forKey: .adamId)
-        try container.encode(requestDate, forKey: .requestDate)
-        try container.encode(applicationVersion, forKey: .applicationVersion)
-        try container.encode(originalApplicationVersion, forKey: .originalApplicationVersion)
-        try container.encode(downloadId, forKey: .downloadId)
-        try container.encode(appItemId, forKey: .appItemId)
-        try container.encode(inApp, forKey: .inApp)
-        try container.encode(originalPurchaseDateMs, forKey: .originalPurchaseDateMs)
-        try container.encode(adamId, forKey: .adamId)
-    }
-    
     enum CodingKeys: String, CodingKey {
-        //this is optional and maybe this need to skip
         case receiptCreationDate = "receipt_creation_date"
         case receiptCreationDatePst = "receipt_creation_date_pst"
         case originalPurchaseDate = "original_purchase_date"

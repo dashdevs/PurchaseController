@@ -206,18 +206,22 @@ public final class PurchaseController {
                 guard let data = try? JSONSerialization.data(withJSONObject: receipt) else {
                     return
                 }
-                let decoder = JSONDecoder()
-                do {
-                    self.receiptValidationResponse = try decoder.decode(ReceiptValidationResponse.self, from: data)
-                } catch {
-                    print(error.localizedDescription)
-                }
-
+                self.receiptValidationResponse = self.createRecipientValidation(from: data)
                 self.purchaseActionState = .finish(PurchaseActionResult.receiptValidationSuccess)
             case .error(let error):
                 self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
             }
         }
+    }
+    
+    func createRecipientValidation(from data: Data) -> ReceiptValidationResponse? {
+        let decoder = JSONDecoder()
+        do {
+            return try decoder.decode(ReceiptValidationResponse.self, from: data)
+        } catch {
+            print(error.localizedDescription)
+        }
+        return nil
     }
     
     /// Function used to validate subscription using validatoro object.
