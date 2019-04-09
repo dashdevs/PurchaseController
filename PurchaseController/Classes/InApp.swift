@@ -14,16 +14,20 @@ struct InApp: Codable {
     let originalTransactionId: String
     let purchaseDateMs: Date?
     let originalPurchaseDateMs: Date?
-    let originaPurchaseDate: Date?
-    let originalPurchaseDatePst: Date?
+    let originaPurchaseDate: String?
+    let originalPurchaseDatePst: String?
     let webOrderLineItemId: String?
     let isTrialPeriod: String
     let isInIntroOfferPeriod: String?
-    let expiresDate: Date?
+    let expiresDate: String?
     let expiresDateMs: Date?
-    let expiresDatePst: Date?
-    let purchaseDate: Date?
-    let purchaseDatePst: Date?
+    let expiresDatePst: String?
+    let purchaseDate: String?
+    let purchaseDatePst: String?
+    
+    private struct Constants {
+        static let thousand: Double = 1000
+    }
     
     enum CodingKeys: String, CodingKey {
         case quantity
@@ -50,30 +54,30 @@ struct InApp: Codable {
         productId = try values.decode(String.self, forKey: .productId)
         transactionId = try values.decode(String.self, forKey: .transactionId)
         originalTransactionId = try values.decode(String.self, forKey: .originalTransactionId)
-        if let purchaseDateString = try? values.decode(String.self, forKey: .purchaseDateMs) {
-            purchaseDateMs = purchaseDateString.date()
+        if let purchaseDateString = try? values.decode(String.self, forKey: .purchaseDateMs), let ms = TimeInterval(purchaseDateString) {
+            purchaseDateMs = Date(timeIntervalSince1970: ms / Constants.thousand)
         } else {
             purchaseDateMs = nil
         }
-        if let originalPurchaseDate = try? values.decode(String.self, forKey: .originalPurchaseDateMs) {
-            originalPurchaseDateMs = originalPurchaseDate.date()
+        if let originalPurchaseDate = try? values.decode(String.self, forKey: .originalPurchaseDateMs), let ms = TimeInterval(originalPurchaseDate) {
+            originalPurchaseDateMs = Date(timeIntervalSince1970: ms / Constants.thousand)
         } else {
             originalPurchaseDateMs = nil
         }
-        if let expiresDateString = try? values.decode(String.self, forKey: .expiresDateMs) {
-            expiresDateMs = expiresDateString.date()
+        if let expiresDateString = try? values.decode(String.self, forKey: .expiresDateMs), let ms = TimeInterval(expiresDateString) {
+            expiresDateMs = Date(timeIntervalSince1970: ms / Constants.thousand)
         } else {
             expiresDateMs = nil
         }
         webOrderLineItemId = try? values.decode(String.self, forKey: .webOrderLineItemId)
         isTrialPeriod = try values.decode(String.self, forKey: .isTrialPeriod)
         isInIntroOfferPeriod = try? values.decode(String.self, forKey: .isInIntroOfferPeriod)
-        expiresDate = Date()
-        expiresDatePst =  Date()
-        originaPurchaseDate = Date()
-        originalPurchaseDatePst = Date()
-        purchaseDate = Date()
-        purchaseDatePst = Date()
+        expiresDate =  try? values.decode(String.self, forKey: .expiresDate)
+        expiresDatePst =  try values.decode(String.self, forKey: .expiresDatePst)
+        originaPurchaseDate = try values.decode(String.self, forKey: .originaPurchaseDate)
+        originalPurchaseDatePst = try values.decode(String.self, forKey: .originalPurchaseDatePst)
+        purchaseDate = try values.decode(String.self, forKey: .purchaseDate)
+        purchaseDatePst = try values.decode(String.self, forKey: .purchaseDatePst)
     }
     
 }

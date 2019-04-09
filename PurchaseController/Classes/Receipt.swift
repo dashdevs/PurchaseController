@@ -9,12 +9,16 @@ import Foundation
 
 struct Receipt: Codable {
     
-    let receiptCreationDate: Date?
-    let receiptCreationDatePst:  Date?
-    let originalPurchaseDate: Date?
-    let originalPurchaseDatePst: Date?
-    let requestDate: Date?
-    let requestDatePst: Date?
+    private struct Constants {
+        static let thousand: Double = 1000
+    }
+    
+    let receiptCreationDate: String?
+    let receiptCreationDatePst:  String?
+    let originalPurchaseDate: String?
+    let originalPurchaseDatePst: String?
+    let requestDate: String?
+    let requestDatePst: String?
     let receiptType: String
     let appItemId: Int
     let receiptCreationDateMs: Date?
@@ -27,58 +31,33 @@ struct Receipt: Codable {
     let originalApplicationVersion: String
     let downloadId: Int
     let inApp: [InApp]
-    let dateTimeZone: TimeZone?
-    let pstDateTimeZone: TimeZone?
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        if let originalPurchaseDateStr = try? values.decode(String.self, forKey: .originalPurchaseDate) {
-            let strs = originalPurchaseDateStr.components(separatedBy:" ")
-            dateTimeZone = TimeZone(identifier: strs[strs.count - 1]) ?? nil
-        } else {
-            dateTimeZone = nil
-        }
-        
-        if let originalPurchaseDateStr = try? values.decode(String.self, forKey: .originalPurchaseDatePst) {
-            let strs = originalPurchaseDateStr.components(separatedBy:" ")
-            pstDateTimeZone = TimeZone(identifier: strs[strs.count - 1]) ?? nil
-        } else {
-            pstDateTimeZone = nil
-        }
-        
-        receiptCreationDate = Date()//try values.decode(String.self, forKey: .receiptCreationDate)
-        receiptCreationDatePst = Date() //try values.decode(String.self, forKey: .receiptCreationDatePst)
-        originalPurchaseDatePst =  Date()//try values.decode(String.self, forKey: .originalPurchaseDatePst)
-        originalPurchaseDate =  Date()// try values.decode(String.self, forKey: .originalPurchaseDate)
+        requestDatePst = try values.decode(String.self, forKey: .requestDatePst)
+        receiptCreationDate = try values.decode(String.self, forKey: .receiptCreationDate)
+        receiptCreationDatePst = try values.decode(String.self, forKey: .receiptCreationDatePst)
+        originalPurchaseDatePst = try values.decode(String.self, forKey: .originalPurchaseDatePst)
+        originalPurchaseDate = try values.decode(String.self, forKey: .originalPurchaseDate)
         receiptType = try values.decode(String.self, forKey: .receiptType)
         appItemId = try values.decode(Int.self, forKey: .appItemId)
         bundleId = try values.decode(String.self, forKey: .bundleId)
-        if let creationDateString = try? values.decode(String.self, forKey: .receiptCreationDateMs) {
-            receiptCreationDateMs = creationDateString.date()
+        if let creationDateString = try? values.decode(String.self, forKey: .receiptCreationDateMs), let ms = TimeInterval(creationDateString) {
+            receiptCreationDateMs = Date(timeIntervalSince1970: ms / Constants.thousand)
         } else {
             receiptCreationDateMs = nil
         }
-        if let purchaseDateString = try? values.decode(String.self, forKey: .originalPurchaseDateMs) {
-            originalPurchaseDateMs = purchaseDateString.date()
+        if let purchaseDateString = try? values.decode(String.self, forKey: .originalPurchaseDateMs), let ms = TimeInterval(purchaseDateString) {
+            originalPurchaseDateMs = Date(timeIntervalSince1970: ms / Constants.thousand)
         } else {
             originalPurchaseDateMs = nil
         }
         adamId = try values.decode(Int.self, forKey: .adamId)
-        let dateFormatter = DateFormatter(dateFormat: .datePst)
-        if let requestDateString = try? values.decode(String.self, forKey: .requestDate) {
-            requestDate = dateFormatter.date(from: requestDateString)
-        } else {
-            requestDate = nil
-        }
-        if let requestDatePstString = try? values.decode(String.self, forKey: .requestDatePst) {
-            requestDatePst = dateFormatter.date(from: requestDatePstString)
-        } else {
-            requestDatePst = nil
-        }
+        requestDate = try values.decode(String.self, forKey: .requestDate)
         
         versionExternalIdentifier = try values.decode(Int.self, forKey: .versionExternalIdentifier)
-        if let requestDateString = try? values.decode(String.self, forKey: .requestDateMs) {
-            requestDateMs = requestDateString.date()
+        if let requestDateString = try? values.decode(String.self, forKey: .requestDateMs), let ms = TimeInterval(requestDateString) {
+            requestDateMs = Date(timeIntervalSince1970: ms / Constants.thousand)
         } else {
             requestDateMs = nil
         }
