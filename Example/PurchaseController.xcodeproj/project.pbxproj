@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2837C6B9A528F964A8A6A7FE /* Pods_PurchaseController_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDDC0AC1089BABDADE951262 /* Pods_PurchaseController_Tests.framework */; };
+		4A85F7EB225BD484008D3045 /* receipt.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A85F7EA225BD484008D3045 /* receipt.json */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		1751CD71229BEC8C86E45CBB /* Pods_PurchaseController_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurchaseController_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A85F7EA225BD484008D3045 /* receipt.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = receipt.json; sourceTree = "<group>"; };
 		4AAB77BBAB78BAC4AD35C606 /* Pods-PurchaseController_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurchaseController_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurchaseController_Example/Pods-PurchaseController_Example.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* PurchaseController_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PurchaseController_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -90,6 +92,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		4A85F7E9225BD3E6008D3045 /* Resourses */ = {
+			isa = PBXGroup;
+			children = (
+				4A85F7EA225BD484008D3045 /* receipt.json */,
+			);
+			path = Resourses;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +148,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				4A85F7E9225BD3E6008D3045 /* Resourses */,
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -294,6 +305,7 @@
 			files = (
 				E8FDD067221ED2AA004D10AD /* LaunchScreen.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				4A85F7EB225BD484008D3045 /* receipt.json in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 				E8FDD06D221EEB03004D10AD /* Main.storyboard in Resources */,
 			);
@@ -333,7 +345,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-PurchaseController_Example/Pods-PurchaseController_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-PurchaseController_Example/Pods-PurchaseController_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/PurchaseController/PurchaseController.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyStoreKit/SwiftyStoreKit.framework",
 			);
@@ -344,7 +356,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PurchaseController_Example/Pods-PurchaseController_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PurchaseController_Example/Pods-PurchaseController_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D8C2D4E80C9324744DC287AD /* [CP] Check Pods Manifest.lock */ = {

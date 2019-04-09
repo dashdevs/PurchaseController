@@ -27,10 +27,25 @@ struct Receipt: Codable {
     let originalApplicationVersion: String
     let downloadId: Int
     let inApp: [InApp]
-
+    let dateTimeZone: TimeZone?
+    let pstDateTimeZone: TimeZone?
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
+        if let originalPurchaseDateStr = try? values.decode(String.self, forKey: .originalPurchaseDate) {
+            let strs = originalPurchaseDateStr.components(separatedBy:" ")
+            dateTimeZone = TimeZone(identifier: strs[strs.count - 1]) ?? nil
+        } else {
+            dateTimeZone = nil
+        }
+        
+        if let originalPurchaseDateStr = try? values.decode(String.self, forKey: .originalPurchaseDatePst) {
+            let strs = originalPurchaseDateStr.components(separatedBy:" ")
+            pstDateTimeZone = TimeZone(identifier: strs[strs.count - 1]) ?? nil
+        } else {
+            pstDateTimeZone = nil
+        }
+        
         receiptCreationDate = Date()//try values.decode(String.self, forKey: .receiptCreationDate)
         receiptCreationDatePst = Date() //try values.decode(String.self, forKey: .receiptCreationDatePst)
         originalPurchaseDatePst =  Date()//try values.decode(String.self, forKey: .originalPurchaseDatePst)

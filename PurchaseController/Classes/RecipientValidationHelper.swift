@@ -1,7 +1,8 @@
 //
-//  RecipientValidationHelper.swift
-//  Pods-PurchaseController_Example
+//  String+Extensions.swift
+//  RecipientValidationHelper
 //
+//  Copyright © 2019 dashdevs.com. All rights reserved.
 //
 
 import Foundation
