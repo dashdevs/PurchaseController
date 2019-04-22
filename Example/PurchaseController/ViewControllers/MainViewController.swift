@@ -36,7 +36,7 @@ extension MainViewController: PurchaseStateHandler {
             
         case ( .loading, .finish(let result)):
             switch (result) {
-            case  .error(let error):
+            case .error(let error):
                 print("--- Error occured: \(error)")
             case .subscriptionValidationSucess(let receipt):
                 print("--- Moved to state: subscriptionValidationSucess with \(receipt)")

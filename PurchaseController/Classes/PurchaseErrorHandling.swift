@@ -19,6 +19,12 @@ import SwiftyStoreKit
 /// - cloudServicePermissionDenied: user has not allowed to access cloud service information
 /// - cloudServiceNetworkConnectionFailed: the device could not connect to the nework
 /// - cloudServiceRevoked: user has revoked permission to use this cloud service
+/// - privacyAcknowledgementRequired: user needs to acknowledge Apple's privacy policy
+/// - unauthorizedRequestData: app is attempting to use SKPayment's requestData property, but does not have the appropriate entitlement
+/// - invalidOfferIdentifier: specified subscription offer identifier is not valid
+/// - invalidSignature: cryptographic signature provided is not valid
+/// - missingOfferParams: one or more parameters from SKPaymentDiscount is missing
+/// - invalidOfferPrice: price of the selected offer is not valid (e.g. lower than the current base subscription price)
 /// - noLocalProduct: product wasn't retrieved
 /// - networkError: operation failed due to network error
 /// - noReceiptData: no receipt data, try to validate local receipt
@@ -39,6 +45,12 @@ public enum PurchaseError: Int {
     case cloudServicePermissionDenied
     case cloudServiceNetworkConnectionFailed
     case cloudServiceRevoked
+    case privacyAcknowledgementRequired
+    case unauthorizedRequestData
+    case invalidOfferIdentifier
+    case invalidSignature
+    case missingOfferParams
+    case invalidOfferPrice
     case noLocalProduct
     case networkError
     case noReceiptData
@@ -77,6 +89,12 @@ public extension SKError {
         case .cloudServicePermissionDenied: return .cloudServicePermissionDenied
         case .cloudServiceNetworkConnectionFailed: return .cloudServiceNetworkConnectionFailed
         case .cloudServiceRevoked: return .cloudServiceRevoked
+        case .privacyAcknowledgementRequired: return .privacyAcknowledgementRequired
+        case .unauthorizedRequestData: return .unauthorizedRequestData
+        case .invalidOfferIdentifier: return .invalidOfferIdentifier
+        case .invalidSignature: return .invalidSignature
+        case .missingOfferParams: return .missingOfferParams
+        case .invalidOfferPrice: return .invalidOfferPrice
         }
     }
 }
