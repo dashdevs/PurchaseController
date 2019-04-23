@@ -7,6 +7,9 @@
 
 import Foundation
 
+/// Function, used create recipient validation info from dte.
+///
+///
 public class RecipientValidationHelper {
     
     static func createRecipientValidation(from data: Data) -> ReceiptValidationResponse? {

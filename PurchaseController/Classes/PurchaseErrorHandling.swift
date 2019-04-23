@@ -48,6 +48,7 @@ public enum PurchaseError: Int {
     case receiptInvalid
     case noActiveSubscription
     case restoreFailed
+    case receiptSerializationError
 }
 
 public extension Error {

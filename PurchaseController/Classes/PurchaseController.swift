@@ -29,6 +29,8 @@ public enum PurchaseActionState {
 /// - restoreSuccess: Notifies handler if restoring was successfull
 /// - completionSuccess: Notifies handler if transaction completion was successfull
 /// - receiptValidationSuccess: Notifies handler if receipt validation was successfull
+/// - receiptSerializationError: Notifies handler if a receipt can not serialization
+
 public enum PurchaseActionResult {
     case error(PurchaseError)
     case subscriptionValidationSucess(ReceiptItem)
@@ -38,6 +40,7 @@ public enum PurchaseActionResult {
     case restoreSuccess
     case completionSuccess
     case receiptValidationSuccess
+    case receiptSerializationError
 }
 
 public protocol PurchaseStateHandler {
@@ -186,6 +189,8 @@ public final class PurchaseController {
     /// Validated receipt dict is stored in sessionReceipt.
     /// More info here: https://developer.apple.com/library/archive/releasenotes/General/ValidateAppStoreReceipt.
     ///
+    /// Notifies handler with .receiptSerializationError if a receipt can not serialization
+    ///
     /// Notifies handler with .receiptValidationSuccess state if no error occured
     ///
     /// Notifies handler with .error if any error occured
@@ -195,7 +200,6 @@ public final class PurchaseController {
     ///     More info here: https://www.appypie.com/faqs/how-can-i-get-shared-secret-key-for-in-app-purchase
     ///   - isSandbox: defines is there sandbox environment or not
     public func verifyReceipt(sharedSecret: String, isSandbox: Bool = true) {
-
         self.purchaseActionState = .loading
         let appleValidator = AppleReceiptValidator(service: isSandbox ? .sandbox : .production,
                                                    sharedSecret: sharedSecret)
@@ -204,6 +208,7 @@ public final class PurchaseController {
             case .success(let receipt):
                 self.sessionReceipt = receipt
                 guard let data = try? JSONSerialization.data(withJSONObject: receipt) else {
+                    self.purchaseActionState = .finish(PurchaseActionResult.receiptSerializationError)
                     return
                 }
                 self.receiptValidationResponse = RecipientValidationHelper.createRecipientValidation(from: data)
