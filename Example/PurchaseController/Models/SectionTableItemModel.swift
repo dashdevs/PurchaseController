@@ -14,7 +14,7 @@ enum SectionTableItemModel: String {
     
     
     private var purchaseSection: [TableItemModel] { return [.consumable, .nonConsumable, .autoRenewSubscription, .nonRenewSubscription] }
-    private var actionSection: [TableItemModel] { return [.retrieve, .restore, .validateReceipt, .validateSubscription] }
+    private var actionSection: [TableItemModel] { return [.retrieve, .restore, .refreshReceipt, .validateReceipt, .validateSubscription] }
     
     var items: [TableItemModel] {
         switch self {

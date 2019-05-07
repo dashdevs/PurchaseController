@@ -15,6 +15,7 @@ import PurchaseController
     @objc func purchaseNonRenewSubscription()
     @objc func restore()
     @objc func retrieve()
+    @objc func updateReceipt()
     @objc func validateReceipt()
     @objc func validateSubscription()
 }
@@ -75,8 +76,12 @@ extension MainViewController: MainViewControllerPresentable {
         purchaseController.retrieve(products: PurchasebleProductItem.allAsRaw())
     }
     
+    @objc func updateReceipt() {
+        purchaseController.fetchReceipt()
+    }
+    
     @objc func validateReceipt() {
-        purchaseController.verifyReceipt(sharedSecret: "d9700a193d4a4b63af22962bd2c7557e")
+        purchaseController.verifyReceipt(sharedSecret: "88038f49a0b74978b2716a9ef7f66470")
     }
     
     @objc func validateSubscription() {

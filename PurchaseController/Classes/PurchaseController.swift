@@ -38,6 +38,7 @@ public enum PurchaseActionResult {
     case restoreSuccess
     case completionSuccess
     case receiptValidationSuccess
+    case fetchReceiptSuccess(Data)
 }
 
 public protocol PurchaseStateHandler {
@@ -207,8 +208,26 @@ public final class PurchaseController {
             }
         }
     }
+
+    /// Function used to fetch receipt in local storage.
+    ///
+    /// Notifies handler with appropriate error state if cannot fetch receipt
+    ///
+    /// Notifies handler with .fetchReceiptSuccess state with receipt data if presents receipt
+    /// - Parameter forceReceipt: if true, refreshes the receipt even if local one already exists.
+    public func fetchReceipt(forceReceipt: Bool = true) {
+        self.purchaseActionState = .loading
+        SwiftyStoreKit.fetchReceipt(forceRefresh: forceReceipt, completion: { result in
+            switch result {
+            case .success(let receiptData):
+                self.purchaseActionState = .finish(.fetchReceiptSuccess(receiptData))
+            case .error(let error):
+                self.purchaseActionState = .finish(.error(error.asPurchaseError()))
+            }
+        })
+    }
     
-    /// Function used to validate subscription using validatoro object.
+    /// Function used to validate subscription using validator object.
     ///
     /// Notifies handler with .noActiveSubscription state if no active subscription exists for given id (did not purchased or expired)
     ///
@@ -247,8 +266,13 @@ public final class PurchaseController {
     ///
     /// Notifies handler with .completionSuccess state when complete
     public func completeTransactions() {
-        SwiftyStoreKit.completeTransactions(completion: { [unowned self] (_) in
-             self.purchaseActionState = .finish(PurchaseActionResult.completionSuccess)
+        SwiftyStoreKit.completeTransactions(completion: { [unowned self] (products) in
+            products.forEach({ purchase in
+                if purchase.needsFinishTransaction {
+                    SwiftyStoreKit.finishTransaction(purchase.transaction)
+                }
+            })
+            self.purchaseActionState = .finish(PurchaseActionResult.completionSuccess)
         })
     }
 }
