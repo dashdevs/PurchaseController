@@ -30,7 +30,6 @@ public enum PurchaseActionState {
 /// - completionSuccess: Notifies handler if transaction completion was successfull
 /// - receiptValidationSuccess: Notifies handler if receipt validation was successfull
 /// - receiptSerializationError: Notifies handler if a receipt can not serialization
-
 public enum PurchaseActionResult {
     case error(PurchaseError)
     case subscriptionValidationSucess(ReceiptItem)

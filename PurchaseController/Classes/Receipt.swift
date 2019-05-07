@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum ReceiptType: String, Codable {
+    case sandbox = "Sandbox"
+    case production = "Production"
+}
+
 struct Receipt: Codable {
     
     private struct Constants {
@@ -27,7 +32,7 @@ struct Receipt: Codable {
     let originalPurchaseDateMs: Date?
     let requestDate: String?
     let requestDatePst: String?
-    let receiptType: String
+    let receiptType: ReceiptType
     let requestDateMs: Date?
     /// App Item ID - A string that the App Store uses to uniquely identify the application that created the transaction.
     let appItemId: Int
@@ -52,7 +57,7 @@ struct Receipt: Codable {
         receiptCreationDatePst = try values.decode(String.self, forKey: .receiptCreationDatePst)
         originalPurchaseDatePst = try values.decode(String.self, forKey: .originalPurchaseDatePst)
         originalPurchaseDate = try values.decode(String.self, forKey: .originalPurchaseDate)
-        receiptType = try values.decode(String.self, forKey: .receiptType)
+        receiptType = try values.decode(ReceiptType.self, forKey: .receiptType)
         appItemId = try values.decode(Int.self, forKey: .appItemId)
         bundleId = try values.decode(String.self, forKey: .bundleId)
         if let creationDateString = try? values.decode(String.self, forKey: .receiptCreationDateMs), let ms = TimeInterval(creationDateString) {

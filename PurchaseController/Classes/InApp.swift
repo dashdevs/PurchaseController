@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Representation of inapp purchase
 struct InApp: Codable {
     /// The number of items purchased.
     let quantity: String
@@ -15,7 +16,7 @@ struct InApp: Codable {
     /// The transaction identifier of the item that was purchased.
     let transactionId: String
     /// For a transaction that restores a previous transaction, the transaction identifier of the original transaction. Otherwise, identical to the transaction identifier.
-    let originalTransactionId: String
+    let originalTransactionId: String?
     /// The date and time that the item was purchased.
     let purchaseDateMs: Date?
     /// For a transaction that restores a previous transaction, the date of the original transaction.
@@ -41,6 +42,7 @@ struct InApp: Codable {
     /// The date and time that the item was purchased.
     let purchaseDatePst: String?
     
+    /// Use to convert TimeInterval to seconds
     private struct Constants {
         static let thousand: Double = 1000
     }

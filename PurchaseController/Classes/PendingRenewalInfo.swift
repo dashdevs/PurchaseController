@@ -7,25 +7,29 @@
 
 import Foundation
 
+/// Type of expiration intent
+///
+/// - customerCanceled: Customer canceled their subscription
+/// - billingError: Billing error; for example customer’s payment information was no longer valid.
+/// - priceIncrease: Customer did not agree to a recent price increase.
+/// - productNotAvailable: Product was not available for purchase at the time of renewal.
+/// - unknownError: Unknown error.
 enum ExpirationIntentType: Int, Codable {
-    /// Customer canceled their subscription
     case customerCanceled
-    /// Billing error; for example customer’s payment information was no longer valid.
     case billingError
-    /// Customer did not agree to a recent price increase.
     case priceIncrease
-    /// Product was not available for purchase at the time of renewal.
     case productNotAvailable
-    /// Unknown error.
     case unknownError
 }
 
+/// Type of auto renew status
+///
+/// - renew: Subscription will renew at the end of the current subscription period.
+/// - turnedOff: Customer has turned off automatic renewal for their subscription
+/// - notSpecified: Not Specified
 enum AutoRenewStatus: Int, Codable {
-    /// Subscription will renew at the end of the current subscription period.
     case renew
-    /// Customer has turned off automatic renewal for their subscription
     case turnedOff
-    /// Not Specified
     case notSpecified
 }
 

@@ -7,16 +7,21 @@
 
 import Foundation
 
+/// Environment of receipt
+///
+/// - production: https://buy.itunes.apple.com/verifyReceipt
+/// - sandbox: https://sandbox.itunes.apple.com/verifyReceipt
 enum EnvironmentType: String, Codable {
     case production
     case sandbox
 }
 
+/// The response’s payload
 public struct ReceiptValidationResponse: Codable {
-    ///
+    /// Either 0 if the receipt is valid, or one of the error codes listed in https://developer.apple.com/library/archive/releasenotes/General/ValidateAppStoreReceipt/Chapters/ValidateRemotely.html#//apple_ref/doc/uid/TP40010573-CH104-SW5
     let status: Int
-    
-    let environment: String
+    /// Environment of receipt, listed in EnvironmentType
+    let environment: EnvironmentType
     /// Object that describes receipt item
     let receipt: Receipt?
     /// Array of Latests Receipt
@@ -34,5 +39,4 @@ public struct ReceiptValidationResponse: Codable {
         case pendingRenewalInfo = "pending_renewal_info"
         case environment
     }
-
 }
