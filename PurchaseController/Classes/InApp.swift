@@ -11,7 +11,7 @@ import SwiftyStoreKit
 /// Representation of inapp purchase
 struct InApp: Codable {
     /// The number of items purchased.
-    let quantity: String
+    let quantity: Int
     /// The product identifier of the item that was purchased.
     let productId: String
     /// The transaction identifier of the item that was purchased.
@@ -59,11 +59,6 @@ struct InApp: Codable {
                                   downloads: [])
     }
     
-    /// Purchase quantity in number format
-    public var quantityNumber: Int {
-        return Int(quantity) ?? 1
-    }
-    
     /// Use to convert TimeInterval to seconds
     private struct Constants {
         static let thousand: Double = 1000
@@ -90,7 +85,7 @@ struct InApp: Codable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        quantity = try values.decode(String.self, forKey: .quantity)
+        quantity = Int(try values.decode(String.self, forKey: .quantity)) ?? 0
         productId = try values.decode(String.self, forKey: .productId)
         transactionId = try values.decode(String.self, forKey: .transactionId)
         originalTransactionId = try values.decode(String.self, forKey: .originalTransactionId)

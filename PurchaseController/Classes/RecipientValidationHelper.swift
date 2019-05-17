@@ -44,7 +44,7 @@ public class ReceiptValidationHelper {
     /// - Returns: readable representation of data
     /// - Throws: an error if any value throws an error during decoding
     private static func createReceiptResponse(data: Data) throws -> ReceiptValidationResponse? {
-        let response = try (JSONDecoder().decode(ReceiptValidationResponse.self, from: data))
+        let response = try JSONDecoder().decode(ReceiptValidationResponse.self, from: data)
         return response
     }
 }

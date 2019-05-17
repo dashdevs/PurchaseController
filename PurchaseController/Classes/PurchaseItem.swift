@@ -82,7 +82,7 @@ public struct PurchaseItem {
             return nil
         }
         return PurchaseItem(productId: inApp.productId,
-                            quantity: inApp.quantityNumber,
+                            quantity: inApp.quantity,
                             product: product,
                             transaction: inApp.purchaseTransaction,
                             originalTransaction: inApp.originalPurchaseTransaction)
@@ -123,11 +123,4 @@ extension PurchaseItem: Hashable {
         hasher.combine(product.productIdentifier)
         hasher.combine(transaction.transactionIdentifier)
     }
-}
-
-public struct ReceiptTransaction: PaymentTransaction {
-    public var transactionDate: Date?
-    public var transactionState: SKPaymentTransactionState
-    public var transactionIdentifier: String?
-    public var downloads: [SKDownload]
 }
