@@ -29,7 +29,6 @@ public enum PurchaseActionState {
 /// - restoreSuccess: Notifies handler if restoring was successfull
 /// - completionSuccess: Notifies handler if transaction completion was successfull
 /// - receiptValidationSuccess: Notifies handler if receipt validation was successfull
-/// - receiptSerializationError: Notifies handler if a receipt can not serialization
 public enum PurchaseActionResult {
     case error(PurchaseError)
     case subscriptionValidationSucess(ReceiptItem)
@@ -39,7 +38,8 @@ public enum PurchaseActionResult {
     case restoreSuccess
     case completionSuccess
     case receiptValidationSuccess
-    case receiptSerializationError
+    case receiptDecodeSuccess(ReceiptValidationResponse)
+    case purchaseSyncronizationSuccess
 }
 
 public protocol PurchaseStateHandler {
@@ -206,16 +206,54 @@ public final class PurchaseController {
             switch result {
             case .success(let receipt):
                 self.sessionReceipt = receipt
-                guard let data = try? JSONSerialization.data(withJSONObject: receipt) else {
-                    self.purchaseActionState = .finish(PurchaseActionResult.receiptSerializationError)
-                    return
-                }
-                self.receiptValidationResponse = RecipientValidationHelper.createRecipientValidation(from: data)
                 self.purchaseActionState = .finish(PurchaseActionResult.receiptValidationSuccess)
             case .error(let error):
                 self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
             }
         }
+    }
+    
+    /// Function used to decode session receipt if exist.
+    ///
+    /// Notifies handler with .noReceiptData if no receipt exist
+    ///
+    /// Notifies handler with .receiptDecodeSuccess state if decode was successfull
+    ///
+    /// Notifies handler with .error if any error occured
+    public func decodeIfPresent() {
+        self.purchaseActionState = .loading
+        guard let sessionReceipt = self.sessionReceipt else {
+            self.purchaseActionState = .finish(PurchaseActionResult.error(.noReceiptData))
+            return
+        }
+        
+        let response = ReceiptValidationHelper.createReceiptValidation(from: sessionReceipt)
+        if let receipt = response.response {
+            self.receiptValidationResponse = receipt
+            self.purchaseActionState = .finish(PurchaseActionResult.receiptDecodeSuccess(receipt))
+        } else if let error = response.error {
+            self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
+        }
+    }
+    
+    /// Function used to synchonize receipt purchases with local saved.
+    ///
+    /// Notifies handler with .purchaseSyncronizationSuccess if purchases synchronized or no purchases in receipt
+    ///
+    public func synchronizeLocalPurchasesFromReceipt() {
+        self.purchaseActionState = .loading
+        guard let purchases = self.receiptValidationResponse?.receipt?.inApp else {
+            self.purchaseActionState = .finish(PurchaseActionResult.purchaseSyncronizationSuccess)
+            return
+        }
+
+        let diff = purchases.filter { (inAppPurchase) -> Bool in
+            return !self.persistor.fetchPurchasedProducts().contains(where: { (purchase) -> Bool in
+                return purchase.transaction.transactionIdentifier == inAppPurchase.transactionId
+            })
+        }.makeItems(with: persistor)
+        self.persistor.persistPurchased(products: diff)
+        self.purchaseActionState = .finish(PurchaseActionResult.purchaseSyncronizationSuccess)
     }
     
     /// Function used to validate subscription using validatoro object.

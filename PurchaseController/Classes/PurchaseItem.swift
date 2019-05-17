@@ -70,10 +70,34 @@ public struct PurchaseItem {
                             originalTransaction: purchase.originalTransaction)
     }
     
+    /// Function for purchase creation
+    ///
+    /// - Parameters:
+    ///   - inApp: decoded object from receipt
+    ///   - persistance: Object that conforms to persistance protocol
+    /// - Returns: Describes item available to purchase
+    static func create(with inApp: InApp,
+                       persistance: PurchasePersistor) -> PurchaseItem? {
+        guard let product = persistance.fetchProducts().first(where: { $0.productIdentifier == inApp.productId}) else {
+            return nil
+        }
+        return PurchaseItem(productId: inApp.productId,
+                            quantity: inApp.quantityNumber,
+                            product: product,
+                            transaction: inApp.purchaseTransaction,
+                            originalTransaction: inApp.originalPurchaseTransaction)
+    }
 }
 
-
 extension Collection where Element == Purchase {
+    internal func makeItems(with persistance: PurchasePersistor) -> [PurchaseItem] {
+        return self.compactMap { (purchase) -> PurchaseItem? in
+            return PurchaseItem.create(with: purchase, persistance: persistance)
+        }
+    }
+}
+
+extension Collection where Element == InApp {
     internal func makeItems(with persistance: PurchasePersistor) -> [PurchaseItem] {
         return self.compactMap { (purchase) -> PurchaseItem? in
             return PurchaseItem.create(with: purchase, persistance: persistance)
@@ -99,4 +123,11 @@ extension PurchaseItem: Hashable {
         hasher.combine(product.productIdentifier)
         hasher.combine(transaction.transactionIdentifier)
     }
+}
+
+public struct ReceiptTransaction: PaymentTransaction {
+    public var transactionDate: Date?
+    public var transactionState: SKPaymentTransactionState
+    public var transactionIdentifier: String?
+    public var downloads: [SKDownload]
 }

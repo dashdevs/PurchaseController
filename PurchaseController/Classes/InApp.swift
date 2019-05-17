@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftyStoreKit
 
 /// Representation of inapp purchase
 struct InApp: Codable {
@@ -41,6 +42,27 @@ struct InApp: Codable {
     let purchaseDate: String?
     /// The date and time that the item was purchased.
     let purchaseDatePst: String?
+    
+    /// Payment transaction object
+    public var purchaseTransaction: PaymentTransaction {
+        return ReceiptTransaction(transactionDate: purchaseDateMs,
+                                  transactionState: .purchased,
+                                  transactionIdentifier: transactionId,
+                                  downloads: [])
+    }
+    
+    /// Original payment transaction object
+    public var originalPurchaseTransaction: PaymentTransaction {
+        return ReceiptTransaction(transactionDate: originalPurchaseDateMs,
+                                  transactionState: .purchased,
+                                  transactionIdentifier: originalTransactionId,
+                                  downloads: [])
+    }
+    
+    /// Purchase quantity in number format
+    public var quantityNumber: Int {
+        return Int(quantity) ?? 1
+    }
     
     /// Use to convert TimeInterval to seconds
     private struct Constants {

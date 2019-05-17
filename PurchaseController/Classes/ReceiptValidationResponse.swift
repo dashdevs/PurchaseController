@@ -12,8 +12,8 @@ import Foundation
 /// - production: https://buy.itunes.apple.com/verifyReceipt
 /// - sandbox: https://sandbox.itunes.apple.com/verifyReceipt
 enum EnvironmentType: String, Codable {
-    case production
-    case sandbox
+    case production = "Production"
+    case sandbox = "Sandbox"
 }
 
 /// The response’s payload
