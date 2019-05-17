@@ -86,7 +86,7 @@ extension MainViewController: MainViewControllerPresentable {
     }
     
     @objc func decodeReceipt() {
-        purchaseController.decodeIfPresent()
+        purchaseController.decodeIfPresent(sessionReceipt: purchaseController.sessionReceipt)
     }
     
     @objc func validateSubscription() {

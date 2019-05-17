@@ -55,7 +55,7 @@ public protocol PurchaseStateHandler {
 public final class PurchaseController {
     
     /// receipt dictionary. Availadble ONLY after verifyReceipt(sharedSecret: isSandbox:) call.
-    private(set) var sessionReceipt: ReceiptInfo?
+    public private(set) var sessionReceipt: ReceiptInfo?
     private var persistor: PurchasePersistor
     private var stateHandler: PurchaseStateHandler?
     private var purchaseActionState: PurchaseActionState {
@@ -220,9 +220,11 @@ public final class PurchaseController {
     /// Notifies handler with .receiptDecodeSuccess state if decode was successfull
     ///
     /// Notifies handler with .error if any error occured
-    public func decodeIfPresent() {
+    ///
+    /// - Parameter sessionReceipt: verified receipt in dictionary format
+    public func decodeIfPresent(sessionReceipt: ReceiptInfo?) {
         self.purchaseActionState = .loading
-        guard let sessionReceipt = self.sessionReceipt else {
+        guard let sessionReceipt = sessionReceipt else {
             self.purchaseActionState = .finish(PurchaseActionResult.error(.noReceiptData))
             return
         }
@@ -236,23 +238,24 @@ public final class PurchaseController {
         }
     }
     
-    /// Function used to synchonize receipt purchases with local saved.
+    /// Function used to synchronize decoded receipt purchases with local saved.
     ///
-    /// Notifies handler with .purchaseSyncronizationSuccess if purchases synchronized or no purchases in receipt
+    /// Notifies handler with .purchaseSyncronizationSuccess if purchases synchronized
     ///
+    /// Notifies handler with .purchaseSynchronizationError if no purchases in receipt or receipt do not decoded
     public func synchronizeLocalPurchasesFromReceipt() {
         self.purchaseActionState = .loading
         guard let purchases = self.receiptValidationResponse?.receipt?.inApp else {
-            self.purchaseActionState = .finish(PurchaseActionResult.purchaseSyncronizationSuccess)
+            self.purchaseActionState = .finish(.error(.purchaseSynchronizationError))
             return
         }
 
-        let diff = purchases.filter { (inAppPurchase) -> Bool in
+        let missingPurchases = purchases.filter { (inAppPurchase) -> Bool in
             return !self.persistor.fetchPurchasedProducts().contains(where: { (purchase) -> Bool in
                 return purchase.transaction.transactionIdentifier == inAppPurchase.transactionId
             })
         }.makeItems(with: persistor)
-        self.persistor.persistPurchased(products: diff)
+        self.persistor.persistPurchased(products: missingPurchases)
         self.purchaseActionState = .finish(PurchaseActionResult.purchaseSyncronizationSuccess)
     }
     
