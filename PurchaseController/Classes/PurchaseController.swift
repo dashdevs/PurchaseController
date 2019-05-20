@@ -266,12 +266,7 @@ public final class PurchaseController {
     ///
     /// Notifies handler with .completionSuccess state when complete
     public func completeTransactions() {
-        SwiftyStoreKit.completeTransactions(completion: { [unowned self] (products) in
-            products.forEach({ purchase in
-                if purchase.needsFinishTransaction {
-                    SwiftyStoreKit.finishTransaction(purchase.transaction)
-                }
-            })
+        SwiftyStoreKit.completeTransactions(completion: { [unowned self] (_) in
             self.purchaseActionState = .finish(PurchaseActionResult.completionSuccess)
         })
     }
