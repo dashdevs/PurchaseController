@@ -49,7 +49,7 @@ struct Receipt: Codable {
     let originalApplicationVersion: String
     let downloadId: Int
     ///In-App Purchase Receipt - The receipt for an in-app purchase. Note: An empty array is a valid receipt.
-    let inApp: [InApp]?
+    let inApp: [InAppPurchase]?
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -61,13 +61,15 @@ struct Receipt: Codable {
         receiptType = try values.decodeIfPresent(ReceiptType.self, forKey: .receiptType)
         appItemId = try values.decode(Int.self, forKey: .appItemId)
         bundleId = try values.decode(String.self, forKey: .bundleId)
-        if let creationDateString = try? values.decode(String.self, forKey: .receiptCreationDateMs), let ms = TimeInterval(creationDateString) {
-            receiptCreationDateMs = Date(timeIntervalSince1970: ms / Constants.thousand)
+        if let creationDateString = try? values.decode(String.self, forKey: .receiptCreationDateMs),
+            let seconds = TimeInterval(millisecondsString: creationDateString) {
+            receiptCreationDateMs = Date(timeIntervalSince1970: seconds)
         } else {
             receiptCreationDateMs = nil
         }
-        if let purchaseDateString = try? values.decode(String.self, forKey: .originalPurchaseDateMs), let ms = TimeInterval(purchaseDateString) {
-            originalPurchaseDateMs = Date(timeIntervalSince1970: ms / Constants.thousand)
+        if let purchaseDateString = try? values.decode(String.self, forKey: .originalPurchaseDateMs),
+            let seconds = TimeInterval(millisecondsString: purchaseDateString) {
+            originalPurchaseDateMs = Date(timeIntervalSince1970: seconds)
         } else {
             originalPurchaseDateMs = nil
         }
@@ -75,15 +77,16 @@ struct Receipt: Codable {
         requestDate = try values.decode(String.self, forKey: .requestDate)
         
         versionExternalIdentifier = try values.decode(Int.self, forKey: .versionExternalIdentifier)
-        if let requestDateString = try? values.decode(String.self, forKey: .requestDateMs), let ms = TimeInterval(requestDateString) {
-            requestDateMs = Date(timeIntervalSince1970: ms / Constants.thousand)
+        if let requestDateString = try? values.decode(String.self, forKey: .requestDateMs),
+            let seconds = TimeInterval(millisecondsString: requestDateString) {
+            requestDateMs = Date(timeIntervalSince1970: seconds)
         } else {
             requestDateMs = nil
         }
         applicationVersion = try values.decode(String.self, forKey: .applicationVersion)
         originalApplicationVersion = try values.decode(String.self, forKey: .originalApplicationVersion)
         downloadId = try values.decode(Int.self, forKey: .downloadId)
-        inApp = try? values.decode([InApp].self, forKey: .inApp)
+        inApp = try? values.decode([InAppPurchase].self, forKey: .inApp)
     }
     
     enum CodingKeys: String, CodingKey {

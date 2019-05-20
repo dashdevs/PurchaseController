@@ -8,43 +8,39 @@
 import Foundation
 import SwiftyStoreKit
 
-public class ReceiptValidationHelper {
-    
-    /// Function used to create readable representation of receipt from dictionary
+extension ReceiptInfo {
+    /// Function used to create readable representation of receipt
     ///
-    /// - Parameter receipt: dictionary receipt
     /// - Returns: readable representation of receipt or error
-    public static func createReceiptValidation(from receipt: ReceiptInfo) -> (response: ReceiptValidationResponse?, error: Error?) {
+    public func createReceiptValidation() -> (response: ReceiptValidationResponse?, error: Error?) {
         do {
-            let data = try JSONSerialization.data(withJSONObject: receipt)
-            let response = try createReceiptResponse(data: data)
+            let data = try JSONSerialization.data(withJSONObject: self)
+            let response = data.createReceiptValidation()
             return (response, nil)
         } catch {
             return (nil, error)
         }
     }
-    
-    /// Function used to create readable representation of receipt from data
+}
+
+extension Data {
+    /// Function used to create readable representation of receipt
     ///
-    /// - Parameter receipt: receipt data
     /// - Returns: readable representation of data
-    public static func createReceiptValidation(from receipt: Data) -> ReceiptValidationResponse? {
+    public func createReceiptValidation() -> ReceiptValidationResponse? {
         do {
-            return try createReceiptResponse(data: receipt)
+            return try self.createReceiptResponse()
         } catch {
             return nil
         }
     }
     
-    // MARK: - Private
-    
-    /// Function used to create receipt object from data
+    /// Function used to create receipt object
     ///
-    /// - Parameter data: receipt data
     /// - Returns: readable representation of data
     /// - Throws: an error if any value throws an error during decoding
-    private static func createReceiptResponse(data: Data) throws -> ReceiptValidationResponse? {
-        let response = try JSONDecoder().decode(ReceiptValidationResponse.self, from: data)
+    private func createReceiptResponse() throws -> ReceiptValidationResponse? {
+        let response = try JSONDecoder().decode(ReceiptValidationResponse.self, from: self)
         return response
     }
 }

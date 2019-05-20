@@ -76,7 +76,7 @@ public struct PurchaseItem {
     ///   - inApp: decoded object from receipt
     ///   - persistance: Object that conforms to persistance protocol
     /// - Returns: Describes item available to purchase
-    static func create(with inApp: InApp,
+    static func create(with inApp: InAppPurchase,
                        persistance: PurchasePersistor) -> PurchaseItem? {
         guard let product = persistance.fetchProducts().first(where: { $0.productIdentifier == inApp.productId}) else {
             return nil
@@ -97,7 +97,7 @@ extension Collection where Element == Purchase {
     }
 }
 
-extension Collection where Element == InApp {
+extension Collection where Element == InAppPurchase {
     internal func makeItems(with persistance: PurchasePersistor) -> [PurchaseItem] {
         return self.compactMap { (purchase) -> PurchaseItem? in
             return PurchaseItem.create(with: purchase, persistance: persistance)

@@ -229,7 +229,7 @@ public final class PurchaseController {
             return
         }
         
-        let response = ReceiptValidationHelper.createReceiptValidation(from: sessionReceipt)
+        let response = sessionReceipt.createReceiptValidation()
         if let receipt = response.response {
             self.receiptValidationResponse = receipt
             self.purchaseActionState = .finish(PurchaseActionResult.receiptDecodeSuccess(receipt))

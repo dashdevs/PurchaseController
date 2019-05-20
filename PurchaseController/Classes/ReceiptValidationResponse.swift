@@ -25,7 +25,7 @@ public struct ReceiptValidationResponse: Codable {
     /// Object that describes receipt item
     let receipt: Receipt?
     /// Array of Latests Receipt
-    let latestReceiptInfo: [InApp]?
+    let latestReceiptInfo: [InAppPurchase]?
     /// Latest Receipt - the status of the most recent renewal
     let latestReceipt: String?
     /// Pending Renewal Info - array of pending renewal info

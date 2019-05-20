@@ -1,5 +1,5 @@
 //
-//  InApp.swift
+//  InAppPurchase.swift
 //  PurchaseController
 //
 //  Copyright © 2019 dashdevs.com. All rights reserved.
@@ -9,7 +9,7 @@ import Foundation
 import SwiftyStoreKit
 
 /// Representation of inapp purchase
-struct InApp: Codable {
+struct InAppPurchase: Codable {
     /// The number of items purchased.
     let quantity: Int
     /// The product identifier of the item that was purchased.
@@ -59,11 +59,6 @@ struct InApp: Codable {
                                   downloads: [])
     }
     
-    /// Use to convert TimeInterval to seconds
-    private struct Constants {
-        static let thousand: Double = 1000
-    }
-    
     enum CodingKeys: String, CodingKey {
         case quantity
         case productId = "product_id"
@@ -89,18 +84,21 @@ struct InApp: Codable {
         productId = try values.decode(String.self, forKey: .productId)
         transactionId = try values.decode(String.self, forKey: .transactionId)
         originalTransactionId = try values.decode(String.self, forKey: .originalTransactionId)
-        if let purchaseDateString = try? values.decode(String.self, forKey: .purchaseDateMs), let ms = TimeInterval(purchaseDateString) {
-            purchaseDateMs = Date(timeIntervalSince1970: ms / Constants.thousand)
+        if let purchaseDateString = try? values.decode(String.self, forKey: .purchaseDateMs),
+            let seconds = TimeInterval(millisecondsString: purchaseDateString) {
+            purchaseDateMs = Date(timeIntervalSince1970: seconds)
         } else {
             purchaseDateMs = nil
         }
-        if let originalPurchaseDate = try? values.decode(String.self, forKey: .originalPurchaseDateMs), let ms = TimeInterval(originalPurchaseDate) {
-            originalPurchaseDateMs = Date(timeIntervalSince1970: ms / Constants.thousand)
+        if let originalPurchaseDate = try? values.decode(String.self, forKey: .originalPurchaseDateMs),
+            let seconds = TimeInterval(millisecondsString: originalPurchaseDate) {
+            originalPurchaseDateMs = Date(timeIntervalSince1970: seconds)
         } else {
             originalPurchaseDateMs = nil
         }
-        if let expiresDateString = try? values.decode(String.self, forKey: .expiresDateMs), let ms = TimeInterval(expiresDateString) {
-            expiresDateMs = Date(timeIntervalSince1970: ms / Constants.thousand)
+        if let expiresDateString = try? values.decode(String.self, forKey: .expiresDateMs),
+            let seconds = TimeInterval(millisecondsString: expiresDateString) {
+            expiresDateMs = Date(timeIntervalSince1970: seconds)
         } else {
             expiresDateMs = nil
         }
@@ -119,4 +117,18 @@ struct InApp: Codable {
         purchaseDatePst = try values.decode(String.self, forKey: .purchaseDatePst)
     }
     
+}
+
+extension TimeInterval {
+    /// Use to convert TimeInterval to seconds
+    private struct Constants {
+        static let thousand: Double = 1000
+    }
+    
+    init?(millisecondsString: String) {
+        guard let milliseconds = TimeInterval(millisecondsString) else {
+            return nil
+        }
+        self = milliseconds / Constants.thousand
+    }
 }
