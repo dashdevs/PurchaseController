@@ -34,7 +34,7 @@ import SwiftyStoreKit
 /// - receiptInvalid: receive invalid - bad status returned
 /// - noActiveSubscription: no active subscription after validation or all expired
 /// - restoreFailed: restoreFailed : check retrieved products
-
+/// - receiptSerializationError: Notifies handler if a receipt can not serialization
 public enum PurchaseError: Int {
     case unknown
     case clientInvalid
@@ -60,6 +60,8 @@ public enum PurchaseError: Int {
     case receiptInvalid
     case noActiveSubscription
     case restoreFailed
+    case receiptSerializationError
+    case purchaseSynchronizationError
 }
 
 public extension Error {

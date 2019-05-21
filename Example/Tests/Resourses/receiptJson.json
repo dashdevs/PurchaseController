@@ -1,0 +1,49 @@
+{
+    "receipt": {
+        "receipt_type": "ProductionSandbox",
+        "adam_id": 0,
+        "app_item_id": 0,
+        "bundle_id": "com.belive.app.ios",
+        "application_version": "3",
+        "download_id": 0,
+        "version_external_identifier": 0,
+        "receipt_creation_date": "2018-11-13 16:46:31 Etc/GMT",
+        "receipt_creation_date_ms": "1542127591000",
+        "receipt_creation_date_pst": "2018-11-13 08:46:31 America/Los_Angeles",
+        "request_date": "2018-11-13 17:10:31 Etc/GMT",
+        "request_date_ms": "1542129031280",
+        "request_date_pst": "2018-11-13 09:10:31 America/Los_Angeles",
+        "original_purchase_date": "2013-08-01 07:00:00 Etc/GMT",
+        "original_purchase_date_ms": "1375340400000",
+        "original_purchase_date_pst": "2013-08-01 00:00:00 America/Los_Angeles",
+        "original_application_version": "1.0",
+        "in_app": [{
+            "quantity": "1",
+            "product_id": "test2",
+            "transaction_id": "1000000472106082",
+            "original_transaction_id": "1000000472106082",
+            "purchase_date": "2018-11-13 16:46:31 Etc/GMT",
+            "purchase_date_ms": "1542127591000",
+            "purchase_date_pst": "2018-11-13 08:46:31 America/Los_Angeles",
+            "original_purchase_date": "2018-11-13 16:46:31 Etc/GMT",
+            "original_purchase_date_ms": "1542127591000",
+            "original_purchase_date_pst": "2018-11-13 08:46:31 America/Los_Angeles",
+            "is_trial_period": "false"
+        }],
+        "recip": [{
+            "quantity": "1",
+            "product_id": "test3",
+            "transaction_id": "1000000472106082",
+            "original_transaction_id": "1000000472106082",
+            "purchase_date": "2018-11-13 16:46:31 Etc/GMT",
+            "purchase_date_ms": "1542127591000",
+            "purchase_date_pst": "2018-11-13 08:46:31 America/Los_Angeles",
+            "original_purchase_date": "2018-11-13 16:46:31 Etc/GMT",
+            "original_purchase_date_ms": "1542127591000",
+            "original_purchase_date_pst": "2018-11-13 08:46:31 America/Los_Angeles",
+            "is_trial_period": "false"
+        }]
+    },
+    "status": 0,
+    "environment": "Sandbox"
+}

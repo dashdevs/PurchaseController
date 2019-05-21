@@ -38,6 +38,8 @@ public enum PurchaseActionResult {
     case restoreSuccess
     case completionSuccess
     case receiptValidationSuccess
+    case receiptDecodeSuccess(ReceiptValidationResponse)
+    case purchaseSyncronizationSuccess
 }
 
 public protocol PurchaseStateHandler {
@@ -53,7 +55,7 @@ public protocol PurchaseStateHandler {
 public final class PurchaseController {
     
     /// receipt dictionary. Availadble ONLY after verifyReceipt(sharedSecret: isSandbox:) call.
-    private(set) var sessionReceipt: ReceiptInfo?
+    public private(set) var sessionReceipt: ReceiptInfo?
     private var persistor: PurchasePersistor
     private var stateHandler: PurchaseStateHandler?
     private var purchaseActionState: PurchaseActionState {
@@ -61,6 +63,7 @@ public final class PurchaseController {
             stateHandler?.update(newState: newValue, from: purchaseActionState)
         }
     }
+    private var receiptValidationResponse: ReceiptValidationResponse?
     
     /// Initializer with default non-secure persistor
     ///
@@ -185,6 +188,8 @@ public final class PurchaseController {
     /// Validated receipt dict is stored in sessionReceipt.
     /// More info here: https://developer.apple.com/library/archive/releasenotes/General/ValidateAppStoreReceipt.
     ///
+    /// Notifies handler with .receiptSerializationError if a receipt can not serialization
+    ///
     /// Notifies handler with .receiptValidationSuccess state if no error occured
     ///
     /// Notifies handler with .error if any error occured
@@ -206,6 +211,52 @@ public final class PurchaseController {
                 self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
             }
         }
+    }
+    
+    /// Function used to decode session receipt if exist.
+    ///
+    /// Notifies handler with .noReceiptData if no receipt exist
+    ///
+    /// Notifies handler with .receiptDecodeSuccess state if decode was successfull
+    ///
+    /// Notifies handler with .error if any error occured
+    ///
+    /// - Parameter sessionReceipt: verified receipt in dictionary format
+    public func decodeIfPresent(sessionReceipt: ReceiptInfo?) {
+        self.purchaseActionState = .loading
+        guard let sessionReceipt = sessionReceipt else {
+            self.purchaseActionState = .finish(PurchaseActionResult.error(.noReceiptData))
+            return
+        }
+        
+        let response = sessionReceipt.createReceiptValidation()
+        if let receipt = response.response {
+            self.receiptValidationResponse = receipt
+            self.purchaseActionState = .finish(PurchaseActionResult.receiptDecodeSuccess(receipt))
+        } else if let error = response.error {
+            self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
+        }
+    }
+    
+    /// Function used to synchronize decoded receipt purchases with local saved.
+    ///
+    /// Notifies handler with .purchaseSyncronizationSuccess if purchases synchronized
+    ///
+    /// Notifies handler with .purchaseSynchronizationError if no purchases in receipt or receipt do not decoded
+    public func synchronizeLocalPurchasesFromReceipt() {
+        self.purchaseActionState = .loading
+        guard let purchases = self.receiptValidationResponse?.receipt?.inApp else {
+            self.purchaseActionState = .finish(.error(.purchaseSynchronizationError))
+            return
+        }
+
+        let missingPurchases = purchases.filter { (inAppPurchase) -> Bool in
+            return !self.persistor.fetchPurchasedProducts().contains(where: { (purchase) -> Bool in
+                return purchase.transaction.transactionIdentifier == inAppPurchase.transactionId
+            })
+        }.makeItems(with: persistor)
+        self.persistor.persistPurchased(products: missingPurchases)
+        self.purchaseActionState = .finish(PurchaseActionResult.purchaseSyncronizationSuccess)
     }
     
     /// Function used to validate subscription using validatoro object.
@@ -248,7 +299,7 @@ public final class PurchaseController {
     /// Notifies handler with .completionSuccess state when complete
     public func completeTransactions() {
         SwiftyStoreKit.completeTransactions(completion: { [unowned self] (_) in
-             self.purchaseActionState = .finish(PurchaseActionResult.completionSuccess)
+            self.purchaseActionState = .finish(PurchaseActionResult.completionSuccess)
         })
     }
 }
