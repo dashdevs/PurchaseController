@@ -15,8 +15,11 @@ import PurchaseController
     @objc func purchaseNonRenewSubscription()
     @objc func restore()
     @objc func retrieve()
+    @objc func refreshReceipt()
     @objc func validateReceipt()
     @objc func validateSubscription()
+    @objc func synchronizePurchases()
+    @objc func decodeReceipt()
 }
 
 class MainViewController: UITableViewController {
@@ -36,7 +39,7 @@ extension MainViewController: PurchaseStateHandler {
             
         case ( .loading, .finish(let result)):
             switch (result) {
-            case  .error(let error):
+            case .error(let error):
                 print("--- Error occured: \(error)")
             case .subscriptionValidationSucess(let receipt):
                 print("--- Moved to state: subscriptionValidationSucess with \(receipt)")
@@ -75,8 +78,20 @@ extension MainViewController: MainViewControllerPresentable {
         purchaseController.retrieve(products: PurchasebleProductItem.allAsRaw())
     }
     
+    @objc func refreshReceipt() {
+        purchaseController.fetchReceipt()
+    }
+    
     @objc func validateReceipt() {
-        purchaseController.verifyReceipt(sharedSecret: "d9700a193d4a4b63af22962bd2c7557e")
+        purchaseController.verifyReceipt(sharedSecret: "88038f49a0b74978b2716a9ef7f66470")
+    }
+    
+    @objc func synchronizePurchases() {
+        purchaseController.synchronizeLocalPurchasesFromReceipt()
+    }
+    
+    @objc func decodeReceipt() {
+        purchaseController.decodeIfPresent(sessionReceipt: purchaseController.sessionReceipt)
     }
     
     @objc func validateSubscription() {
