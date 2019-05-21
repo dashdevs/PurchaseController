@@ -18,6 +18,8 @@ import PurchaseController
     @objc func updateReceipt()
     @objc func validateReceipt()
     @objc func validateSubscription()
+    @objc func synchronizePurchases()
+    @objc func decodeReceipt()
 }
 
 class MainViewController: UITableViewController {
@@ -82,6 +84,15 @@ extension MainViewController: MainViewControllerPresentable {
     
     @objc func validateReceipt() {
         purchaseController.verifyReceipt(sharedSecret: "88038f49a0b74978b2716a9ef7f66470")
+
+    }
+    
+    @objc func synchronizePurchases() {
+        purchaseController.synchronizeLocalPurchasesFromReceipt()
+    }
+    
+    @objc func decodeReceipt() {
+        purchaseController.decodeIfPresent(sessionReceipt: purchaseController.sessionReceipt)
     }
     
     @objc func validateSubscription() {

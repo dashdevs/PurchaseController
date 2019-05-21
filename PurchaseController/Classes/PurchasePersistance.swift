@@ -36,7 +36,7 @@ public protocol PurchasePersistor {
     func fetchPurchasedProducts() -> [PurchaseItem]
 }
 
- final class PurchasePersistorImplementation: PurchasePersistor {
+final class PurchasePersistorImplementation: PurchasePersistor {
     
     // MARK: - Private
     

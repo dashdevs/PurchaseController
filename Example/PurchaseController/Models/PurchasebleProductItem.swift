@@ -7,16 +7,14 @@
 
 import Foundation
 
-enum PurchasebleProductItem: String {
+enum PurchasebleProductItem: String, CaseIterable {
     case consumable = "dashdevs.PurchaseController.Consumable"
     case nonConsumable = "dashdevs.PurchaseController.NonConsumable"
     case autoRenewSubscription = "dashdevs.PurchaseController.Autorenew"
     case nonRenewSubscription = "dashdevs.PurchaseController.NonRenewSubscription"
     
-    static let all: [PurchasebleProductItem] = [.consumable, .nonConsumable, .autoRenewSubscription, .nonRenewSubscription]
-    
     static func allAsRaw() -> Set<String> {
-        let values = PurchasebleProductItem.all.map { $0.rawValue }
+        let values = PurchasebleProductItem.allCases.map { $0.rawValue }
         return Set(values)
     }
 }
