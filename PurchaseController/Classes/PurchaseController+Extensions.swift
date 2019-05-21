@@ -1,5 +1,5 @@
 //
-//  String+Extensions.swift
+//  PurchaseController+Extensions.swift
 //  ReceiptValidationHelper
 //
 //  Copyright © 2019 dashdevs.com. All rights reserved.

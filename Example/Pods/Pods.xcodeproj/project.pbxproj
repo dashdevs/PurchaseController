@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		12DFFF7EB3275ED7DA069A7E09AD3726 /* RecipientValidationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11869003563E8E7B10C43B6FD05AD17 /* RecipientValidationHelper.swift */; };
 		19FB3D2219C5D4A2142D50D1826636D0 /* InAppReceiptVerificator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0E0206D12CECC2D4806ACB3426DC1 /* InAppReceiptVerificator.swift */; };
 		2625110B1E319A20D15F2B2EE8DB241A /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE12854A817188B4E4597948107FED59 /* Receipt.swift */; };
+		285B19CD22941E51004E4B99 /* PurchaseController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11869003563E8E7B10C43B6FD05AD17 /* PurchaseController+Extensions.swift */; };
 		2EC056EC665E76873CAD40F998BAFD42 /* SwiftyStoreKit+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721C6F2151485E499339F81E7B0959BF /* SwiftyStoreKit+Types.swift */; };
 		304C39CAED9943DC580A0558182AEA10 /* SKProduct+LocalizedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982ABA9F7D85DD9B6B570CFEFAE1E502 /* SKProduct+LocalizedPrice.swift */; };
 		3636A9B2CEB0B5E72D62D75F4380956B /* InAppReceiptRefreshRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FDF535AD500EA3C438E500CABE6C158 /* InAppReceiptRefreshRequest.swift */; };
@@ -137,7 +137,7 @@
 		E100DB68041A30845142151C3B316D9A /* RestorePurchasesController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RestorePurchasesController.swift; path = SwiftyStoreKit/RestorePurchasesController.swift; sourceTree = "<group>"; };
 		E1A47F1FE061FDA0C300DFC27A7819AB /* PendingRenewalInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PendingRenewalInfo.swift; path = PurchaseController/Classes/PendingRenewalInfo.swift; sourceTree = "<group>"; };
 		EDE1F76AF5732BDAB01C3069AC227C15 /* SwiftyStoreKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyStoreKit-umbrella.h"; sourceTree = "<group>"; };
-		F11869003563E8E7B10C43B6FD05AD17 /* RecipientValidationHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RecipientValidationHelper.swift; path = PurchaseController/Classes/RecipientValidationHelper.swift; sourceTree = "<group>"; };
+		F11869003563E8E7B10C43B6FD05AD17 /* PurchaseController+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "PurchaseController+Extensions.swift"; path = "PurchaseController/Classes/PurchaseController+Extensions.swift"; sourceTree = "<group>"; };
 		F17E22CDE09D45C3270D4EC2A6CE625E /* ProductsInfoController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProductsInfoController.swift; path = SwiftyStoreKit/ProductsInfoController.swift; sourceTree = "<group>"; };
 		F1E6CB609B7D4BFA7AC4325813E7C08A /* PurchaseController.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = PurchaseController.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		F6B166BDF3DBB85F0CADD9609B0A2070 /* Pods-PurchaseController_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PurchaseController_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -354,7 +354,7 @@
 				CE12854A817188B4E4597948107FED59 /* Receipt.swift */,
 				E0D8B155B7D0F5FA6393F3BFEBB212D7 /* ReceiptTransaction.swift */,
 				659E1FF36F12495E6F9B848CAA4412E5 /* ReceiptValidationResponse.swift */,
-				F11869003563E8E7B10C43B6FD05AD17 /* RecipientValidationHelper.swift */,
+				F11869003563E8E7B10C43B6FD05AD17 /* PurchaseController+Extensions.swift */,
 				24150F56B147E4C478B66CCE62BA0782 /* Pod */,
 				7103DC25B85FB316D466C53AEB7DA452 /* Support Files */,
 			);
@@ -560,6 +560,7 @@
 			files = (
 				AF2B4C0AE3A73BDB493E05F6F8AEDC68 /* InAppPurchase.swift in Sources */,
 				738E68F3EA0610FDE0E44CF2DD68D210 /* PendingRenewalInfo.swift in Sources */,
+				285B19CD22941E51004E4B99 /* PurchaseController+Extensions.swift in Sources */,
 				904EE99A1775BE70D6CA7B10BBF82035 /* PurchaseController-dummy.m in Sources */,
 				F11842E6EF6D15DE846FC5025817352A /* PurchaseController.swift in Sources */,
 				D37576889787071D7D13034D61F8CE37 /* PurchaseErrorHandling.swift in Sources */,
@@ -568,7 +569,6 @@
 				2625110B1E319A20D15F2B2EE8DB241A /* Receipt.swift in Sources */,
 				730954D010344CAD37E1F28D1D10F151 /* ReceiptTransaction.swift in Sources */,
 				B5853132C091CA536A07789CB997C4F4 /* ReceiptValidationResponse.swift in Sources */,
-				12DFFF7EB3275ED7DA069A7E09AD3726 /* RecipientValidationHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
