@@ -66,7 +66,7 @@ enum TableItemModel: String {
         case .retrieve:
             return #selector(MainViewController.retrieve)
         case .refreshReceipt:
-            return #selector(MainViewController.updateReceipt)
+            return #selector(MainViewController.refreshReceipt)
         case .validateReceipt:
             return #selector(MainViewController.validateReceipt)
         case .decodeReceipt:
