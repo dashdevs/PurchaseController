@@ -15,7 +15,7 @@ extension ReceiptInfo {
     public func createReceiptValidation() -> (response: ReceiptValidationResponse?, error: Error?) {
         do {
             let data = try JSONSerialization.data(withJSONObject: self)
-            let response = data.createReceiptValidation()
+            let response = try data.createReceiptResponse()
             return (response, nil)
         } catch {
             return (nil, error)
@@ -39,7 +39,7 @@ extension Data {
     ///
     /// - Returns: readable representation of data
     /// - Throws: an error if any value throws an error during decoding
-    private func createReceiptResponse() throws -> ReceiptValidationResponse? {
+    public func createReceiptResponse() throws -> ReceiptValidationResponse? {
         let response = try JSONDecoder().decode(ReceiptValidationResponse.self, from: self)
         return response
     }

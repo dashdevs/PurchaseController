@@ -44,7 +44,7 @@ struct PendingRenewalInfo: Codable {
     /// Subscription Auto Renew Preference - This key is only present for auto-renewable subscription receipts.
     /// The value for this key corresponds to the productIdentifier property of the product that the customer’s subscription renews.
     /// You can use this value to present an alternative service level to the customer before the current subscription period ends.
-    let autoRenewProductId: String
+    let autoRenewProductId: String?
     
     /// Original Transaction Identifier - This value is the same for all receipts that have been generated for a specific subscription. This value is useful for relating together multiple iOS 6 style transaction receipts for the same individual customer’s subscription.
     let originalTransactionId: String
@@ -69,16 +69,25 @@ struct PendingRenewalInfo: Codable {
     
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        if let expirationIntentValue = Int(try values.decode(String.self, forKey: .expirationIntent)), let type = ExpirationIntentType(rawValue: expirationIntentValue) {
+        if let expirationIntentInt = try values.decodeIfPresent(String.self, forKey: .expirationIntent),
+            let expirationIntentValue = Int(expirationIntentInt),
+            let type = ExpirationIntentType(rawValue: expirationIntentValue) {
             expirationIntent = type
         } else {
             expirationIntent = ExpirationIntentType.unknownError
         }
-        autoRenewProductId = try values.decode(String.self, forKey: .autoRenewProductId)
+        autoRenewProductId = try values.decodeIfPresent(String.self, forKey: .autoRenewProductId)
         originalTransactionId = try values.decode(String.self, forKey: .originalTransactionId)
-        isInBillingRetryPeriod = try Bool(values.decode(String.self, forKey: .isInBillingRetryPeriod)) ?? false
+        if let inBillingPeriodValue = try values.decodeIfPresent(String.self, forKey: .isInBillingRetryPeriod),
+            let inBillingPeriodBool = Bool(inBillingPeriodValue) {
+            isInBillingRetryPeriod = inBillingPeriodBool
+        } else {
+            isInBillingRetryPeriod = false
+        }
         productId = try values.decode(String.self, forKey: .productId)
-        if let autoRenewStatusValue = Int(try values.decode(String.self, forKey: .autoRenewStatus)), let type = AutoRenewStatus(rawValue: autoRenewStatusValue) {
+        if let autoRenewStatusString = try values.decodeIfPresent(String.self, forKey: .autoRenewStatus),
+            let autoRenewStatusValue = Int(autoRenewStatusString),
+            let type = AutoRenewStatus(rawValue: autoRenewStatusValue) {
             autoRenewStatus = type
         } else {
             autoRenewStatus = .notSpecified
