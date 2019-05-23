@@ -103,14 +103,18 @@ struct InAppPurchase: Codable {
             expiresDateMs = nil
         }
         webOrderLineItemId = try? values.decode(String.self, forKey: .webOrderLineItemId)
-        isTrialPeriod = Bool(try values.decode(String.self, forKey: .isTrialPeriod))
-        if let isInIntroOfferPeriodString = try? values.decode(String.self, forKey: .isInIntroOfferPeriod) {
+        if let isTrialPeriodString = try values.decodeIfPresent(String.self, forKey: .isTrialPeriod) {
+            isTrialPeriod = Bool(isTrialPeriodString)
+        } else{
+            isTrialPeriod = nil
+        }
+        if let isInIntroOfferPeriodString = try values.decodeIfPresent(String.self, forKey: .isInIntroOfferPeriod) {
             isInIntroOfferPeriod = Bool(isInIntroOfferPeriodString)
         } else {
             isInIntroOfferPeriod = nil
         }
-        expiresDate =  try? values.decode(String.self, forKey: .expiresDate)
-        expiresDatePst =  try? values.decode(String.self, forKey: .expiresDatePst)
+        expiresDate = try values.decodeIfPresent(String.self, forKey: .expiresDate)
+        expiresDatePst = try values.decodeIfPresent(String.self, forKey: .expiresDatePst)
         originaPurchaseDate = try values.decode(String.self, forKey: .originaPurchaseDate)
         originalPurchaseDatePst = try values.decode(String.self, forKey: .originalPurchaseDatePst)
         purchaseDate = try values.decode(String.self, forKey: .purchaseDate)
