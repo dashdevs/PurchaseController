@@ -34,7 +34,7 @@ public enum PurchaseActionResult {
     case subscriptionValidationSucess(ReceiptItem)
     case retrieveSuccess
     case retrieveSuccessInvalidProducts
-    case purchaseSuccess
+    case purchaseSuccess(PurchaseItem)
     case restoreSuccess
     case completionSuccess
     case receiptValidationSuccess
@@ -57,6 +57,7 @@ public final class PurchaseController {
     
     /// receipt dictionary. Availadble ONLY after verifyReceipt(sharedSecret: isSandbox:) call.
     public private(set) var sessionReceipt: ReceiptInfo?
+    private static let globalPersistor = PurchasePersistorImplementation()
     private var persistor: PurchasePersistor
     private var stateHandler: PurchaseStateHandler?
     private var purchaseActionState: PurchaseActionState {
@@ -70,7 +71,7 @@ public final class PurchaseController {
     ///
     /// - Parameter stateHandler: Any object for state handling, should implement PurchaseStateHandler protocol
     public init(stateHandler: PurchaseStateHandler?)  {
-        self.persistor = PurchasePersistorImplementation()
+        self.persistor = PurchaseController.globalPersistor
         self.stateHandler = stateHandler
         self.purchaseActionState = .none
     }
@@ -177,7 +178,7 @@ public final class PurchaseController {
             case .success(let purchase):
                 let item = PurchaseItem(purchaseDeatils: purchase)
                 self.persistor.persistPurchased(products: [item])
-                self.purchaseActionState = .finish(PurchaseActionResult.purchaseSuccess)
+                self.purchaseActionState = .finish(PurchaseActionResult.purchaseSuccess(item))
             case .error(let error):
                 self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
             }
