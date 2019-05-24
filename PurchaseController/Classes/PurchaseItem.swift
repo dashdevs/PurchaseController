@@ -11,15 +11,15 @@ import SwiftyStoreKit
 /// Item describes avaible to purchase object
 public struct PurchaseItem {
     /// Purchase identifier - unique id of purchase object from appstore connect
-    let productId: String
+    public let productId: String
     /// Amount of purchased items
-    let quantity: Int
+    public let quantity: Int
     /// StoreKit representation of product
-    let product: SKProduct
+    public let product: SKProduct
     /// Object that describes transaction item
-    let transaction: PaymentTransaction
+    public let transaction: PaymentTransaction
     /// Object that describes original transaction item (used for subscriptions)
-    let originalTransaction: PaymentTransaction?
+    public let originalTransaction: PaymentTransaction?
     
     /// PurchaseItem initializer
     ///
