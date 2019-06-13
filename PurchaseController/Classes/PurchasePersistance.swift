@@ -8,8 +8,6 @@
 import StoreKit
 import SwiftyStoreKit
 
-typealias ProductsDictionary = [String: SKProduct]
-
 public protocol PurchasePersistor {
     
     /// Function that store SKProduct to persistor (should be used for retrieved objects)
@@ -40,6 +38,8 @@ public protocol PurchasePersistor {
 }
 
 final class PurchasePersistorImplementation: PurchasePersistor {
+    
+    private typealias ProductsDictionary = [String: SKProduct]
     
     // MARK: - Private
     
