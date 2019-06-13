@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'PurchaseController'
-  s.version          = '0.4.2'
+  s.version          = '0.4.3'
   s.summary          = 'A helpful and convenient In App purchases framework'
 
   s.homepage         = 'http://dashdevs.com'
@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '10.0'
 
   s.source_files = 'PurchaseController/Classes/**/*'
-  
+
   s.frameworks = 'StoreKit'
   s.dependency 'SwiftyStoreKit', '~> 0.14'
   s.swift_version = '4.2'
