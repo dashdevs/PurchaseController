@@ -8,15 +8,18 @@
 import StoreKit
 import SwiftyStoreKit
 
+typealias ProductsDictionary = [String: SKProduct]
+
 public protocol PurchasePersistor {
+    
     /// Function that store SKProduct to persistor (should be used for retrieved objects)
     ///
-    /// - Parameter products: Array of retrieved SKProduct
-    func persist(products: [SKProduct])
+    /// - Parameter products: Set of retrieved SKProduct
+    func persist(products: Set<SKProduct>)
     /// Function that extracts SKProduct from persistor (should be used for retrieved objects)
     ///
-    /// - Parameter products: products: Array of retrieved SKProduct to extract
-    func extract(products: [SKProduct])
+    /// - Parameter products: products: Set of retrieved SKProduct to extract
+    func extract(products: Set<SKProduct>)
     /// Function that fetches SKProducts from persistor (should be used for retrieved objects)
     ///
     /// - Returns: array of SKProducts, stored in persistor
@@ -41,20 +44,20 @@ final class PurchasePersistorImplementation: PurchasePersistor {
     // MARK: - Private
     
     private var purchasedProducts: [PurchaseItem] = []
-    private var localProducts: [SKProduct] = []
+    private var localProducts = ProductsDictionary()
     
     // MARK: - Public
     
-    public func persist(products: [SKProduct]) {
-        localProducts.append(contentsOf: products)
+    public func persist(products: Set<SKProduct>) {
+        products.forEach({ localProducts[$0.productIdentifier] = $0 })
     }
     
-    public func extract(products: [SKProduct]) {
-        localProducts = Array(Set(localProducts).subtracting(products))
+    public func extract(products: Set<SKProduct>) {
+        products.forEach({ localProducts.removeValue(forKey: $0.productIdentifier) })
     }
     
     public func fetchProducts() -> [SKProduct] {
-        return localProducts
+        return Array(localProducts.values)
     }
     
     public func persistPurchased(products: [PurchaseItem]) {
@@ -68,5 +71,4 @@ final class PurchasePersistorImplementation: PurchasePersistor {
     public func fetchPurchasedProducts() -> [PurchaseItem] {
         return purchasedProducts
     }
-    
 }
