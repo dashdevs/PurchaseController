@@ -122,7 +122,7 @@ public final class PurchaseController {
                 self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
                 return
             }
-            self.persistor.persist(products: Array(results.retrievedProducts))
+            self.persistor.persist(products: results.retrievedProducts)
             if results.invalidProductIDs.count > 0 {
                 self.purchaseActionState = .finish(PurchaseActionResult.retrieveSuccessInvalidProducts)
                 return
