@@ -1,5 +1,5 @@
 PODS:
-  - PurchaseController (0.4.2):
+  - PurchaseController (0.4.3):
     - SwiftyStoreKit (~> 0.14)
   - SwiftyStoreKit (0.14.2)
 
@@ -16,9 +16,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  PurchaseController: 599e879b48fff37abc41dfcb6efd2a56f9c4a992
+  PurchaseController: 5d33fb36226d164d223781a089117d672f5e06d6
   SwiftyStoreKit: cc399645796b094022fb650c148a0aed25995873
 
 PODFILE CHECKSUM: adb6f146b43819f04d4a4e65933c6d8e839f83ec
 
-COCOAPODS: 1.6.0
+COCOAPODS: 1.7.2
