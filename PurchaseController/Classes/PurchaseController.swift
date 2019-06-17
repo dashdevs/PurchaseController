@@ -52,7 +52,7 @@ public protocol PurchaseStateHandler {
     func update(newState: PurchaseActionState, from state: PurchaseActionState)
 }
 
-@available(iOS 10.0, *)  
+@available(iOS 10.0, *)
 public final class PurchaseController {
     
     /// receipt dictionary. Availadble ONLY after verifyReceipt(sharedSecret: isSandbox:) call.

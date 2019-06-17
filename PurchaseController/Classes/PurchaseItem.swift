@@ -22,7 +22,7 @@ public struct PurchaseItem {
     public let originalTransaction: PaymentTransaction?
     
     /// Data representation of receipt of specific transaction - deprecated
-    @available(*, deprecated, message: "Use PurcaseController.decodeIfPresent(sessionReceipt: ReceiptInfo?)")
+    @available(*, deprecated, message: "Use PurchaseController.decodeIfPresent(sessionReceipt: ReceiptInfo?)")
     public var receiptData: Data? {
         guard let transaction = transaction as? SKPaymentTransaction else { return nil }
         return TransactionReceiptFetcher.directTransactionReceipt(for: transaction)
@@ -93,6 +93,24 @@ public struct PurchaseItem {
                             product: product,
                             transaction: inApp.purchaseTransaction,
                             originalTransaction: inApp.originalPurchaseTransaction)
+    }
+    
+    /// Function for transaction completion
+    /// Transaction will be presented in receipt until finished
+    public func completeTransaction() {
+        SwiftyStoreKit.finishTransaction(transaction)
+    }
+    
+    /// Function for original transaction completion
+    /// Original transaction appears after restoring or renewal (for subscriptions)
+    /// Transaction will be presented in receipt until finished
+    ///
+    /// - Throws: an PurchaseError.noOriginalTransactionData error when original transaction does not exist
+    public func completeOriginalTransaction() throws {
+        guard let original = originalTransaction else {
+            throw PurchaseError.noOriginalTransactionData.asError()
+        }
+        SwiftyStoreKit.finishTransaction(original)
     }
 }
 
