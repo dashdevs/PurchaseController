@@ -1,6 +1,6 @@
 {
   "name": "PurchaseController",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "summary": "A helpful and convenient In App purchases framework",
   "homepage": "http://dashdevs.com",
   "license": {
@@ -12,7 +12,7 @@
   },
   "source": {
     "git": "https://bitbucket.org/itomych/purchasecontroller.git",
-    "tag": "0.4.2"
+    "tag": "0.4.3"
   },
   "platforms": {
     "ios": "10.0"
@@ -24,5 +24,6 @@
       "~> 0.14"
     ]
   },
+  "swift_versions": "4.2",
   "swift_version": "4.2"
 }

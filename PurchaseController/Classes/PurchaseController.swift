@@ -165,15 +165,17 @@ public final class PurchaseController {
     ///
     /// Notifies handler with .error if any error occured
     ///
-    /// - Parameter identifier: identifier of product to purchase
-    public func purchase(with identifier: String) {
+    /// - Parameters:
+    ///   - identifier: identifier of product to purchase.
+    ///   - atomically: defines if the transaction should be completed immediately.
+    public func purchase(with identifier: String, atomically: Bool = true) {
         self.purchaseActionState = .loading
         guard let localСompared = try? localProducts(by: { $0.productIdentifier == identifier }),
             let product = localСompared.first else {
             self.purchaseActionState = .finish(PurchaseActionResult.error(.noLocalProduct))
             return 
         }
-        SwiftyStoreKit.purchaseProduct(product) { [unowned self] (results) in
+        SwiftyStoreKit.purchaseProduct(product, atomically: atomically) { [unowned self] (results) in
             switch results {
             case .success(let purchase):
                 let item = PurchaseItem(purchaseDeatils: purchase)
