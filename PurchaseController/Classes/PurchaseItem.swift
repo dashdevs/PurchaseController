@@ -21,6 +21,13 @@ public struct PurchaseItem {
     /// Object that describes original transaction item (used for subscriptions)
     public let originalTransaction: PaymentTransaction?
     
+    /// Data representation of receipt of specific transaction - deprecated
+    @available(*, deprecated, message: "Use PurcaseController.decodeIfPresent(sessionReceipt: ReceiptInfo?)")
+    public var receiptData: Data? {
+        guard let transaction = transaction as? SKPaymentTransaction else { return nil }
+        return TransactionReceiptFetcher.directTransactionReceipt(for: transaction)
+    }
+    
     /// PurchaseItem initializer
     ///
     /// - Parameter purchaseDeatils: SwiftyStoreKit representation of purchased product
