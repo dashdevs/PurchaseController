@@ -28,6 +28,7 @@ import SwiftyStoreKit
 /// - noLocalProduct: product wasn't retrieved
 /// - networkError: operation failed due to network error
 /// - noReceiptData: no receipt data, try to validate local receipt
+/// - noOriginalTransactionData: no original transaction to process
 /// - noRemoteData: no remote data received
 /// - requestBodyEncodeError: error when encoding HTTP body into JSON
 /// - receiptJsonDecodeError: error when decoding response
@@ -54,6 +55,7 @@ public enum PurchaseError: Int {
     case noLocalProduct
     case networkError
     case noReceiptData
+    case noOriginalTransactionData
     case noRemoteData
     case requestBodyEncodeError
     case receiptJsonDecodeError
@@ -114,5 +116,14 @@ public extension ReceiptError {
         case .jsonDecodeError(_): return .receiptJsonDecodeError
         case .receiptInvalid(_): return .receiptInvalid
         }
+    }
+}
+
+public extension PurchaseError {
+    /// PurchaseError convert function
+    ///
+    /// - Returns: converted self to NSError
+    func asError() -> Error {
+        return NSError(domain: String(describing: self), code: rawValue, userInfo: nil)
     }
 }
