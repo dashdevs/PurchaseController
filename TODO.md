@@ -8,4 +8,3 @@
 * Add downloading content hosted with Apple
 * Get rid of SwiftyStoreKit dependency
 * Find convenient way to manage environments (prod, dev, etc)
-* Add nullability specifiers in Obj-C files
