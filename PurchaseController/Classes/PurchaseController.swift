@@ -88,12 +88,26 @@ public final class PurchaseController {
     
     // MARK: - Public
     
+    /// Function used to access all local purchased products.
+    ///
+    /// - Returns: array of PurchaseItem.
+    public func localPurschasedProducts() -> [PurchaseItem] {
+        return persistor.fetchPurchasedProducts()
+    }
+    
     /// Filter function, used to access to local purchased products
     ///
     /// - Parameter filter: filter closure used for comparing PurchaseItem objects
     /// - Returns: array of PurchaseItem after filter applying
     public func localPurschasedProducts(by filter: (PurchaseItem) throws -> Bool) throws -> [PurchaseItem] {
         return try persistor.fetchPurchasedProducts().filter(filter)
+    }
+    
+    /// Function used to access all local products.
+    ///
+    /// - Returns: array of SKProduct.
+    public func localProducts() -> [SKProduct] {
+        return persistor.fetchProducts()
     }
     
     /// Filter function used to access to local products
