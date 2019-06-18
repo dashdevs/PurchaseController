@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 `PurchaseController` adheres to [Semantic Versioning](https://semver.org/).
 
+#### 0.x Releases
+- `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041) | [0.4.2](#042) | [0.4.3](#043) | [0.4.4](#044)
+- `0.3.x` Releases - [0.3.0](#030)
+- `0.2.x` Releases - [0.2.0](#020) 
+- `0.1.x` Releases - [0.1.0](#010) 
+
+---
+
 ## [0.4.4](https://github.com/dashdevs/PurchaseController/releases/tag/0.4.4)
 Released on 2019-06-17. 
 
