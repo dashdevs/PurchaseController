@@ -103,18 +103,18 @@ public final class PurchaseController {
         return try persistor.fetchPurchasedProducts().filter(filter)
     }
     
-    /// Function used to access all local products.
+    /// Function used to access all local products available for purchase.
     ///
     /// - Returns: array of SKProduct.
-    public func localProducts() -> [SKProduct] {
+    public func localAvailableProducts() -> [SKProduct] {
         return persistor.fetchProducts()
     }
     
-    /// Filter function used to access to local products
+    /// Filter function used to access to local products available for purchase.
     ///
-    /// - Parameter filter: filter closure, used to comparing to SKProduct objects
-    /// - Returns: array of SKProduct after filter applying
-    public func localProducts(by filter: (SKProduct) throws -> Bool) throws -> [SKProduct] {
+    /// - Parameter filter: filter closure, used to comparing to SKProduct objects.
+    /// - Returns: array of SKProduct after filter applying.
+    public func localAvailableProducts(by filter: (SKProduct) throws -> Bool) throws -> [SKProduct] {
         return try persistor.fetchProducts().filter(filter)
     }
     
@@ -184,7 +184,7 @@ public final class PurchaseController {
     ///   - atomically: defines if the transaction should be completed immediately.
     public func purchase(with identifier: String, atomically: Bool = true) {
         self.purchaseActionState = .loading
-        guard let localСompared = try? localProducts(by: { $0.productIdentifier == identifier }),
+        guard let localСompared = try? localAvailableProducts(by: { $0.productIdentifier == identifier }),
             let product = localСompared.first else {
             self.purchaseActionState = .finish(PurchaseActionResult.error(.noLocalProduct))
             return 
