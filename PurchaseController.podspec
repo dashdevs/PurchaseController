@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '10.0'
 
-  s.source_files = 'PurchaseController/Classes/**/*'
+  s.source_files = 'PurchaseController/Classes/**/*', 'PurchaseController/Headers/**/*'
 
   s.frameworks = 'StoreKit'
   s.dependency 'SwiftyStoreKit', '~> 0.14'
