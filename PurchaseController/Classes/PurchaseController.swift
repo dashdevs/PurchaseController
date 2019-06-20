@@ -236,15 +236,7 @@ public final class PurchaseController {
 
         }
         
-//        SwiftyStoreKit.verifyReceipt(using: appleValidator) { [unowned self] result in
-//            switch result {
-//            case .success(let receipt):
-//                self.sessionReceipt = receipt
-//                self.purchaseActionState = .finish(PurchaseActionResult.receiptValidationSuccess)
-//            case .error(let error):
-//                self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
-//            }
-        }
+    }
 
     /// Function used to fetch receipt in local storage.
     ///
@@ -282,6 +274,7 @@ public final class PurchaseController {
         
         let response = sessionReceipt.createReceiptValidation()
         if let receipt = response.response {
+            print(receipt)
             self.receiptValidationResponse = receipt
             self.purchaseActionState = .finish(PurchaseActionResult.receiptDecodeSuccess(receipt))
         } else if let error = response.error {

@@ -42,6 +42,7 @@ public struct ParsedReceipt {
     let expirationDate: Date?
 }
 
+
 public struct ParsedInAppPurchaseReceipt {
     let quantity: Int?
     let productIdentifier: String?
@@ -50,6 +51,7 @@ public struct ParsedInAppPurchaseReceipt {
     let purchaseDate: Date?
     let originalPurchaseDate: Date?
     let subscriptionExpirationDate: Date?
+    let subscriptionIntroductoryPricePeriod: Bool?
     let cancellationDate: Date?
     let webOrderLineItemId: Int?
 }
@@ -383,6 +385,7 @@ struct ReceiptParser {
         var purchaseDate: Date?
         var originalPurchaseDate: Date?
         var subscriptionExpirationDate: Date?
+        var subscriptionIntroductoryPricePeriod: Bool?
         var cancellationDate: Date?
         var webOrderLineItemId: Int?
         
@@ -430,31 +433,35 @@ struct ReceiptParser {
             
             // Decode attributes
             switch attributeType {
-            case 1701:
+            case PurchaseReceiptFields.quantity.asn1Type:
                 var startOfQuantity = currentInAppPurchaseASN1PayloadLocation
                 quantity = DecodeASN1Integer(startOfInt: &startOfQuantity , length: length)
-            case 1702:
+            case PurchaseReceiptFields.productIdentifier.asn1Type:
                 var startOfProductIdentifier = currentInAppPurchaseASN1PayloadLocation
                 productIdentifier = DecodeASN1String(startOfString: &startOfProductIdentifier, length: length)
-            case 1703:
+            case PurchaseReceiptFields.transactionIdentifier.asn1Type:
                 var startOfTransactionIdentifier = currentInAppPurchaseASN1PayloadLocation
                 transactionIdentifier = DecodeASN1String(startOfString: &startOfTransactionIdentifier, length: length)
-            case 1705:
+            case PurchaseReceiptFields.originalTransactionIdentifier.asn1Type:
                 var startOfOriginalTransactionIdentifier = currentInAppPurchaseASN1PayloadLocation
                 originalTransactionIdentifier = DecodeASN1String(startOfString: &startOfOriginalTransactionIdentifier, length: length)
-            case 1704:
+            case PurchaseReceiptFields.purchaseDate.asn1Type:
                 var startOfPurchaseDate = currentInAppPurchaseASN1PayloadLocation
                 purchaseDate = DecodeASN1Date(startOfDate: &startOfPurchaseDate, length: length)
-            case 1706:
+            case PurchaseReceiptFields.originalPurchaseDate.asn1Type:
                 var startOfOriginalPurchaseDate = currentInAppPurchaseASN1PayloadLocation
                 originalPurchaseDate = DecodeASN1Date(startOfDate: &startOfOriginalPurchaseDate, length: length)
-            case 1708:
+            case PurchaseReceiptFields.subscriptionExpirationDate.asn1Type:
                 var startOfSubscriptionExpirationDate = currentInAppPurchaseASN1PayloadLocation
                 subscriptionExpirationDate = DecodeASN1Date(startOfDate: &startOfSubscriptionExpirationDate, length: length)
-            case 1712:
+            case PurchaseReceiptFields.subscriptionIntroductoryPricePeriod.asn1Type: // TODO
+                var startOfSubscriptionIntroductoryPricePeriod = currentInAppPurchaseASN1PayloadLocation
+                let intValue = DecodeASN1Integer(startOfInt: &startOfSubscriptionIntroductoryPricePeriod, length: length)
+                subscriptionIntroductoryPricePeriod = intValue == 1 ? true : false
+            case PurchaseReceiptFields.cancellationDate.asn1Type:
                 var startOfCancellationDate = currentInAppPurchaseASN1PayloadLocation
                 cancellationDate = DecodeASN1Date(startOfDate: &startOfCancellationDate, length: length)
-            case 1711:
+            case PurchaseReceiptFields.webOrderLineItemId.asn1Type:
                 var startOfWebOrderLineItemId = currentInAppPurchaseASN1PayloadLocation
                 webOrderLineItemId = DecodeASN1Integer(startOfInt: &startOfWebOrderLineItemId, length: length)
             default:
@@ -471,6 +478,7 @@ struct ReceiptParser {
                                           purchaseDate: purchaseDate,
                                           originalPurchaseDate: originalPurchaseDate,
                                           subscriptionExpirationDate: subscriptionExpirationDate,
+                                          subscriptionIntroductoryPricePeriod: subscriptionIntroductoryPricePeriod,
                                           cancellationDate: cancellationDate,
                                           webOrderLineItemId: webOrderLineItemId)
     }
@@ -530,3 +538,125 @@ struct ReceiptParser {
     }
 }
 
+/// Refer to https://developer.apple.com/library/archive/releasenotes/General/ValidateAppStoreReceipt/Chapters/ReceiptFields.html
+/// "In-App Purchase Receipt Fields" section.
+struct PurchaseReceiptFields {
+    
+    /// The number of items purchased.
+    ///
+    /// This value corresponds to the quantity property of the SKPayment object stored in the transaction’s payment property.
+    static let quantity = ReceiptField(asn1Type: 1701, codingKey: .quantity)
+    
+    /// The number of items purchased.
+    ///
+    /// This value corresponds to the productIdentifier property of the SKPayment object stored in the transaction’s payment property.
+    static let productIdentifier = ReceiptField(asn1Type: 1702, codingKey: .productId)
+
+    /// The transaction identifier of the item that was purchased.
+    ///
+    /// This value corresponds to the transaction’s transactionIdentifier property.
+    static let transactionIdentifier = ReceiptField(asn1Type: 1703, codingKey: .transactionId)
+    
+    /// For a transaction that restores a previous transaction, the transaction identifier of the original transaction. Otherwise, identical to the transaction identifier.
+    ///
+    /// This value corresponds to the original transaction’s transactionIdentifier property.
+    static let originalTransactionIdentifier = ReceiptField(asn1Type: 1705, codingKey: .originalTransactionId)
+    
+    /// The date and time that the item was purchased.
+    ///
+    /// This value corresponds to the transaction’s transactionDate property.
+    static let purchaseDate = ReceiptField(asn1Type: 1704, codingKey: .purchaseDate)
+    
+    /// For a transaction that restores a previous transaction, the date of the original transaction.
+    ///
+    /// This value corresponds to the original transaction’s transactionDate property.
+    static let originalPurchaseDate = ReceiptField(asn1Type: 1706, codingKey: .originaPurchaseDate)
+
+    /// The expiration date for the subscription, expressed as the number of milliseconds since January 1, 1970, 00:00:00 GMT.
+    ///
+    /// This key is only present for auto-renewable subscription receipts. Use this value to identify the date when the subscription will renew or expire,
+    /// to determine if a customer should have access to content or service. After validating the latest receipt,
+    /// if the subscription expiration date for the latest renewal transaction is a past date, it is safe to assume that the subscription has expired.
+    static let subscriptionExpirationDate = ReceiptField(asn1Type: 1708, codingKey: .expiresDate)
+
+    /// For an expired subscription, the reason for the subscription expiration.
+    ///
+    /// This key is only present for a receipt containing an expired auto-renewable subscription. You can use this value to decide whether to display appropriate messaging in your app for customers to resubscribe.
+    static let subscriptionExpirationIntent = ReceiptField(asn1Type: nil, codingKey: .subscriptionExpirationIntent)
+
+    /// For an expired subscription, whether or not Apple is still attempting to automatically renew the subscription.
+    ///
+    /// This key is only present for auto-renewable subscription receipts. If the customer’s subscription failed to renew because the App Store was unable to complete the transaction,
+    /// this value will reflect whether or not the App Store is still trying to renew the subscription.
+    static let subscriptionRetryFlag = ReceiptField(asn1Type: nil, codingKey: .subscriptionRetryFlag)
+
+    /// For a subscription, whether or not it is in the free trial period.
+    ///
+    /// This key is only present for auto-renewable subscription receipts. The value for this key is "true" if the customer’s subscription is currently in the free trial period, or "false" if not.
+    static let subscriptionTrialPeriod = ReceiptField(asn1Type: nil, codingKey: .isTrialPeriod)
+
+    /// For an auto-renewable subscription, whether or not it is in the introductory price period.
+    ///
+    /// This key is only present for auto-renewable subscription receipts. The value for this key is "true" if the customer’s subscription is currently in an introductory price period, or "false" if not.
+    static let subscriptionIntroductoryPricePeriod = ReceiptField(asn1Type: 1719, codingKey: .isInIntroOfferPeriod)
+
+    /// For a transaction that was canceled by Apple customer support, the time and date of the cancellation. For an auto-renewable subscription plan that was upgraded, the time and date of the upgrade transaction.
+    ///
+    /// Treat a canceled receipt the same as if no purchase had ever been made.
+    static let cancellationDate = ReceiptField(asn1Type: 1712, codingKey: .cancellationDate)
+
+    /// For a transaction that was canceled, the reason for cancellation.
+    ///
+    /// Use this value along with the cancellation date to identify possible issues in your app that may lead customers to contact Apple customer support.
+    static let cancellationReason = ReceiptField(asn1Type: nil, codingKey: .cancellationReason)
+
+    /// A string that the App Store uses to uniquely identify the application that created the transaction.
+    ///
+    /// If your server supports multiple applications, you can use this value to differentiate between them.
+    /// Apps are assigned an identifier only in the production environment, so this key is not present for receipts created in the test environment.
+    static let appItemId = ReceiptField(asn1Type: nil, codingKey: .appItemId)
+
+    /// An arbitrary number that uniquely identifies a revision of your application.
+    ///
+    /// This key is not present for receipts created in the test environment. Use this value to identify the version of the app that the customer bought.
+    static let externalVersionIdentifier = ReceiptField(asn1Type: nil, codingKey: .externalVersionIdentifier)
+
+    /// The primary key for identifying subscription purchases.
+    ///
+    /// This value is a unique ID that identifies purchase events across devices, including subscription renewal purchase events.
+    static let webOrderLineItemId = ReceiptField(asn1Type: 1711, codingKey: .webOrderLineItemId)
+
+    /// The current renewal status for the auto-renewable subscription.
+    ///
+    /// This key is only present for auto-renewable subscription receipts, for active or expired subscriptions. The value for this key should not be interpreted as the customer’s subscription status.
+    /// You can use this value to display an alternative subscription product in your app, for example, a lower level subscription plan that the customer can downgrade to from their current plan.
+    static let subscriptionAutoRenewStatus = ReceiptField(asn1Type: nil, codingKey: .subscriptionAutoRenewStatus)
+
+    /// The current renewal preference for the auto-renewable subscription.
+    ///
+    /// This key is only present for auto-renewable subscription receipts. The value for this key corresponds to the productIdentifier property of the product that the customer’s subscription renews.
+    /// You can use this value to present an alternative service level to the customer before the current subscription period ends.
+    static let subscriptionAutoRenewPreference = ReceiptField(asn1Type: nil, codingKey: .subscriptionAutoRenewPreference)
+
+    /// The current price consent status for a subscription price increase.
+    ///
+    /// This key is only present for auto-renewable subscription receipts if the subscription price was increased without keeping the existing price for active subscribers.
+    /// You can use this value to track customer adoption of the new price and take appropriate action.
+    static let subscriptionPriceConsentStatus = ReceiptField(asn1Type: nil, codingKey: .subscriptionPriceConsentStatus)
+}
+
+struct ReceiptField {
+    
+    let asn1Type: Int?
+    let jsonKey: String
+    
+    init(asn1Type: Int?, codingKey: InAppPurchase.CodingKeys) {
+        self.asn1Type = asn1Type
+        self.jsonKey = codingKey.rawValue
+    }
+    
+    init(asn1Type: Int?, jsonKey: String) {
+        self.asn1Type = asn1Type
+        self.jsonKey = jsonKey
+    }
+}
