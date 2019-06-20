@@ -20,21 +20,21 @@ struct InAppPurchase: Codable {
     let originalTransactionId: String?
 
     /// The date and time that the item was purchased.
-    let purchaseDate: String?
+    let purchaseDate: Date?
     /// The date and time that the item was purchased.
     let purchaseDateMs: Date?
     /// The date and time that the item was purchased.
     let purchaseDatePst: String?
 
     /// For a transaction that restores a previous transaction, the date of the original transaction.
-    let originaPurchaseDate: String?
+    let originaPurchaseDate: Date?
     /// For a transaction that restores a previous transaction, the date of the original transaction.
     let originalPurchaseDateMs: Date?
     /// For a transaction that restores a previous transaction, the date of the original transaction.
     let originalPurchaseDatePst: String?
     
     /// The date that the app receipt expires.
-    let expiresDate: String?
+    let expiresDate: Date?
     /// The date that the app receipt expires.
     let expiresDateMs: Date?
     /// The date that the app receipt expires.
@@ -47,7 +47,7 @@ struct InAppPurchase: Codable {
     let subscriptionRetryFlag: Int? // TODO: create an enum for int values
 
     /// For a transaction that was canceled by Apple customer support, the time and date of the cancellation. For an auto-renewable subscription plan that was upgraded, the time and date of the upgrade transaction.
-    let cancellationDate: String?
+    let cancellationDate: Date?
 
     /// For a transaction that was canceled by Apple customer support, the time and date of the cancellation. For an auto-renewable subscription plan that was upgraded, the time and date of the upgrade transaction.
     let cancellationReason: Int? // TODO: create an enum for int values
@@ -124,8 +124,59 @@ struct InAppPurchase: Codable {
         case subscriptionPriceConsentStatus = "price_consent_status"
     }
     
+    init?(quantity: Int?,
+          productIdentifier: String?,
+          transactionIdentifier: String?,
+          originalTransactionIdentifier: String?,
+          purchaseDate: Date?,
+          originalPurchaseDate: Date?,
+          subscriptionExpirationDate: Date?,
+          subscriptionIntroductoryPricePeriod: Bool?,
+          cancellationDate: Date?,
+          webOrderLineItemId: String?) {
+        guard let quantity = quantity,
+            let productIdentifier = productIdentifier,
+            let transactionIdentifier = transactionIdentifier else {
+                return nil
+        }
+        
+        self.quantity = quantity
+        self.productId = productIdentifier
+        self.transactionId = transactionIdentifier
+        self.originalTransactionId = originalTransactionIdentifier
+        self.purchaseDate = purchaseDate
+        self.originaPurchaseDate = originalPurchaseDate
+        self.expiresDate = subscriptionExpirationDate
+        self.isInIntroOfferPeriod = subscriptionIntroductoryPricePeriod
+        self.cancellationDate = cancellationDate
+        self.webOrderLineItemId = webOrderLineItemId
+    
+        self.purchaseDateMs = nil
+        self.purchaseDatePst = nil
+        self.originalPurchaseDateMs = nil
+        self.originalPurchaseDatePst = nil
+        self.expiresDateMs = nil
+        self.expiresDatePst = nil
+        self.subscriptionExpirationIntent = nil
+        self.subscriptionRetryFlag = nil
+        self.cancellationReason = nil
+        self.appItemId = nil
+        self.externalVersionIdentifier = nil
+        self.isTrialPeriod = nil
+        self.subscriptionAutoRenewStatus = nil
+        self.subscriptionAutoRenewPreference = nil
+        self.subscriptionPriceConsentStatus = nil
+    }
+    
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
+
+//        } else {
+//            print("====NO DATE STRING")
+//
+//            purchaseDate = nil
+//        }
+
         quantity = Int(try values.decode(String.self, forKey: .quantity)) ?? 0
         productId = try values.decode(String.self, forKey: .productId)
         transactionId = try values.decode(String.self, forKey: .transactionId)
@@ -136,6 +187,8 @@ struct InAppPurchase: Codable {
         } else {
             purchaseDateMs = nil
         }
+        
+
         if let originalPurchaseDate = try? values.decode(String.self, forKey: .originalPurchaseDateMs),
             let seconds = TimeInterval(millisecondsString: originalPurchaseDate) {
             originalPurchaseDateMs = Date(timeIntervalSince1970: seconds)
@@ -161,7 +214,11 @@ struct InAppPurchase: Codable {
             subscriptionRetryFlag = nil
         }
         
-        cancellationDate = try values.decodeIfPresent(String.self, forKey: .cancellationDate)
+        if let cancellationDateStr = try values.decodeIfPresent(String.self, forKey: .cancellationDate) {
+            cancellationDate = DateFormatter.appleValidator.date(from: cancellationDateStr)
+        } else {
+            cancellationDate = nil
+        }
         if let cancellationReasonStr = try values.decodeIfPresent(String.self, forKey: .cancellationReason) {
             cancellationReason = Int(cancellationReasonStr)
         } else {
@@ -181,7 +238,7 @@ struct InAppPurchase: Codable {
         } else {
             isInIntroOfferPeriod = nil
         }
-        webOrderLineItemId = try? values.decode(String.self, forKey: .webOrderLineItemId)
+        webOrderLineItemId = try values.decodeIfPresent(String.self, forKey: .webOrderLineItemId)
 
         if let subscriptionAutoRenewStatusStr = try values.decodeIfPresent(String.self, forKey: .subscriptionAutoRenewStatus) {
             subscriptionAutoRenewStatus = Int(subscriptionAutoRenewStatusStr)
@@ -189,20 +246,35 @@ struct InAppPurchase: Codable {
             subscriptionAutoRenewStatus = nil
         }
         
-        subscriptionAutoRenewPreference = try? values.decode(String.self, forKey: .subscriptionAutoRenewPreference)
+        subscriptionAutoRenewPreference = try values.decodeIfPresent(String.self, forKey: .subscriptionAutoRenewPreference)
 
         if let subscriptionPriceConsentStatusStr = try values.decodeIfPresent(String.self, forKey: .subscriptionPriceConsentStatus) {
             subscriptionPriceConsentStatus = Int(subscriptionPriceConsentStatusStr)
         } else {
             subscriptionPriceConsentStatus = nil
         }
-        
-        expiresDate = try values.decodeIfPresent(String.self, forKey: .expiresDate)
+
+        if let expiresDateStr = try values.decodeIfPresent(String.self, forKey: .expiresDate) {
+            expiresDate = DateFormatter.appleValidator.date(from: expiresDateStr)
+        } else {
+            expiresDate = nil
+        }
         expiresDatePst = try values.decodeIfPresent(String.self, forKey: .expiresDatePst)
-        originaPurchaseDate = try values.decode(String.self, forKey: .originaPurchaseDate)
-        originalPurchaseDatePst = try values.decode(String.self, forKey: .originalPurchaseDatePst)
-        purchaseDate = try values.decode(String.self, forKey: .purchaseDate)
-        purchaseDatePst = try values.decode(String.self, forKey: .purchaseDatePst)
+        
+        if let originaPurchaseDateStr = try values.decodeIfPresent(String.self, forKey: .originaPurchaseDate) {
+            originaPurchaseDate = DateFormatter.appleValidator.date(from: originaPurchaseDateStr)
+        } else {
+            originaPurchaseDate = nil
+        }
+        originalPurchaseDatePst = try values.decodeIfPresent(String.self, forKey: .originalPurchaseDatePst)
+
+        if let purchaseDateStr = try values.decodeIfPresent(String.self, forKey: .purchaseDate) {
+            purchaseDate = DateFormatter.appleValidator.date(from: purchaseDateStr)
+        } else {
+            purchaseDate = nil
+        }
+        
+        purchaseDatePst = try values.decodeIfPresent(String.self, forKey: .purchaseDatePst)
     }
     
 }

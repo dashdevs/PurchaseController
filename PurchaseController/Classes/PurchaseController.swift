@@ -233,7 +233,6 @@ public final class PurchaseController {
 
         case .error(let error):
             self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
-
         }
         
     }

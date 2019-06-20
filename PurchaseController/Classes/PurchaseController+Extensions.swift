@@ -44,3 +44,23 @@ extension Data {
         return response
     }
 }
+
+extension DateFormatter {
+    /// Date formatter code from https://www.objc.io/issues/17-security/receipt-validation/#parsing-the-receipt
+    static let RFC3339: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        return dateFormatter
+    }()
+    
+    static let appleValidator: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss VV"
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        return dateFormatter
+    }()
+
+}

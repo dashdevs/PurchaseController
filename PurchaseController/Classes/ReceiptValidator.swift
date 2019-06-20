@@ -36,7 +36,7 @@ public struct ParsedReceipt {
     let appVersion: String?
     let opaqueValue: NSData?
     let sha1Hash: NSData?
-    let inAppPurchaseReceipts: [ParsedInAppPurchaseReceipt]?
+    let inAppPurchaseReceipts: [InAppPurchase]?
     let originalAppVersion: String?
     let receiptCreationDate: Date?
     let expirationDate: Date?
@@ -278,7 +278,7 @@ struct ReceiptParser {
         var appVersion: String?
         var opaqueValue: NSData?
         var sha1Hash: NSData?
-        var inAppPurchaseReceipts = [ParsedInAppPurchaseReceipt]()
+        var inAppPurchaseReceipts = [InAppPurchase]()
         var originalAppVersion: String?
         var receiptCreationDate: Date?
         var expirationDate: Date?
@@ -377,7 +377,7 @@ struct ReceiptParser {
                              expirationDate: expirationDate)
     }
     
-    func parseInAppPurchaseReceipt(currentInAppPurchaseASN1PayloadLocation: inout UnsafePointer<UInt8>?, payloadLength: Int) throws -> ParsedInAppPurchaseReceipt {
+    func parseInAppPurchaseReceipt(currentInAppPurchaseASN1PayloadLocation: inout UnsafePointer<UInt8>?, payloadLength: Int) throws -> InAppPurchase {
         var quantity: Int?
         var productIdentifier: String?
         var transactionIdentifier: String?
@@ -387,7 +387,7 @@ struct ReceiptParser {
         var subscriptionExpirationDate: Date?
         var subscriptionIntroductoryPricePeriod: Bool?
         var cancellationDate: Date?
-        var webOrderLineItemId: Int?
+        var webOrderLineItemId: String?
         
         let endOfPayload = currentInAppPurchaseASN1PayloadLocation!.advanced(by: payloadLength)
         var type = Int32(0)
@@ -454,16 +454,16 @@ struct ReceiptParser {
             case PurchaseReceiptFields.subscriptionExpirationDate.asn1Type:
                 var startOfSubscriptionExpirationDate = currentInAppPurchaseASN1PayloadLocation
                 subscriptionExpirationDate = DecodeASN1Date(startOfDate: &startOfSubscriptionExpirationDate, length: length)
-            case PurchaseReceiptFields.subscriptionIntroductoryPricePeriod.asn1Type: // TODO
+            case PurchaseReceiptFields.subscriptionIntroductoryPricePeriod.asn1Type:
                 var startOfSubscriptionIntroductoryPricePeriod = currentInAppPurchaseASN1PayloadLocation
-                let intValue = DecodeASN1Integer(startOfInt: &startOfSubscriptionIntroductoryPricePeriod, length: length)
-                subscriptionIntroductoryPricePeriod = intValue == 1 ? true : false
+                let strValue = DecodeASN1String(startOfString: &startOfSubscriptionIntroductoryPricePeriod, length: length) ?? "false"
+                subscriptionIntroductoryPricePeriod = Bool(strValue)
             case PurchaseReceiptFields.cancellationDate.asn1Type:
                 var startOfCancellationDate = currentInAppPurchaseASN1PayloadLocation
                 cancellationDate = DecodeASN1Date(startOfDate: &startOfCancellationDate, length: length)
             case PurchaseReceiptFields.webOrderLineItemId.asn1Type:
                 var startOfWebOrderLineItemId = currentInAppPurchaseASN1PayloadLocation
-                webOrderLineItemId = DecodeASN1Integer(startOfInt: &startOfWebOrderLineItemId, length: length)
+                webOrderLineItemId = DecodeASN1String(startOfString: &startOfWebOrderLineItemId, length: length)
             default:
                 break
             }
@@ -471,16 +471,19 @@ struct ReceiptParser {
             currentInAppPurchaseASN1PayloadLocation = currentInAppPurchaseASN1PayloadLocation!.advanced(by: length)
         }
         
-        return ParsedInAppPurchaseReceipt(quantity: quantity,
-                                          productIdentifier: productIdentifier,
-                                          transactionIdentifier: transactionIdentifier,
-                                          originalTransactionIdentifier: originalTransactionIdentifier,
-                                          purchaseDate: purchaseDate,
-                                          originalPurchaseDate: originalPurchaseDate,
-                                          subscriptionExpirationDate: subscriptionExpirationDate,
-                                          subscriptionIntroductoryPricePeriod: subscriptionIntroductoryPricePeriod,
-                                          cancellationDate: cancellationDate,
-                                          webOrderLineItemId: webOrderLineItemId)
+        guard let purchase =  InAppPurchase(quantity: quantity,
+                                            productIdentifier: productIdentifier,
+                                            transactionIdentifier: transactionIdentifier,
+                                            originalTransactionIdentifier: originalTransactionIdentifier,
+                                            purchaseDate: purchaseDate,
+                                            originalPurchaseDate: originalPurchaseDate,
+                                            subscriptionExpirationDate: subscriptionExpirationDate,
+                                            subscriptionIntroductoryPricePeriod: subscriptionIntroductoryPricePeriod,
+                                            cancellationDate: cancellationDate,
+                                            webOrderLineItemId: webOrderLineItemId) else {
+                                                throw ReceiptValidationError.malformedInAppPurchaseReceipt
+        }
+        return purchase
     }
     
     func DecodeASN1Integer(startOfInt intPointer: inout UnsafePointer<UInt8>?, length: Int) -> Int? {
@@ -524,14 +527,8 @@ struct ReceiptParser {
     }
     
     func DecodeASN1Date(startOfDate datePointer: inout UnsafePointer<UInt8>?, length: Int) -> Date? {
-        // Date formatter code from https://www.objc.io/issues/17-security/receipt-validation/#parsing-the-receipt
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        
         if let dateString = DecodeASN1String(startOfString: &datePointer, length:length) {
-            return dateFormatter.date(from: dateString)
+            return DateFormatter.RFC3339.date(from: dateString)
         }
         
         return nil

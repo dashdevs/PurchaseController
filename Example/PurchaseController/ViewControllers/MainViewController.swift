@@ -83,8 +83,8 @@ extension MainViewController: MainViewControllerPresentable {
     }
     
     @objc func validateReceipt() {
-//        purchaseController.verifyReceiptLocally()
-        purchaseController.verifyReceiptRemotely(sharedSecret: nil, isSandbox: true)
+        purchaseController.verifyReceiptLocally()
+//        purchaseController.verifyReceiptRemotely(sharedSecret: nil, isSandbox: true)
     }
     
     @objc func synchronizePurchases() {
