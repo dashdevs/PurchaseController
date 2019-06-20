@@ -202,7 +202,8 @@ public final class PurchaseController {
     ///   - sharedSecret: shared secret from Appstore Connect.
     ///     More info here: https://www.appypie.com/faqs/how-can-i-get-shared-secret-key-for-in-app-purchase
     ///   - isSandbox: defines is there sandbox environment or not
-    public func verifyReceipt(sharedSecret: String, isSandbox: Bool = true) {
+    public func verifyReceiptRemotely(sharedSecret: String?, isSandbox: Bool = true) {
+        
         self.purchaseActionState = .loading
         let appleValidator = AppleReceiptValidator(service: isSandbox ? .sandbox : .production,
                                                    sharedSecret: sharedSecret)
@@ -216,6 +217,34 @@ public final class PurchaseController {
             }
         }
     }
+    
+    public func validateReceipt(using validator: ReceiptValidatorProtocol) {
+        
+    }
+    
+    public func verifyReceiptLocally() {
+        
+        self.purchaseActionState = .loading
+        let result = LocalReceiptValidator().validateReceipt()
+        switch result {
+        case .success(let receipt):
+            print(receipt)
+            self.purchaseActionState = .finish(PurchaseActionResult.receiptValidationSuccess)
+
+        case .error(let error):
+            self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
+
+        }
+        
+//        SwiftyStoreKit.verifyReceipt(using: appleValidator) { [unowned self] result in
+//            switch result {
+//            case .success(let receipt):
+//                self.sessionReceipt = receipt
+//                self.purchaseActionState = .finish(PurchaseActionResult.receiptValidationSuccess)
+//            case .error(let error):
+//                self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
+//            }
+        }
 
     /// Function used to fetch receipt in local storage.
     ///
@@ -325,3 +354,34 @@ public final class PurchaseController {
         })
     }
 }
+
+public enum PCReceiptValidationResult {
+    case success(receipt: ReceiptInfo)
+    case error(error: Error)
+}
+
+public protocol ReceiptValidatorProtocol {
+    func validate(completion: @escaping (PCReceiptValidationResult) -> Void)
+}
+
+struct AppleReceiptValidatorImplementation: ReceiptValidatorProtocol {
+    
+    private let sharedSecret: String?
+    private let isSandbox: Bool
+    
+    func validate(completion: @escaping (PCReceiptValidationResult) -> Void) {
+        
+        let appleValidator = AppleReceiptValidator(service: isSandbox ? .sandbox : .production,
+                                                   sharedSecret: sharedSecret)
+        SwiftyStoreKit.verifyReceipt(using: appleValidator) { result in
+            switch result {
+            case .success(let receipt):
+                completion(.success(receipt: receipt))
+            case .error(let error):
+                completion(.error(error: error))
+            }
+        }
+    }
+}
+
+//extension PurchaseControllerReceiptValidator

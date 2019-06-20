@@ -7,6 +7,7 @@
 import Foundation
 import StoreKit
 import openssl
+import SwiftyStoreKit
 
 #if os(macOS)
 import IOKit
@@ -18,7 +19,7 @@ enum ReceiptValidationResult {
     case error(ReceiptValidationError)
 }
 
-enum ReceiptValidationError : Error {
+public enum ReceiptValidationError: Error {
     case couldNotFindReceipt
     case emptyReceiptContents
     case receiptNotSigned
@@ -29,7 +30,7 @@ enum ReceiptValidationError : Error {
     case incorrectHash
 }
 
-struct ParsedReceipt {
+public struct ParsedReceipt {
     let bundleIdentifier: String?
     let bundleIdData: NSData?
     let appVersion: String?
@@ -41,7 +42,7 @@ struct ParsedReceipt {
     let expirationDate: Date?
 }
 
-struct ParsedInAppPurchaseReceipt {
+public struct ParsedInAppPurchaseReceipt {
     let quantity: Int?
     let productIdentifier: String?
     let transactionIdentifier: String?
@@ -54,11 +55,26 @@ struct ParsedInAppPurchaseReceipt {
 }
 
 // MARK: Receipt Validator and supporting Types
-struct ReceiptValidator {
+
+extension LocalReceiptValidator: ReceiptValidatorProtocol {
+    public func validate(completion: @escaping (PCReceiptValidationResult) -> Void) {
+        switch validateReceipt() {
+        case .success(let receipt):
+            print(receipt)
+//            completion(.success(receipt: receipt))
+        case .error(let error):
+            completion(.error(error: error))
+        }
+    }
+}
+
+public struct LocalReceiptValidator {
     let receiptLoader = ReceiptLoader()
     let receiptExtractor = ReceiptExtractor()
     let receiptSignatureValidator = ReceiptSignatureValidator()
     let receiptParser = ReceiptParser()
+    
+    public init() {}
     
     func validateReceipt() -> ReceiptValidationResult {
         do {

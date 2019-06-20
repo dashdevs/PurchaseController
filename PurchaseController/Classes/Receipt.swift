@@ -13,7 +13,7 @@ enum ReceiptType: String, Codable {
     case productionSandbox = "ProductionSandbox"
 }
 
-struct Receipt: Codable {
+public struct Receipt: Codable {
     
     private struct Constants {
         static let thousand: Double = 1000
@@ -51,7 +51,7 @@ struct Receipt: Codable {
     ///In-App Purchase Receipt - The receipt for an in-app purchase. Note: An empty array is a valid receipt.
     let inApp: [InAppPurchase]?
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         requestDatePst = try values.decode(String.self, forKey: .requestDatePst)
         receiptCreationDate = try values.decode(String.self, forKey: .receiptCreationDate)
