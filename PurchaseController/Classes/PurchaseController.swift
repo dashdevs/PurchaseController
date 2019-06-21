@@ -216,7 +216,6 @@ public final class PurchaseController {
             switch validationResult {
             case let .success(receipt):
                 self.sessionReceipt = receipt
-                print("====\n", receipt)
                 self.purchaseActionState = .finish(PurchaseActionResult.receiptValidationSuccess)
             case let .error(error):
                 self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
