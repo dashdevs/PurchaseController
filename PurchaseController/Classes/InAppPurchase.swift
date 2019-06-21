@@ -167,35 +167,29 @@ struct InAppPurchase: Codable {
         self.subscriptionAutoRenewPreference = nil
         self.subscriptionPriceConsentStatus = nil
     }
-    
+        
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-
-//        } else {
-//            print("====NO DATE STRING")
-//
-//            purchaseDate = nil
-//        }
 
         quantity = Int(try values.decode(String.self, forKey: .quantity)) ?? 0
         productId = try values.decode(String.self, forKey: .productId)
         transactionId = try values.decode(String.self, forKey: .transactionId)
         originalTransactionId = try values.decode(String.self, forKey: .originalTransactionId)
-        if let purchaseDateString = try? values.decode(String.self, forKey: .purchaseDateMs),
+        
+        if let purchaseDateString = try values.decodeIfPresent(String.self, forKey: .purchaseDateMs),
             let seconds = TimeInterval(millisecondsString: purchaseDateString) {
             purchaseDateMs = Date(timeIntervalSince1970: seconds)
         } else {
             purchaseDateMs = nil
         }
-        
 
-        if let originalPurchaseDate = try? values.decode(String.self, forKey: .originalPurchaseDateMs),
+        if let originalPurchaseDate = try values.decodeIfPresent(String.self, forKey: .originalPurchaseDateMs),
             let seconds = TimeInterval(millisecondsString: originalPurchaseDate) {
             originalPurchaseDateMs = Date(timeIntervalSince1970: seconds)
         } else {
             originalPurchaseDateMs = nil
         }
-        if let expiresDateString = try? values.decode(String.self, forKey: .expiresDateMs),
+        if let expiresDateString = try values.decodeIfPresent(String.self, forKey: .expiresDateMs),
             let seconds = TimeInterval(millisecondsString: expiresDateString) {
             expiresDateMs = Date(timeIntervalSince1970: seconds)
         } else {

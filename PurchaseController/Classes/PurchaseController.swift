@@ -211,6 +211,7 @@ public final class PurchaseController {
             switch result {
             case .success(let receipt):
                 self.sessionReceipt = receipt
+                print(receipt)
                 self.purchaseActionState = .finish(PurchaseActionResult.receiptValidationSuccess)
             case .error(let error):
                 self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
@@ -228,9 +229,8 @@ public final class PurchaseController {
         let result = LocalReceiptValidator().validateReceipt()
         switch result {
         case .success(let receipt):
-            print(receipt)
+            print("==== receipt:\n", receipt)
             self.purchaseActionState = .finish(PurchaseActionResult.receiptValidationSuccess)
-
         case .error(let error):
             self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
         }
@@ -375,5 +375,3 @@ struct AppleReceiptValidatorImplementation: ReceiptValidatorProtocol {
         }
     }
 }
-
-//extension PurchaseControllerReceiptValidator
