@@ -9,7 +9,7 @@
 
 @implementation TransactionReceiptFetcher
 
-+ (NSData * _Nullable)directTransactionReceiptFor:(SKPaymentTransaction *)transaction {
++ (NSData * _Nullable)directTransactionReceiptFor:(SKPaymentTransaction * _Nonnull)transaction {
     return [transaction transactionReceipt];
 }
 
