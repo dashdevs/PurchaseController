@@ -13,7 +13,7 @@ enum ReceiptType: String, Codable {
     case productionSandbox = "ProductionSandbox"
 }
 
-public struct Receipt: Codable {
+public struct Receipt: Codable, ReadableDebugStringProtocol {
     
     private struct Constants {
         static let thousand: Double = 1000

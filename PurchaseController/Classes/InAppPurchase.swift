@@ -9,7 +9,7 @@ import Foundation
 import SwiftyStoreKit
 
 /// Representation of inapp purchase
-struct InAppPurchase: Codable {
+struct InAppPurchase: Codable, ReadableDebugStringProtocol {
     /// The number of items purchased.
     let quantity: Int
     /// The product identifier of the item that was purchased.
