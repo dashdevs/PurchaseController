@@ -62,7 +62,6 @@ extension JSONDecoder {
             
             throw DecodingError.dataCorruptedError(in: container,
                                                    debugDescription: "Cannot decode date string \(dateString)")
-
         })
 
     return decoder
@@ -70,7 +69,7 @@ extension JSONDecoder {
 }
 
 extension DateFormatter {
-    /// Date formatter code from https://www.objc.io/issues/17-security/receipt-validation/#parsing-the-receipt
+    /// Date formatter code from [objc.io tutorial](https://www.objc.io/issues/17-security/receipt-validation/#parsing-the-receipt)
     static let RFC3339: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -86,5 +85,4 @@ extension DateFormatter {
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         return dateFormatter
     }()
-
 }

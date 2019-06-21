@@ -19,7 +19,6 @@ import PurchaseController
     @objc func validateReceipt()
     @objc func validateSubscription()
     @objc func synchronizePurchases()
-    @objc func decodeReceipt()
 }
 
 class MainViewController: UITableViewController {
@@ -83,17 +82,15 @@ extension MainViewController: MainViewControllerPresentable {
     }
     
     @objc func validateReceipt() {
+        purchaseController.validateReceipt(using: AppleReceiptValidatorImplementation(sharedSecret: nil, isSandbox: true))
 //        purchaseController.verifyReceiptLocally()
-        purchaseController.verifyReceiptRemotely(sharedSecret: nil, isSandbox: true)
+//        purchaseController.verifyReceiptRemotely(sharedSecret: nil, isSandbox: true)
     }
     
     @objc func synchronizePurchases() {
         purchaseController.synchronizeLocalPurchasesFromReceipt()
     }
     
-    @objc func decodeReceipt() {
-        purchaseController.decodeIfPresent(sessionReceipt: purchaseController.sessionReceipt)
-    }
     
     @objc func validateSubscription() {
         purchaseController.validateSubscription(productID: PurchasebleProductItem.autoRenewSubscription.rawValue, type: .autoRenewable)

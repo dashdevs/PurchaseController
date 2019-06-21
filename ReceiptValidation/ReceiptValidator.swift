@@ -14,9 +14,9 @@ import IOKit
 #endif
 
 // MARK: Output
-enum ReceiptValidationResult {
-    case success(Receipt)
-    case error(ReceiptValidationError)
+public enum ReceiptValidationResult {
+    case success(receipt: Receipt)
+    case error(error: Error)
 }
 
 public enum ReceiptValidationError: Error {
@@ -36,27 +36,13 @@ private struct ReceiptValidationData {
     let sha1Hash: NSData
 }
 
-public struct ParsedInAppPurchaseReceipt {
-    let quantity: Int?
-    let productIdentifier: String?
-    let transactionIdentifier: String?
-    let originalTransactionIdentifier: String?
-    let purchaseDate: Date?
-    let originalPurchaseDate: Date?
-    let subscriptionExpirationDate: Date?
-    let subscriptionIntroductoryPricePeriod: Bool?
-    let cancellationDate: Date?
-    let webOrderLineItemId: Int?
-}
-
 // MARK: Receipt Validator and supporting Types
 
 extension LocalReceiptValidator: ReceiptValidatorProtocol {
-    public func validate(completion: @escaping (PCReceiptValidationResult) -> Void) {
+    public func validate(completion: @escaping (ReceiptValidationResult) -> Void) {
         switch validateReceipt() {
         case .success(let receipt):
-            print(receipt)
-//            completion(.success(receipt: receipt))
+            completion(.success(receipt: receipt))
         case .error(let error):
             completion(.error(error: error))
         }
@@ -82,9 +68,9 @@ public struct LocalReceiptValidator {
             let parsedReceipt = try receiptParser.parse(receiptContainer)
             try validateHash(receipt: parsedReceipt.0)
             
-            return .success(parsedReceipt.1)
+            return .success(receipt: parsedReceipt.1)
         } catch {
-            return .error(error as! ReceiptValidationError)
+            return .error(error: error)
         }
     }
     
