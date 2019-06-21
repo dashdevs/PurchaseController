@@ -15,43 +15,53 @@ enum ReceiptType: String, Codable {
 
 public struct Receipt: Codable, ReadableDebugStringProtocol {
     
-    private struct Constants {
-        static let thousand: Double = 1000
-    }
-    /// Receipt Creation Date - The date when the app receipt was created.
-    /// When validating a receipt, use this date to validate the receipt’s signature.
-    let receiptCreationDate: Date?
-    /// Receipt Creation Date - The date when the app receipt was created.
-    let receiptCreationDatePst:  String?
-    /// Receipt Creation Date - The date when the app receipt was created.
-    let receiptCreationDateMs: Date?
-    /// The date that the app receipt expires.
-    let receiptExpirationDate: Date?
-    /// Original Purchase Date - For a transaction that restores a previous transaction, the date of the original transaction.
-    let originalPurchaseDate: String?
-    /// Original Purchase Date - For a transaction that restores a previous transaction, the date of the original transaction.
-    let originalPurchaseDatePst: String?
-    /// Original Purchase Date - For a transaction that restores a previous transaction, the date of the original transaction.
-    let originalPurchaseDateMs: Date?
-    let requestDate: String?
-    let requestDatePst: String?
-    let receiptType: ReceiptType?
-    let requestDateMs: Date?
-    /// App Item ID - A string that the App Store uses to uniquely identify the application that created the transaction.
-    let appItemId: Int?
+    // MARK: - Properties
+    
     /// Bundle Identifier - The app’s bundle identifier.
     let bundleId: String
-    let adamId: Int?
-    /// External Version Identifier - An arbitrary number that uniquely identifies a revision of your application.
-    let versionExternalIdentifier: Int?
+    
     /// App Version - The app’s version number.
     let applicationVersion: String
-    /// Original Application Version - The version of the app that was originally purchased.
-    /// In the sandbox environment, the value of this field is always “1.0”.
-    let originalApplicationVersion: String
-    let downloadId: Int?
+
     ///In-App Purchase Receipt - The receipt for an in-app purchase. Note: An empty array is a valid receipt.
     let inApp: [InAppPurchase]?
+
+    /// Original Application Version - The version of the app that was originally purchased.
+    ///
+    /// In the sandbox environment, the value of this field is always “1.0”.
+    let originalApplicationVersion: String
+
+    /// Receipt Creation Date - The date when the app receipt was created.
+    ///
+    /// When validating a receipt, use this date to validate the receipt’s signature.
+    let receiptCreationDate: Date?
+    let receiptCreationDatePst:  Date?
+    let receiptCreationDateMs: Date?
+    
+    /// The date that the app receipt expires.
+    let receiptExpirationDate: Date?
+    
+    /// Original Purchase Date - For a transaction that restores a previous transaction, the date of the original transaction.
+    let originalPurchaseDate: Date?
+    let originalPurchaseDatePst: Date?
+    let originalPurchaseDateMs: Date?
+    
+    let requestDate: Date?
+    let requestDatePst: Date?
+    let requestDateMs: Date?
+    
+    let receiptType: ReceiptType?
+    /// App Item ID - A string that the App Store uses to uniquely identify the application that created the transaction.
+    let appItemId: Int?
+    
+    let adamId: Int?
+    
+    /// External Version Identifier - An arbitrary number that uniquely identifies a revision of your application.
+    let versionExternalIdentifier: Int?
+    
+    let downloadId: Int?
+    
+    // MARK: - Lifecycle
     
     init?(bundleIdentifier: String?,
           appVersion: String?,
@@ -68,19 +78,18 @@ public struct Receipt: Codable, ReadableDebugStringProtocol {
         
         self.bundleId = bundleIdentifier
         self.applicationVersion = appVersion
-        self.originalApplicationVersion = originalAppVersion
         self.inApp = inAppPurchaseReceipts
+        self.originalApplicationVersion = originalAppVersion
         self.receiptCreationDate = receiptCreationDate
+        self.receiptCreationDatePst = receiptCreationDate
+        self.receiptCreationDateMs = receiptCreationDate
         self.receiptExpirationDate = expirationDate
-        
-        self.receiptCreationDateMs = nil
-        self.receiptCreationDatePst = nil
         self.originalPurchaseDate = nil
-        self.originalPurchaseDateMs = nil
         self.originalPurchaseDatePst = nil
+        self.originalPurchaseDateMs = nil
         self.requestDate = nil
-        self.requestDateMs = nil
         self.requestDatePst = nil
+        self.requestDateMs = nil
         self.appItemId = nil
         self.adamId = nil
         self.versionExternalIdentifier = nil
@@ -88,57 +97,41 @@ public struct Receipt: Codable, ReadableDebugStringProtocol {
         self.receiptType = nil
     }
     
+    // MARK: - Codable
+    
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        requestDatePst = try values.decode(String.self, forKey: .requestDatePst)
-        receiptCreationDatePst = try values.decode(String.self, forKey: .receiptCreationDatePst)
+        bundleId = try values.decode(String.self, forKey: .bundleId)
+        applicationVersion = try values.decode(String.self, forKey: .applicationVersion)
+        inApp = try? values.decode([InAppPurchase].self, forKey: .inApp)
+        originalApplicationVersion = try values.decode(String.self, forKey: .originalApplicationVersion)
+
+        receiptCreationDate = try values.decodeIfPresent(Date.self, forKey: .receiptCreationDate)
+        receiptCreationDatePst = try values.decodeIfPresent(Date.self, forKey: .receiptCreationDatePst)
+        receiptCreationDateMs = try values.decodeIfPresent(Date.self, forKey: .receiptCreationDateMs)
         
-        if let receiptCreationDateStr = try values.decodeIfPresent(String.self, forKey: .receiptCreationDate) {
-            receiptCreationDate = DateFormatter.appleValidator.date(from: receiptCreationDateStr)
-        } else {
-            receiptCreationDate = nil
-        }
-        
-        if let receiptExprationDateStr = try values.decodeIfPresent(String.self, forKey: .receiptExpirationDate) {
-            receiptExpirationDate = DateFormatter.appleValidator.date(from: receiptExprationDateStr)
-        } else {
-            receiptExpirationDate = nil
-        }
-        
-        originalPurchaseDatePst = try values.decode(String.self, forKey: .originalPurchaseDatePst)
-        originalPurchaseDate = try values.decode(String.self, forKey: .originalPurchaseDate)
+        receiptExpirationDate = try values.decodeIfPresent(Date.self, forKey: .receiptExpirationDate)
+
+        originalPurchaseDate = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDate)
+        originalPurchaseDatePst = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDatePst)
+        originalPurchaseDateMs = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDateMs)
+
+        requestDate = try values.decodeIfPresent(Date.self, forKey: .requestDate)
+        requestDatePst = try values.decodeIfPresent(Date.self, forKey: .requestDatePst)
+        requestDateMs = try values.decodeIfPresent(Date.self, forKey: .requestDateMs)
+
         receiptType = try values.decodeIfPresent(ReceiptType.self, forKey: .receiptType)
         appItemId = try values.decode(Int.self, forKey: .appItemId)
-        bundleId = try values.decode(String.self, forKey: .bundleId)
-        if let creationDateString = try? values.decode(String.self, forKey: .receiptCreationDateMs),
-            let seconds = TimeInterval(millisecondsString: creationDateString) {
-            receiptCreationDateMs = Date(timeIntervalSince1970: seconds)
-        } else {
-            receiptCreationDateMs = nil
-        }
-        if let purchaseDateString = try? values.decode(String.self, forKey: .originalPurchaseDateMs),
-            let seconds = TimeInterval(millisecondsString: purchaseDateString) {
-            originalPurchaseDateMs = Date(timeIntervalSince1970: seconds)
-        } else {
-            originalPurchaseDateMs = nil
-        }
         adamId = try values.decode(Int.self, forKey: .adamId)
-        requestDate = try values.decode(String.self, forKey: .requestDate)
-        
         versionExternalIdentifier = try values.decode(Int.self, forKey: .versionExternalIdentifier)
-        if let requestDateString = try? values.decode(String.self, forKey: .requestDateMs),
-            let seconds = TimeInterval(millisecondsString: requestDateString) {
-            requestDateMs = Date(timeIntervalSince1970: seconds)
-        } else {
-            requestDateMs = nil
-        }
-        applicationVersion = try values.decode(String.self, forKey: .applicationVersion)
-        originalApplicationVersion = try values.decode(String.self, forKey: .originalApplicationVersion)
         downloadId = try values.decode(Int.self, forKey: .downloadId)
-        inApp = try? values.decode([InAppPurchase].self, forKey: .inApp)
     }
     
     enum CodingKeys: String, CodingKey {
+        case bundleId = "bundle_id"
+        case applicationVersion = "application_version"
+        case inApp = "in_app"
+        case originalApplicationVersion = "original_application_version"
         case receiptCreationDate = "receipt_creation_date"
         case receiptCreationDatePst = "receipt_creation_date_pst"
         case receiptCreationDateMs = "receipt_creation_date_ms"
@@ -148,15 +141,11 @@ public struct Receipt: Codable, ReadableDebugStringProtocol {
         case originalPurchaseDateMs = "original_purchase_date_ms"
         case requestDate = "request_date"
         case requestDatePst = "request_date_pst"
+        case requestDateMs = "request_date_ms"
         case receiptType = "receipt_type"
         case appItemId = "app_item_id"
-        case bundleId = "bundle_id"
         case adamId = "adam_id"
         case versionExternalIdentifier = "version_external_identifier"
-        case requestDateMs = "request_date_ms"
-        case applicationVersion = "application_version"
-        case originalApplicationVersion = "original_application_version"
         case downloadId = "download_id"
-        case inApp = "in_app"
     }
 }

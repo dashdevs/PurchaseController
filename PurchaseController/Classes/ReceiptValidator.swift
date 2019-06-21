@@ -531,7 +531,6 @@ fileprivate struct ReceiptParser {
         if let dateString = DecodeASN1String(startOfString: &datePointer, length:length) {
             return DateFormatter.RFC3339.date(from: dateString)
         }
-        
         return nil
     }
 }
@@ -628,7 +627,7 @@ struct PurchaseReceiptFields {
     /// For a transaction that restores a previous transaction, the date of the original transaction.
     ///
     /// This value corresponds to the original transaction’s transactionDate property.
-    static let originalPurchaseDate = ReceiptField(asn1Type: 1706, jsonKey: CodingKeys.originaPurchaseDate.rawValue)
+    static let originalPurchaseDate = ReceiptField(asn1Type: 1706, jsonKey: CodingKeys.originalPurchaseDate.rawValue)
 
     /// The expiration date for the subscription, expressed as the number of milliseconds since January 1, 1970, 00:00:00 GMT.
     ///

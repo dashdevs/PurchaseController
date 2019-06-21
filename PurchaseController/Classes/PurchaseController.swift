@@ -210,7 +210,7 @@ public final class PurchaseController {
         SwiftyStoreKit.verifyReceipt(using: appleValidator) { [unowned self] result in
             switch result {
             case .success(let receipt):
-                self.sessionReceipt = receipt
+                self.sessionReceipt = receipt // TODO: decode
                 print(receipt)
                 self.purchaseActionState = .finish(PurchaseActionResult.receiptValidationSuccess)
             case .error(let error):

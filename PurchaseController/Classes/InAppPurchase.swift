@@ -21,24 +21,18 @@ struct InAppPurchase: Codable, ReadableDebugStringProtocol {
 
     /// The date and time that the item was purchased.
     let purchaseDate: Date?
-    /// The date and time that the item was purchased.
     let purchaseDateMs: Date?
-    /// The date and time that the item was purchased.
-    let purchaseDatePst: String?
+    let purchaseDatePst: Date?
 
     /// For a transaction that restores a previous transaction, the date of the original transaction.
-    let originaPurchaseDate: Date?
-    /// For a transaction that restores a previous transaction, the date of the original transaction.
+    let originalPurchaseDate: Date?
     let originalPurchaseDateMs: Date?
-    /// For a transaction that restores a previous transaction, the date of the original transaction.
-    let originalPurchaseDatePst: String?
+    let originalPurchaseDatePst: Date?
     
     /// The date that the app receipt expires.
     let expiresDate: Date?
-    /// The date that the app receipt expires.
     let expiresDateMs: Date?
-    /// The date that the app receipt expires.
-    let expiresDatePst: String?
+    let expiresDatePst: Date?
 
     /// For an expired subscription, the reason for the subscription expiration.
     let subscriptionExpirationIntent: Int? // TODO: create an enum for int values
@@ -100,7 +94,7 @@ struct InAppPurchase: Codable, ReadableDebugStringProtocol {
         case purchaseDate = "purchase_date"
         case purchaseDateMs = "purchase_date_ms"
         case purchaseDatePst = "purchase_date_pst"
-        case originaPurchaseDate = "original_purchase_date"
+        case originalPurchaseDate = "original_purchase_date"
         case originalPurchaseDateMs = "original_purchase_date_ms"
         case originalPurchaseDatePst = "original_purchase_date_pst"
         case expiresDate = "expires_date"
@@ -145,7 +139,7 @@ struct InAppPurchase: Codable, ReadableDebugStringProtocol {
         self.transactionId = transactionIdentifier
         self.originalTransactionId = originalTransactionIdentifier
         self.purchaseDate = purchaseDate
-        self.originaPurchaseDate = originalPurchaseDate
+        self.originalPurchaseDate = originalPurchaseDate
         self.expiresDate = subscriptionExpirationDate
         self.isInIntroOfferPeriod = subscriptionIntroductoryPricePeriod
         self.cancellationDate = cancellationDate
@@ -176,25 +170,19 @@ struct InAppPurchase: Codable, ReadableDebugStringProtocol {
         transactionId = try values.decode(String.self, forKey: .transactionId)
         originalTransactionId = try values.decode(String.self, forKey: .originalTransactionId)
         
-        if let purchaseDateString = try values.decodeIfPresent(String.self, forKey: .purchaseDateMs),
-            let seconds = TimeInterval(millisecondsString: purchaseDateString) {
-            purchaseDateMs = Date(timeIntervalSince1970: seconds)
-        } else {
-            purchaseDateMs = nil
-        }
+        purchaseDate = try values.decodeIfPresent(Date.self, forKey: .purchaseDate)
+        purchaseDatePst = try values.decodeIfPresent(Date.self, forKey: .purchaseDatePst)
+        purchaseDateMs = try values.decodeIfPresent(Date.self, forKey: .purchaseDateMs)
 
-        if let originalPurchaseDate = try values.decodeIfPresent(String.self, forKey: .originalPurchaseDateMs),
-            let seconds = TimeInterval(millisecondsString: originalPurchaseDate) {
-            originalPurchaseDateMs = Date(timeIntervalSince1970: seconds)
-        } else {
-            originalPurchaseDateMs = nil
-        }
-        if let expiresDateString = try values.decodeIfPresent(String.self, forKey: .expiresDateMs),
-            let seconds = TimeInterval(millisecondsString: expiresDateString) {
-            expiresDateMs = Date(timeIntervalSince1970: seconds)
-        } else {
-            expiresDateMs = nil
-        }
+        originalPurchaseDate = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDate)
+        originalPurchaseDatePst = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDatePst)
+        originalPurchaseDateMs = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDateMs)
+
+        
+        expiresDate = try values.decodeIfPresent(Date.self, forKey: .expiresDate)
+        expiresDatePst = try values.decodeIfPresent(Date.self, forKey: .expiresDatePst)
+        expiresDateMs = try values.decodeIfPresent(Date.self, forKey: .expiresDateMs)
+
         
         if let subscriptionExpirationIntentStr = try values.decodeIfPresent(String.self, forKey: .subscriptionExpirationIntent) {
             subscriptionExpirationIntent = Int(subscriptionExpirationIntentStr)
@@ -247,28 +235,6 @@ struct InAppPurchase: Codable, ReadableDebugStringProtocol {
         } else {
             subscriptionPriceConsentStatus = nil
         }
-
-        if let expiresDateStr = try values.decodeIfPresent(String.self, forKey: .expiresDate) {
-            expiresDate = DateFormatter.appleValidator.date(from: expiresDateStr)
-        } else {
-            expiresDate = nil
-        }
-        expiresDatePst = try values.decodeIfPresent(String.self, forKey: .expiresDatePst)
-        
-        if let originaPurchaseDateStr = try values.decodeIfPresent(String.self, forKey: .originaPurchaseDate) {
-            originaPurchaseDate = DateFormatter.appleValidator.date(from: originaPurchaseDateStr)
-        } else {
-            originaPurchaseDate = nil
-        }
-        originalPurchaseDatePst = try values.decodeIfPresent(String.self, forKey: .originalPurchaseDatePst)
-
-        if let purchaseDateStr = try values.decodeIfPresent(String.self, forKey: .purchaseDate) {
-            purchaseDate = DateFormatter.appleValidator.date(from: purchaseDateStr)
-        } else {
-            purchaseDate = nil
-        }
-        
-        purchaseDatePst = try values.decodeIfPresent(String.self, forKey: .purchaseDatePst)
     }
     
 }

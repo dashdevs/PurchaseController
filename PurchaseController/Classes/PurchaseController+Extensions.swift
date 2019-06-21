@@ -40,9 +40,33 @@ extension Data {
     /// - Returns: readable representation of data
     /// - Throws: an error if any value throws an error during decoding
     public func createReceiptResponse() throws -> ReceiptValidationResponse? {
-        let response = try JSONDecoder().decode(ReceiptValidationResponse.self, from: self)
+        let response = try JSONDecoder.validatonResponse.decode(ReceiptValidationResponse.self, from: self)
         return response
     }
+}
+
+extension JSONDecoder {
+    static let validatonResponse: JSONDecoder = {
+       let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .custom({ decoder -> Date in
+            let container = try decoder.singleValueContainer()
+            let dateString = try container.decode(String.self)
+            
+            if let seconds = TimeInterval(millisecondsString: dateString) {
+                return Date(timeIntervalSince1970: seconds)
+            }
+            
+            if let formattedDate = DateFormatter.appleValidator.date(from: dateString) {
+                return formattedDate
+            }
+            
+            throw DecodingError.dataCorruptedError(in: container,
+                                                   debugDescription: "Cannot decode date string \(dateString)")
+
+        })
+
+    return decoder
+    }()
 }
 
 extension DateFormatter {
