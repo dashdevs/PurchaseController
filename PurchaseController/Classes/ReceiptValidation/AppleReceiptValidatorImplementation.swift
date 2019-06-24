@@ -57,7 +57,7 @@ public struct AppleReceiptValidatorImplementation: ReceiptValidatorProtocol {
         } else if let error = validation.error {
             completion(.error(error: error))
         } else {
-            completion(.error(error: PurchaseError.receiptSerializationError.asError()))
+            completion(.error(error: PurchaseError.receiptSerializationError.asNSError()))
         }
     }
 }

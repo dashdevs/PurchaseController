@@ -8,6 +8,34 @@
 import StoreKit
 import SwiftyStoreKit
 
+/// PurchaseError types
+///
+/// - unknown: client is not allowed to issue the request, etc.
+/// - clientInvalid: invalid client data (payment method, not enough funds, etc).
+/// - paymentCancelled: user cancelled the request, etc.
+/// - paymentInvalid: purchase identifier was invalid, etc.
+/// - paymentNotAllowed: this device is not allowed to make the payment
+/// - storeProductNotAvailable: product is not available in the current storefront
+/// - cloudServicePermissionDenied: user has not allowed to access cloud service information
+/// - cloudServiceNetworkConnectionFailed: the device could not connect to the nework
+/// - cloudServiceRevoked: user has revoked permission to use this cloud service
+/// - privacyAcknowledgementRequired: user needs to acknowledge Apple's privacy policy
+/// - unauthorizedRequestData: app is attempting to use SKPayment's requestData property, but does not have the appropriate entitlement
+/// - invalidOfferIdentifier: specified subscription offer identifier is not valid
+/// - invalidSignature: cryptographic signature provided is not valid
+/// - missingOfferParams: one or more parameters from SKPaymentDiscount is missing
+/// - invalidOfferPrice: price of the selected offer is not valid (e.g. lower than the current base subscription price)
+/// - noLocalProduct: product wasn't retrieved
+/// - networkError: operation failed due to network error
+/// - noReceiptData: no receipt data, try to validate local receipt
+/// - noOriginalTransactionData: no original transaction to process
+/// - noRemoteData: no remote data received
+/// - requestBodyEncodeError: error when encoding HTTP body into JSON
+/// - receiptJsonDecodeError: error when decoding response
+/// - receiptInvalid: receive invalid - bad status returned
+/// - noActiveSubscription: no active subscription after validation or all expired
+/// - restoreFailed: restoreFailed : check retrieved products
+/// - receiptSerializationError: Notifies handler if a receipt can not serialization
 public enum PurchaseError: Int, Error {
     case unknown
     case clientInvalid
