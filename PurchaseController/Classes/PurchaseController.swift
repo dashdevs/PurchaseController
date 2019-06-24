@@ -30,7 +30,7 @@ public enum PurchaseActionState {
 /// - completionSuccess: Notifies handler if transaction completion was successfull
 /// - receiptValidationSuccess: Notifies handler if receipt validation was successfull
 public enum PurchaseActionResult {
-    case error(PurchaseError)
+    case error(Error)
     case subscriptionValidationSucess(ReceiptItem)
     case retrieveSuccess
     case retrieveSuccessInvalidProducts
@@ -156,7 +156,7 @@ public final class PurchaseController {
         SwiftyStoreKit.restorePurchases { [unowned self] (results) in
             let items = results.restoredPurchases.makeItems(with: self.persistor)
             if items.isEmpty {
-                self.purchaseActionState = .finish(PurchaseActionResult.error(.restoreFailed))
+                self.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.restoreFailed))
                 return
             }
             self.persistor.persistPurchased(products: items)
@@ -184,7 +184,7 @@ public final class PurchaseController {
         self.purchaseActionState = .loading
         guard let localСompared = try? localAvailableProducts(by: { $0.productIdentifier == identifier }),
             let product = localСompared.first else {
-                self.purchaseActionState = .finish(PurchaseActionResult.error(.noLocalProduct))
+                self.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.noLocalProduct))
                 return 
         }
         SwiftyStoreKit.purchaseProduct(product, atomically: atomically) { [unowned self] (results) in
@@ -250,7 +250,7 @@ public final class PurchaseController {
     public func synchronizeLocalPurchasesFromReceipt() {
         self.purchaseActionState = .loading
         guard let purchases = self.sessionReceipt?.inApp else {
-            self.purchaseActionState = .finish(.error(.purchaseSynchronizationError))
+            self.purchaseActionState = .finish(.error(PurchaseError.purchaseSynchronizationError))
             return
         }
         
@@ -275,11 +275,11 @@ public final class PurchaseController {
     public func validateSubscription(productID: String, type: SubscriptionType) {
         self.purchaseActionState = .loading
         guard let receipt = self.sessionReceipt else {
-            self.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.noReceiptData))
+            self.purchaseActionState = .finish(PurchaseActionResult.error(ReceiptError.noReceiptData))
             return
         }
         
-        self.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.noReceiptData))
+        self.purchaseActionState = .finish(PurchaseActionResult.error(ReceiptError.noReceiptData))
         return
         // TODO: receipt as dictionary
         //        let purchaseResult = SwiftyStoreKit.verifySubscription(

@@ -27,12 +27,7 @@ import SwiftyStoreKit
 /// - invalidOfferPrice: price of the selected offer is not valid (e.g. lower than the current base subscription price)
 /// - noLocalProduct: product wasn't retrieved
 /// - networkError: operation failed due to network error
-/// - noReceiptData: no receipt data, try to validate local receipt
 /// - noOriginalTransactionData: no original transaction to process
-/// - noRemoteData: no remote data received
-/// - requestBodyEncodeError: error when encoding HTTP body into JSON
-/// - receiptJsonDecodeError: error when decoding response
-/// - receiptInvalid: receive invalid - bad status returned
 /// - noActiveSubscription: no active subscription after validation or all expired
 /// - restoreFailed: restoreFailed : check retrieved products
 /// - receiptSerializationError: Notifies handler if a receipt can not serialization
@@ -54,12 +49,7 @@ public enum PurchaseError: Int, Error {
     case invalidOfferPrice
     case noLocalProduct
     case networkError
-    case noReceiptData
     case noOriginalTransactionData
-    case noRemoteData
-    case requestBodyEncodeError
-    case receiptJsonDecodeError
-    case receiptInvalid
     case noActiveSubscription
     case restoreFailed
     case receiptSerializationError
@@ -103,18 +93,8 @@ extension PurchaseError: CustomDebugStringConvertible {
             return "Product wasn't retrieved."
         case .networkError:
             return "Operation failed due to network error."
-        case .noReceiptData:
-            return "No receipt data, try to validate local receipt."
         case .noOriginalTransactionData:
             return "No original transaction to process."
-        case .noRemoteData:
-            return "No remote data received."
-        case .requestBodyEncodeError:
-            return "Error when encoding HTTP body into JSON."
-        case .receiptJsonDecodeError:
-            return "Error when decoding response."
-        case .receiptInvalid:
-            return "Receive invalid - bad status returned."
         case .noActiveSubscription:
             return "No active subscription after validation or all expired."
         case .restoreFailed:
@@ -184,21 +164,19 @@ public extension SKError {
     }
 }
 
-public extension ReceiptError {
-    /// Error convert function
-    ///
-    /// - Returns: converted self to PurchaseError
-    func asPurchaseError() -> PurchaseError {
-        switch self {
-        case .noReceiptData: return .noReceiptData
-        case .noRemoteData: return .noRemoteData
-        case .requestBodyEncodeError(_): return .requestBodyEncodeError
-        case .networkError(_): return .networkError
-        case .jsonDecodeError(_): return .receiptJsonDecodeError
-        case .receiptInvalid(_): return .receiptInvalid
-        }
-    }
+// MARK: - Supporting types
+
+public enum LocalReceiptValidationError: Error {
+    case couldNotFindReceipt
+    case emptyReceiptContents
+    case receiptNotSigned
+    case appleRootCertificateNotFound
+    case receiptSignatureInvalid
+    case malformedReceipt
+    case malformedInAppPurchaseReceipt
+    case incorrectHash
 }
+
 
 public extension PurchaseError {
     /// PurchaseError convert function
