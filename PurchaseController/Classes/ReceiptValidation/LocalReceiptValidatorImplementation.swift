@@ -6,12 +6,8 @@
 import Foundation
 import StoreKit
 import openssl
-import SwiftyStoreKit
 
-#if os(macOS)
-import IOKit
-#endif
-
+// MARK: - Supporting types
 
 public enum ReceiptValidationError: Error {
     case couldNotFindReceipt
@@ -30,8 +26,7 @@ private struct ReceiptValidationData {
     let sha1Hash: NSData
 }
 
-// MARK: Receipt Validator and supporting Types
-
+// MARK: - ReceiptValidatorProtocol
 extension LocalReceiptValidatorImplementation: ReceiptValidatorProtocol {
     public func validate(completion: @escaping (ReceiptValidationResult) -> Void) {
         switch validateReceipt() {
@@ -43,15 +38,33 @@ extension LocalReceiptValidatorImplementation: ReceiptValidatorProtocol {
     }
 }
 
+/// Validates receipt locally.
+///
+/// Local validation requires code to read and validate a PKCS #7 signature, and code to parse and validate the signed payload.
+/// - important: Perform receipt validation immediately after your app is launched, before displaying any user interface or spawning any child processes.
+/// Implement this check in the main function, before the NSApplicationMain function is called. For additional security, you may repeat this check periodically while your application is running.
+///
+/// # See also
+/// [Validating Receipts Locally](https://developer.apple.com/library/archive/releasenotes/General/ValidateAppStoreReceipt/Chapters/ValidateLocally.html)
 public struct LocalReceiptValidatorImplementation {
-    let receiptLoader = ReceiptLoader()
-    let receiptExtractor = ReceiptExtractor()
-    let receiptSignatureValidator = ReceiptSignatureValidator()
+    
+    // MARK: - Properties
+    
+    private let receiptLoader = ReceiptLoader()
+    private let receiptExtractor = ReceiptExtractor()
+    private let receiptSignatureValidator = ReceiptSignatureValidator()
     private let receiptParser = ReceiptParser()
+    
+    // MARK: - Lifecycle
     
     public init() {}
     
-    func validateReceipt() -> ReceiptValidationResult {
+    // MARK: - Private methods
+    
+    /// Performs a series of defined operations for local receipt validateion.
+    ///
+    /// - Returns: Validation result.
+    fileprivate func validateReceipt() -> ReceiptValidationResult {
         do {
             let receiptData = try receiptLoader.loadReceipt()
             let receiptContainer = try receiptExtractor.extractPKCS7Container(receiptData)
@@ -68,48 +81,10 @@ public struct LocalReceiptValidatorImplementation {
         }
     }
     
-    // Returns a NSData object, containing the device's GUID.
+    /// Extracts data with device GUID.
+    ///
+    /// - Returns: NSData object, containing the device's GUID.
     private func deviceIdentifierData() -> NSData? {
-        #if os(macOS)
-        
-        var master_port = mach_port_t()
-        var kernResult = IOMasterPort(mach_port_t(MACH_PORT_NULL), &master_port)
-        
-        guard kernResult == KERN_SUCCESS else {
-            return nil
-        }
-        
-        guard let matchingDict = IOBSDNameMatching(master_port, 0, "en0") else {
-            return nil
-        }
-        
-        var iterator = io_iterator_t()
-        kernResult = IOServiceGetMatchingServices(master_port, matchingDict, &iterator)
-        guard kernResult == KERN_SUCCESS else {
-            return nil
-        }
-        
-        var macAddress: NSData?
-        while true {
-            let service = IOIteratorNext(iterator)
-            guard service != 0 else { break }
-            
-            var parentService = io_object_t()
-            kernResult = IORegistryEntryGetParentEntry(service, kIOServicePlane, &parentService)
-            
-            if kernResult == KERN_SUCCESS {
-                macAddress = IORegistryEntryCreateCFProperty(parentService, "IOMACAddress" as CFString, kCFAllocatorDefault, 0).takeRetainedValue() as? NSData
-                IOObjectRelease(parentService)
-            }
-            
-            IOObjectRelease(service)
-        }
-        
-        IOObjectRelease(iterator)
-        return macAddress
-        
-        #else // iOS, watchOS, tvOS
-        
         var deviceIdentifier = UIDevice.current.identifierForVendor?.uuid
         
         let rawDeviceIdentifierPointer = withUnsafePointer(to: &deviceIdentifier, {
@@ -118,8 +93,6 @@ public struct LocalReceiptValidatorImplementation {
         })
         
         return NSData(bytes: rawDeviceIdentifierPointer, length: 16)
-        
-        #endif
     }
     
     fileprivate func validateHash(receipt: ReceiptValidationData) throws {
@@ -151,7 +124,7 @@ public struct LocalReceiptValidatorImplementation {
     }
 }
 
-struct ReceiptLoader {
+fileprivate struct ReceiptLoader {
     let receiptUrl = Bundle.main.appStoreReceiptURL
     
     func loadReceipt() throws -> Data {
@@ -165,7 +138,7 @@ struct ReceiptLoader {
         throw ReceiptValidationError.couldNotFindReceipt
     }
     
-    fileprivate func receiptFound() -> Bool {
+    func receiptFound() -> Bool {
         do {
             if let isReachable = try receiptUrl?.checkResourceIsReachable() {
                 return isReachable
@@ -173,12 +146,11 @@ struct ReceiptLoader {
         } catch _ {
             return false
         }
-        
         return false
     }
 }
 
-struct ReceiptExtractor {
+fileprivate struct ReceiptExtractor {
     func extractPKCS7Container(_ receiptData: Data) throws -> UnsafeMutablePointer<PKCS7> {
         let receiptBIO = BIO_new(BIO_s_mem())
         BIO_write(receiptBIO, (receiptData as NSData).bytes, Int32(receiptData.count))
@@ -186,11 +158,8 @@ struct ReceiptExtractor {
         guard let receiptPKCS7Container = d2i_PKCS7_bio(receiptBIO, nil) else {
             throw ReceiptValidationError.emptyReceiptContents
         }
-        
-//        let pkcs7DataTypeCode = OBJ_obj2nid(pkcs7_d_sign(receiptPKCS7Container).pointee.contents.pointee.type)
-        let dSign = receiptPKCS7Container.pointee.d.sign // это тоже самое что было в функции pkcs7_d_sign(receiptPKCS7Container) -> return ptr->d.sign;
+        let dSign = receiptPKCS7Container.pointee.d.sign
         let pkcs7DataTypeCode = OBJ_obj2nid(dSign?.pointee.contents.pointee.type)
-        
         guard pkcs7DataTypeCode == NID_pkcs7_data else {
             throw ReceiptValidationError.emptyReceiptContents
         }
@@ -199,7 +168,7 @@ struct ReceiptExtractor {
     }
 }
 
-struct ReceiptSignatureValidator {
+fileprivate struct ReceiptSignatureValidator {
     func checkSignaturePresence(_ PKCS7Container: UnsafeMutablePointer<PKCS7>) throws {
         let pkcs7SignedTypeCode = OBJ_obj2nid(PKCS7Container.pointee.type)
         

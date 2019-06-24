@@ -94,9 +94,7 @@ extension MainViewController: MainViewControllerPresentable {
         purchaseController.synchronizeLocalPurchasesFromReceipt()
     }
     
-    
     @objc func validateSubscription() {
         purchaseController.validateSubscription(productID: PurchasebleProductItem.autoRenewSubscription.rawValue, type: .autoRenewable)
     }
-    
 }
