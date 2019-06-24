@@ -39,8 +39,7 @@ extension LocalReceiptValidatorImplementation: ReceiptValidatorProtocol {
 }
 
 /// Validates receipt locally.
-///
-/// Local validation requires code to read and validate a PKCS #7 signature, and code to parse and validate the signed payload.
+/// /// Local validation requires code to read and validate a PKCS #7 signature, and code to parse and validate the signed payload.
 /// - important: Perform receipt validation immediately after your app is launched, before displaying any user interface or spawning any child processes.
 /// Implement this check in the main function, before the NSApplicationMain function is called. For additional security, you may repeat this check periodically while your application is running.
 ///

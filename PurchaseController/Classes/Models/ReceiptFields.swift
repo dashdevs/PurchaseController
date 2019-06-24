@@ -188,3 +188,54 @@ struct ReceiptField {
         self.jsonKey = jsonKey
     }
 }
+
+/// For an expired subscription, the reason for the subscription expiration.
+///
+/// - customerCanceledSubscription: Customer canceled their subscription.
+/// - billingError: Billing error; for example customer’s payment information was no longer valid.
+/// - customerDidNotAgreeToPriceIncrease: Customer did not agree to a recent price increase.
+/// - productWasNotAvailable: Product was not available for purchase at the time of renewal.
+/// - unknownError: Unknown error.
+enum SubscriptionExpirationIntent: String, Codable {
+    case customerCanceledSubscription = "1"
+    case billingError = "2"
+    case customerDidNotAgreeToPriceIncrease = "3"
+    case productWasNotAvailable = "4"
+    case unknownError = "5"
+}
+
+/// For an expired subscription, whether or not Apple is still attempting to automatically renew the subscription.
+///
+/// - stillAttempting: App Store is still attempting to renew the subscription.
+/// - stoppedAttempting: App Store has stopped attempting to renew the subscription.
+enum SubscriptionRetryFlag: String, Codable {
+    case stillAttempting = "1"
+    case stoppedAttempting = "0"
+}
+
+/// For a transaction that was canceled, the reason for cancellation.
+///
+/// - customerCanceled: Customer canceled their transaction due to an actual or perceived issue within your app.
+/// - anotherReason: Transaction was canceled for another reason, for example, if the customer made the purchase accidentally.
+enum CancellationReason: String, Codable {
+    case customerCanceled = "1"
+    case anotherReason = "0"
+}
+
+/// The current renewal status for the auto-renewable subscription.
+///
+/// - willRenew: Subscription will renew at the end of the current subscription period.
+/// - autoRenewalTurnedOff: Customer has turned off automatic renewal for their subscription.
+enum SubscriptionAutoRenewStatus: String, Codable {
+    case willRenew = "1"
+    case autoRenewalTurnedOff = "0"
+}
+
+/// The current price consent status for a subscription price increase.
+///
+/// - agreed: Customer has agreed to the price increase. Subscription will renew at the higher price.
+/// - notTakenAction: Customer has not taken action regarding the increased price. Subscription expires if the customer takes no action before the renewal.
+enum SubscriptionPriceConsentStatus: String, Codable {
+    case agreed = "1"
+    case notTakenAction = "0"
+}

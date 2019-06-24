@@ -38,16 +38,16 @@ struct InAppPurchase: ReadableDebugStringProtocol {
     let expiresDatePst: Date?
 
     /// For an expired subscription, the reason for the subscription expiration.
-    let subscriptionExpirationIntent: Int? // TODO: create an enum for int values
+    let subscriptionExpirationIntent: SubscriptionExpirationIntent?
     
     /// For an expired subscription, whether or not Apple is still attempting to automatically renew the subscription.
-    let subscriptionRetryFlag: Int? // TODO: create an enum for int values
+    let subscriptionRetryFlag: SubscriptionRetryFlag?
 
     /// For a transaction that was canceled by Apple customer support, the time and date of the cancellation. For an auto-renewable subscription plan that was upgraded, the time and date of the upgrade transaction.
     let cancellationDate: Date?
 
     /// For a transaction that was canceled by Apple customer support, the time and date of the cancellation. For an auto-renewable subscription plan that was upgraded, the time and date of the upgrade transaction.
-    let cancellationReason: Int? // TODO: create an enum for int values
+    let cancellationReason: CancellationReason?
     
     /// A string that the App Store uses to uniquely identify the application that created the transaction.
     let appItemId: String?
@@ -64,15 +64,14 @@ struct InAppPurchase: ReadableDebugStringProtocol {
     let webOrderLineItemId: String?
     
     /// The current renewal status for the auto-renewable subscription.
-    let subscriptionAutoRenewStatus: Int? // TODO: create an enum for int values
+    let subscriptionAutoRenewStatus: SubscriptionAutoRenewStatus?
     
     /// The current renewal preference for the auto-renewable subscription.
     let subscriptionAutoRenewPreference: String?
     
     /// The current price consent status for a subscription price increase.
-    let subscriptionPriceConsentStatus: Int? // TODO: create an enum for int values
+    let subscriptionPriceConsentStatus: SubscriptionPriceConsentStatus?
 
-    
     /// Payment transaction object
     public var purchaseTransaction: PaymentTransaction {
         let date: Date? = {
@@ -211,28 +210,11 @@ extension InAppPurchase: Codable {
             return TimeInterval(millisecondsString: str)
         }()
         
-        if let subscriptionExpirationIntentStr = try values.decodeIfPresent(String.self, forKey: .subscriptionExpirationIntent) {
-            subscriptionExpirationIntent = Int(subscriptionExpirationIntentStr)
-        } else {
-            subscriptionExpirationIntent = nil
-        }
+        subscriptionExpirationIntent = try values.decodeIfPresent(SubscriptionExpirationIntent.self, forKey: .subscriptionExpirationIntent)
+        subscriptionRetryFlag = try values.decodeIfPresent(SubscriptionRetryFlag.self, forKey: .subscriptionRetryFlag)
         
-        if let subscriptionRetryFlagStr = try values.decodeIfPresent(String.self, forKey: .subscriptionRetryFlag) {
-            subscriptionRetryFlag = Int(subscriptionRetryFlagStr)
-        } else {
-            subscriptionRetryFlag = nil
-        }
-        
-        if let cancellationDateStr = try values.decodeIfPresent(String.self, forKey: .cancellationDate) {
-            cancellationDate = DateFormatter.appleValidator.date(from: cancellationDateStr)
-        } else {
-            cancellationDate = nil
-        }
-        if let cancellationReasonStr = try values.decodeIfPresent(String.self, forKey: .cancellationReason) {
-            cancellationReason = Int(cancellationReasonStr)
-        } else {
-            cancellationReason = nil
-        }
+        cancellationDate = try values.decodeIfPresent(Date.self, forKey: .cancellationDate)
+        cancellationReason = try values.decodeIfPresent(CancellationReason.self, forKey: .cancellationReason)
         
         appItemId = try values.decodeIfPresent(String.self, forKey: .appItemId)
         externalVersionIdentifier = try values.decodeIfPresent(String.self, forKey: .externalVersionIdentifier)
@@ -249,19 +231,9 @@ extension InAppPurchase: Codable {
         }
         webOrderLineItemId = try values.decodeIfPresent(String.self, forKey: .webOrderLineItemId)
         
-        if let subscriptionAutoRenewStatusStr = try values.decodeIfPresent(String.self, forKey: .subscriptionAutoRenewStatus) {
-            subscriptionAutoRenewStatus = Int(subscriptionAutoRenewStatusStr)
-        } else {
-            subscriptionAutoRenewStatus = nil
-        }
-        
+        subscriptionAutoRenewStatus = try values.decodeIfPresent(SubscriptionAutoRenewStatus.self, forKey: .subscriptionAutoRenewStatus)
         subscriptionAutoRenewPreference = try values.decodeIfPresent(String.self, forKey: .subscriptionAutoRenewPreference)
-        
-        if let subscriptionPriceConsentStatusStr = try values.decodeIfPresent(String.self, forKey: .subscriptionPriceConsentStatus) {
-            subscriptionPriceConsentStatus = Int(subscriptionPriceConsentStatusStr)
-        } else {
-            subscriptionPriceConsentStatus = nil
-        }
+        subscriptionPriceConsentStatus = try values.decodeIfPresent(SubscriptionPriceConsentStatus.self, forKey: .subscriptionPriceConsentStatus)
     }
 }
 
