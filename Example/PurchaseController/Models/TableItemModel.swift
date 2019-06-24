@@ -18,7 +18,6 @@ enum TableItemModel: String {
     case retrieve
     case refreshReceipt
     case validateReceipt
-    case decodeReceipt
     case synchronizePurchases
     case validateSubscription
     
@@ -41,8 +40,6 @@ enum TableItemModel: String {
             return "Refresh receipt 🧾"
         case .validateReceipt:
             return "Validate receipt 💴"
-        case .decodeReceipt:
-            return "Decode receipt 🧾"
         case .synchronizePurchases:
             return "Synchronize purchases ↕"
         case .validateSubscription:
@@ -69,8 +66,6 @@ enum TableItemModel: String {
             return #selector(MainViewController.refreshReceipt)
         case .validateReceipt:
             return #selector(MainViewController.validateReceipt)
-        case .decodeReceipt:
-            return #selector(MainViewController.decodeReceipt)
         case .synchronizePurchases:
             return #selector(MainViewController.synchronizePurchases)
         case .validateSubscription:
