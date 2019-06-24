@@ -217,6 +217,10 @@ public final class PurchaseController {
             case let .success(receipt):
                 self.sessionReceipt = receipt
                 self.purchaseActionState = .finish(PurchaseActionResult.receiptValidationSuccess)
+                if let receiptData = try? JSONEncoder.receiptEncoder.encode(receipt) {
+                    let json = try?  JSONSerialization.jsonObject(with: receiptData, options: .allowFragments)
+                    print(json)
+                }
             case let .error(error):
                 self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
             }

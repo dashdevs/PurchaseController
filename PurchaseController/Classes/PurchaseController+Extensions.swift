@@ -40,13 +40,13 @@ extension Data {
     /// - Returns: readable representation of data
     /// - Throws: an error if any value throws an error during decoding
     public func createReceiptResponse() throws -> ReceiptValidationResponse? {
-        let response = try JSONDecoder.validatonResponse.decode(ReceiptValidationResponse.self, from: self)
+        let response = try JSONDecoder.receiptDecoder.decode(ReceiptValidationResponse.self, from: self)
         return response
     }
 }
 
 extension JSONDecoder {
-    static let validatonResponse: JSONDecoder = {
+    static let receiptDecoder: JSONDecoder = {
        let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .custom({ decoder -> Date in
             let container = try decoder.singleValueContainer()
@@ -65,6 +65,14 @@ extension JSONDecoder {
         })
 
     return decoder
+    }()
+}
+
+extension JSONEncoder {
+    static let receiptEncoder: JSONEncoder = {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .formatted(DateFormatter.appleValidator)
+        return encoder
     }()
 }
 

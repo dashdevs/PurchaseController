@@ -13,7 +13,7 @@ enum ReceiptType: String, Codable {
     case productionSandbox = "ProductionSandbox"
 }
 
-public struct Receipt: Codable, ReadableDebugStringProtocol {
+public struct Receipt: ReadableDebugStringProtocol {
     
     // MARK: - Properties
     
@@ -96,36 +96,10 @@ public struct Receipt: Codable, ReadableDebugStringProtocol {
         self.downloadId = nil
         self.receiptType = nil
     }
-    
-    // MARK: - Codable
-    
-    public init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        bundleId = try values.decode(String.self, forKey: .bundleId)
-        applicationVersion = try values.decode(String.self, forKey: .applicationVersion)
-        inApp = try? values.decode([InAppPurchase].self, forKey: .inApp)
-        originalApplicationVersion = try values.decode(String.self, forKey: .originalApplicationVersion)
+}
 
-        receiptCreationDate = try values.decodeIfPresent(Date.self, forKey: .receiptCreationDate)
-        receiptCreationDatePst = try values.decodeIfPresent(Date.self, forKey: .receiptCreationDatePst)
-        receiptCreationDateMs = try values.decodeIfPresent(Date.self, forKey: .receiptCreationDateMs)
-        
-        receiptExpirationDate = try values.decodeIfPresent(Date.self, forKey: .receiptExpirationDate)
-
-        originalPurchaseDate = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDate)
-        originalPurchaseDatePst = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDatePst)
-        originalPurchaseDateMs = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDateMs)
-
-        requestDate = try values.decodeIfPresent(Date.self, forKey: .requestDate)
-        requestDatePst = try values.decodeIfPresent(Date.self, forKey: .requestDatePst)
-        requestDateMs = try values.decodeIfPresent(Date.self, forKey: .requestDateMs)
-
-        receiptType = try values.decodeIfPresent(ReceiptType.self, forKey: .receiptType)
-        appItemId = try values.decode(Int.self, forKey: .appItemId)
-        adamId = try values.decode(Int.self, forKey: .adamId)
-        versionExternalIdentifier = try values.decode(Int.self, forKey: .versionExternalIdentifier)
-        downloadId = try values.decode(Int.self, forKey: .downloadId)
-    }
+// MARK: - Codable
+extension Receipt: Codable {
     
     enum CodingKeys: String, CodingKey {
         case bundleId = "bundle_id"
@@ -147,5 +121,61 @@ public struct Receipt: Codable, ReadableDebugStringProtocol {
         case adamId = "adam_id"
         case versionExternalIdentifier = "version_external_identifier"
         case downloadId = "download_id"
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        bundleId = try values.decode(String.self, forKey: .bundleId)
+        applicationVersion = try values.decode(String.self, forKey: .applicationVersion)
+        inApp = try? values.decode([InAppPurchase].self, forKey: .inApp)
+        originalApplicationVersion = try values.decode(String.self, forKey: .originalApplicationVersion)
+        
+        receiptCreationDate = try values.decodeIfPresent(Date.self, forKey: .receiptCreationDate)
+        receiptCreationDatePst = try values.decodeIfPresent(Date.self, forKey: .receiptCreationDatePst)
+        receiptCreationDateMs = try values.decodeIfPresent(Date.self, forKey: .receiptCreationDateMs)
+        
+        receiptExpirationDate = try values.decodeIfPresent(Date.self, forKey: .receiptExpirationDate)
+        
+        originalPurchaseDate = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDate)
+        originalPurchaseDatePst = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDatePst)
+        originalPurchaseDateMs = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDateMs)
+        
+        requestDate = try values.decodeIfPresent(Date.self, forKey: .requestDate)
+        requestDatePst = try values.decodeIfPresent(Date.self, forKey: .requestDatePst)
+        requestDateMs = try values.decodeIfPresent(Date.self, forKey: .requestDateMs)
+        
+        receiptType = try values.decodeIfPresent(ReceiptType.self, forKey: .receiptType)
+        appItemId = try values.decode(Int.self, forKey: .appItemId)
+        adamId = try values.decode(Int.self, forKey: .adamId)
+        versionExternalIdentifier = try values.decode(Int.self, forKey: .versionExternalIdentifier)
+        downloadId = try values.decode(Int.self, forKey: .downloadId)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(bundleId, forKey: .bundleId)
+        try container.encode(applicationVersion, forKey: .applicationVersion)
+        try container.encode(inApp, forKey: .inApp)
+        try container.encode(originalApplicationVersion, forKey: .originalApplicationVersion)
+
+        try container.encode(receiptCreationDate, forKey: .receiptCreationDate)
+        try container.encode(receiptCreationDatePst, forKey: .receiptCreationDatePst)
+        try container.encode(receiptCreationDateMs?.timeIntervalSince1970, forKey: .receiptCreationDateMs)
+        
+        try container.encode(receiptExpirationDate, forKey: .receiptExpirationDate)
+
+        try container.encode(originalPurchaseDate, forKey: .originalPurchaseDate)
+        try container.encode(originalPurchaseDatePst, forKey: .originalPurchaseDatePst)
+        try container.encode(originalPurchaseDateMs?.timeIntervalSince1970, forKey: .originalPurchaseDateMs)
+
+        try container.encode(requestDate, forKey: .requestDate)
+        try container.encode(requestDatePst, forKey: .requestDatePst)
+        try container.encode(requestDateMs?.timeIntervalSince1970, forKey: .requestDateMs)
+
+        try container.encode(receiptType, forKey: .receiptType)
+        try container.encode(appItemId, forKey: .appItemId)
+        try container.encode(adamId, forKey: .adamId)
+        try container.encode(versionExternalIdentifier, forKey: .versionExternalIdentifier)
+        try container.encode(downloadId, forKey: .downloadId)
     }
 }

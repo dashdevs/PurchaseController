@@ -82,7 +82,7 @@ extension MainViewController: MainViewControllerPresentable {
     }
     
     @objc func validateReceipt() {
-        purchaseController.validateReceipt(using: AppleReceiptValidatorImplementation(sharedSecret: nil, isSandbox: true))
+        purchaseController.validateReceipt(using: LocalReceiptValidatorImplementation())
     }
     
     @objc func synchronizePurchases() {
