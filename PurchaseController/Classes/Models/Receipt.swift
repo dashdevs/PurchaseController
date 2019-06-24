@@ -13,7 +13,7 @@ enum ReceiptType: String, Codable {
     case productionSandbox = "ProductionSandbox"
 }
 
-public struct Receipt: Codable, ReadableDebugStringProtocol {
+public struct Receipt: ReadableDebugStringProtocol, DataFormatsEncodable {
     
     // MARK: - Properties
     
@@ -96,45 +96,10 @@ public struct Receipt: Codable, ReadableDebugStringProtocol {
         self.downloadId = nil
         self.receiptType = nil
     }
-    
-    // MARK: - Codable
-    
-    public init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        bundleId = try values.decode(String.self, forKey: .bundleId)
-        applicationVersion = try values.decode(String.self, forKey: .applicationVersion)
-        inApp = try? values.decode([InAppPurchase].self, forKey: .inApp)
-        originalApplicationVersion = try values.decode(String.self, forKey: .originalApplicationVersion)
+}
 
-        receiptCreationDate = try values.decodeIfPresent(Date.self, forKey: .receiptCreationDate)
-        receiptCreationDatePst = try values.decodeIfPresent(Date.self, forKey: .receiptCreationDatePst)
-        receiptCreationDateMs = {
-            guard let str = try? values.decode(String.self, forKey: .receiptCreationDateMs) else { return nil }
-            return TimeInterval(millisecondsString: str)
-        }()
-        
-        receiptExpirationDate = try values.decodeIfPresent(Date.self, forKey: .receiptExpirationDate)
-
-        originalPurchaseDate = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDate)
-        originalPurchaseDatePst = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDatePst)
-        originalPurchaseDateMs = {
-            guard let str = try? values.decode(String.self, forKey: .originalPurchaseDateMs) else { return nil }
-            return TimeInterval(millisecondsString: str)
-        }()
-
-        requestDate = try values.decodeIfPresent(Date.self, forKey: .requestDate)
-        requestDatePst = try values.decodeIfPresent(Date.self, forKey: .requestDatePst)
-        requestDateMs = {
-            guard let str = try? values.decode(String.self, forKey: .requestDateMs) else { return nil }
-            return TimeInterval(millisecondsString: str)
-        }()
-        
-        receiptType = try values.decodeIfPresent(ReceiptType.self, forKey: .receiptType)
-        appItemId = try values.decode(Int.self, forKey: .appItemId)
-        adamId = try values.decode(Int.self, forKey: .adamId)
-        versionExternalIdentifier = try values.decode(Int.self, forKey: .versionExternalIdentifier)
-        downloadId = try values.decode(Int.self, forKey: .downloadId)
-    }
+// MARK: - Codable
+extension Receipt: Codable {
     
     enum CodingKeys: String, CodingKey {
         case bundleId = "bundle_id"
@@ -156,5 +121,43 @@ public struct Receipt: Codable, ReadableDebugStringProtocol {
         case adamId = "adam_id"
         case versionExternalIdentifier = "version_external_identifier"
         case downloadId = "download_id"
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        bundleId = try values.decode(String.self, forKey: .bundleId)
+        applicationVersion = try values.decode(String.self, forKey: .applicationVersion)
+        inApp = try? values.decode([InAppPurchase].self, forKey: .inApp)
+        originalApplicationVersion = try values.decode(String.self, forKey: .originalApplicationVersion)
+        
+        receiptCreationDate = try values.decodeIfPresent(Date.self, forKey: .receiptCreationDate)
+        receiptCreationDatePst = try values.decodeIfPresent(Date.self, forKey: .receiptCreationDatePst)
+        receiptCreationDateMs = {
+            guard let str = try? values.decode(String.self, forKey: .receiptCreationDateMs) else { return nil }
+            return TimeInterval(millisecondsString: str)
+        }()
+        
+        receiptExpirationDate = try values.decodeIfPresent(Date.self, forKey: .receiptExpirationDate)
+        
+        originalPurchaseDate = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDate)
+        originalPurchaseDatePst = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDatePst)
+
+        originalPurchaseDateMs = {
+            guard let str = try? values.decode(String.self, forKey: .originalPurchaseDateMs) else { return nil }
+            return TimeInterval(millisecondsString: str)
+        }()
+
+        requestDate = try values.decodeIfPresent(Date.self, forKey: .requestDate)
+        requestDatePst = try values.decodeIfPresent(Date.self, forKey: .requestDatePst)
+        requestDateMs = {
+            guard let str = try? values.decode(String.self, forKey: .requestDateMs) else { return nil }
+            return TimeInterval(millisecondsString: str)
+        }()
+        
+        receiptType = try values.decodeIfPresent(ReceiptType.self, forKey: .receiptType)
+        appItemId = try values.decode(Int.self, forKey: .appItemId)
+        adamId = try values.decode(Int.self, forKey: .adamId)
+        versionExternalIdentifier = try values.decode(Int.self, forKey: .versionExternalIdentifier)
+        downloadId = try values.decode(Int.self, forKey: .downloadId)
     }
 }

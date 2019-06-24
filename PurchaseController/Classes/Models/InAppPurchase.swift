@@ -9,7 +9,10 @@ import Foundation
 import SwiftyStoreKit
 
 /// Representation of inapp purchase
-struct InAppPurchase: Codable, ReadableDebugStringProtocol {
+struct InAppPurchase: ReadableDebugStringProtocol {
+    
+    // MARK: - Properties
+    
     /// The number of items purchased.
     let quantity: Int
     /// The product identifier of the item that was purchased.
@@ -94,37 +97,7 @@ struct InAppPurchase: Codable, ReadableDebugStringProtocol {
                                   downloads: [])
     }
     
-    enum CodingKeys: String, CodingKey {
-        case quantity
-        case productId = "product_id"
-        case transactionId = "transaction_id"
-        case originalTransactionId = "original_transaction_id"
-        case purchaseDate = "purchase_date"
-        case purchaseDateMs = "purchase_date_ms"
-        case purchaseDatePst = "purchase_date_pst"
-        case originalPurchaseDate = "original_purchase_date"
-        case originalPurchaseDateMs = "original_purchase_date_ms"
-        case originalPurchaseDatePst = "original_purchase_date_pst"
-        case expiresDate = "expires_date"
-        case expiresDateMs = "expires_date_ms"
-        case expiresDatePst = "expires_date_pst"
-        
-        case subscriptionExpirationIntent = "expiration_intent"
-        case subscriptionRetryFlag = "is_in_billing_retry_period"
-        case cancellationDate = "cancellation_date"
-        case cancellationReason = "cancellation_reason"
-        case appItemId = "app_item_id"
-        case externalVersionIdentifier = "version_external_identifier"
-
-        case isTrialPeriod = "is_trial_period"
-        case isInIntroOfferPeriod = "is_in_intro_offer_period"
-    
-        case webOrderLineItemId = "web_order_line_item_id"
-    
-        case subscriptionAutoRenewStatus = "auto_renew_status"
-        case subscriptionAutoRenewPreference = "auto_renew_product_id"
-        case subscriptionPriceConsentStatus = "price_consent_status"
-    }
+    // MARK: - Lifecycle
     
     init?(quantity: Int?,
           productIdentifier: String?,
@@ -146,6 +119,7 @@ struct InAppPurchase: Codable, ReadableDebugStringProtocol {
         self.productId = productIdentifier
         self.transactionId = transactionIdentifier
         self.originalTransactionId = originalTransactionIdentifier
+        
         self.purchaseDate = purchaseDate
         self.purchaseDatePst = purchaseDate
         self.purchaseDateMs = purchaseDate?.timeIntervalSince1970
@@ -161,7 +135,7 @@ struct InAppPurchase: Codable, ReadableDebugStringProtocol {
         self.isInIntroOfferPeriod = subscriptionIntroductoryPricePeriod
         self.cancellationDate = cancellationDate
         self.webOrderLineItemId = webOrderLineItemId
-    
+
         self.subscriptionExpirationIntent = nil
         self.subscriptionRetryFlag = nil
         self.cancellationReason = nil
@@ -172,10 +146,45 @@ struct InAppPurchase: Codable, ReadableDebugStringProtocol {
         self.subscriptionAutoRenewPreference = nil
         self.subscriptionPriceConsentStatus = nil
     }
+}
+
+// MARK: - Codable
+extension InAppPurchase: Codable {
+    enum CodingKeys: String, CodingKey {
+        case quantity
+        case productId = "product_id"
+        case transactionId = "transaction_id"
+        case originalTransactionId = "original_transaction_id"
+        case purchaseDate = "purchase_date"
+        case purchaseDateMs = "purchase_date_ms"
+        case purchaseDatePst = "purchase_date_pst"
+        case originalPurchaseDate = "original_purchase_date"
+        case originalPurchaseDateMs = "original_purchase_date_ms"
+        case originalPurchaseDatePst = "original_purchase_date_pst"
+        case expiresDate = "expires_date"
+        case expiresDateMs = "expires_date_ms"
+        case expiresDatePst = "expires_date_pst"
         
+        case subscriptionExpirationIntent = "expiration_intent"
+        case subscriptionRetryFlag = "is_in_billing_retry_period"
+        case cancellationDate = "cancellation_date"
+        case cancellationReason = "cancellation_reason"
+        case appItemId = "app_item_id"
+        case externalVersionIdentifier = "version_external_identifier"
+        
+        case isTrialPeriod = "is_trial_period"
+        case isInIntroOfferPeriod = "is_in_intro_offer_period"
+        
+        case webOrderLineItemId = "web_order_line_item_id"
+        
+        case subscriptionAutoRenewStatus = "auto_renew_status"
+        case subscriptionAutoRenewPreference = "auto_renew_product_id"
+        case subscriptionPriceConsentStatus = "price_consent_status"
+    }
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-
+        
         quantity = Int(try values.decode(String.self, forKey: .quantity)) ?? 0
         productId = try values.decode(String.self, forKey: .productId)
         transactionId = try values.decode(String.self, forKey: .transactionId)
@@ -227,7 +236,7 @@ struct InAppPurchase: Codable, ReadableDebugStringProtocol {
         
         appItemId = try values.decodeIfPresent(String.self, forKey: .appItemId)
         externalVersionIdentifier = try values.decodeIfPresent(String.self, forKey: .externalVersionIdentifier)
-
+        
         if let isTrialPeriodString = try values.decodeIfPresent(String.self, forKey: .isTrialPeriod) {
             isTrialPeriod = Bool(isTrialPeriodString)
         } else{
@@ -239,7 +248,7 @@ struct InAppPurchase: Codable, ReadableDebugStringProtocol {
             isInIntroOfferPeriod = nil
         }
         webOrderLineItemId = try values.decodeIfPresent(String.self, forKey: .webOrderLineItemId)
-
+        
         if let subscriptionAutoRenewStatusStr = try values.decodeIfPresent(String.self, forKey: .subscriptionAutoRenewStatus) {
             subscriptionAutoRenewStatus = Int(subscriptionAutoRenewStatusStr)
         } else {
@@ -247,14 +256,13 @@ struct InAppPurchase: Codable, ReadableDebugStringProtocol {
         }
         
         subscriptionAutoRenewPreference = try values.decodeIfPresent(String.self, forKey: .subscriptionAutoRenewPreference)
-
+        
         if let subscriptionPriceConsentStatusStr = try values.decodeIfPresent(String.self, forKey: .subscriptionPriceConsentStatus) {
             subscriptionPriceConsentStatus = Int(subscriptionPriceConsentStatusStr)
         } else {
             subscriptionPriceConsentStatus = nil
         }
     }
-    
 }
 
 extension TimeInterval {
