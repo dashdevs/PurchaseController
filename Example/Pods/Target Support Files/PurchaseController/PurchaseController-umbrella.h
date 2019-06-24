@@ -10,8 +10,8 @@
 #endif
 #endif
 
-#import "pkcs7_union_accessors.h"
 #import "TransactionReceiptFetcher.h"
+#import "PurchaseController-Bridging-Header.h"
 
 FOUNDATION_EXPORT double PurchaseControllerVersionNumber;
 FOUNDATION_EXPORT const unsigned char PurchaseControllerVersionString[];

@@ -15,60 +15,60 @@
 			dependencies = (
 			);
 			name = GRKOpenSSLFramework;
-			productName = GRKOpenSSLFramework;
 		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		048782DF73CBFB16BDA0BBB4CADB143F /* SwiftyStoreKit+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10C246CC804BA7C11187AD3C12D7C17 /* SwiftyStoreKit+Types.swift */; };
-		07E8610AFD220304EFCDF7D4AAFE3725 /* TransactionReceiptFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = ED4BCE74CE1597F5A2F1BAEF24EC7B89 /* TransactionReceiptFetcher.m */; };
-		0D5734BE8A680B757F87DF3C5F364485 /* InAppReceiptRefreshRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F004E5E9B3C1924338C0DE8D1730D /* InAppReceiptRefreshRequest.swift */; };
-		1916C02F1A4897F869F626E8323B2877 /* RestorePurchasesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12768A30571A6DB1788C354ED1134D0 /* RestorePurchasesController.swift */; };
-		1BFBB0024F8EF6F6B27A2D026A284940 /* TransactionReceiptFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DF1FF2F7AD0F4EDF7183D417DD8A091 /* TransactionReceiptFetcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		26A032E6BEAF370E35B29D5F66DB1000 /* InAppReceiptVerificator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E7F604539348DC8458506CBC38FFE3 /* InAppReceiptVerificator.swift */; };
+		0255B81B657083D727F2B3A140F60FE7 /* PurchasePersistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FE133E78E6D30C718D5AF10D61264C /* PurchasePersistance.swift */; };
+		04A6ABC8616B744A5E1526588CF22F9C /* SwiftyStoreKit+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10C246CC804BA7C11187AD3C12D7C17 /* SwiftyStoreKit+Types.swift */; };
+		063DF5D5616346D2EFED46D71753199E /* OS.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55BAA9403E237C4B67727FB4EABB4AB /* OS.swift */; };
+		0AB6CB6DE7F256E7AD70B6779DC7B102 /* InAppReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C52C6D2CED50BF5FC92C08ECA13E3B /* InAppReceipt.swift */; };
+		12DB8DC1A55D778449647267F3056764 /* InAppReceiptVerificator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E7F604539348DC8458506CBC38FFE3 /* InAppReceiptVerificator.swift */; };
+		173B2A3A9FF0C8A39FFA6E5A2A373B6D /* SwiftyStoreKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 239E9577CC2A1A1D3A60F337FBEB759E /* SwiftyStoreKit-dummy.m */; };
+		22BF170266BE0FB8219DB65D33E6E2ED /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D56FDDFDF338A3D7303B6D382FF2E6 /* StoreKit.framework */; };
 		288E899B8ED7DBF1414DE70A8E2FCDED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD3E390129CFCC2FB7F725234FA16E5 /* Foundation.framework */; };
-		2ADF46F6E4997BC8E2CF7E13A5EFFFC0 /* SwiftyStoreKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765D1591BEDF9A854D5674C5AA13071 /* SwiftyStoreKit.swift */; };
-		3CD5BEFE606E9D25166B19E83B20CEA5 /* ReceiptValidatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DC9A477D73AFA51598476818FBFC9E /* ReceiptValidatorProtocol.swift */; };
-		456F39173B8A7CB103091EB143E22E3A /* PurchaseController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D404185F5EA56E8966FBC97721ADF07F /* PurchaseController-dummy.m */; };
-		4ADFE1D671D236F85CFE0B84AFAE4CF7 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736ED901F6E3F583E9956C976D3961FC /* PurchaseController.swift */; };
-		4B33524BB1629FD6A9143BD198CA7B01 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD3E390129CFCC2FB7F725234FA16E5 /* Foundation.framework */; };
-		4B814612C874C7F187F2897D5B9C626B /* PurchaseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F00509E4BDC3B18C22F5E6FCF96B65A /* PurchaseItem.swift */; };
-		53AA3097FDFF37FC204A072C359CE80D /* PurchasePersistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5337837A22175C868D1C4D7B866F45AE /* PurchasePersistance.swift */; };
-		55C07FC799C0324265D82B6B44D9EDC1 /* AppleReceiptValidatorImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3984D6AFBD4E7EE1732B9E96225FEF /* AppleReceiptValidatorImplementation.swift */; };
-		586312DA5EA914673C6C05261CE0D5D8 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01D56FDDFDF338A3D7303B6D382FF2E6 /* StoreKit.framework */; };
-		5E60E039B333AA8939E7927A8D70D0D0 /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C20A4D05AFA0BE3D2F6C9C2514ECB3F /* Receipt.swift */; };
-		5F888DD1ABD8281790533025B07BD86A /* InAppPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207C75B17D60A0D20666B4374EF4F988 /* InAppPurchase.swift */; };
+		295B4E0133C8C86279537DC170B04347 /* PurchaseErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3433C5BFC2DFA7E7E827531EDDA6A152 /* PurchaseErrorHandling.swift */; };
+		2DC44CEC5D35838AAF0A146667C9F456 /* AppleReceiptValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0683B86C9777844B800F6BDCE69064 /* AppleReceiptValidator.swift */; };
+		30034B0A26EEB8CD86B00351C5C34237 /* CompleteTransactionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359163EFAD053A4FA02BED1BE46233F /* CompleteTransactionsController.swift */; };
+		320AA4991CE2E466731345ED661E2C43 /* ProductsInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F30F948B578A0FA3523478D7AADB01 /* ProductsInfoController.swift */; };
+		3B3DDDF2A4DD7DBBF23F168A0DE229BD /* PurchaseController-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 21650B9B5479A6DD12AED2EA575E1CEC /* PurchaseController-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		42D3B625274BEBB8A8D135D753A46B75 /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E94F40B4D9A45C407B03174AB1BBAD /* Receipt.swift */; };
+		4494D3ACB7EBE036D28045E59D1CCA15 /* PaymentQueueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97AA14718160C4AA81F37D3BA901E8A /* PaymentQueueController.swift */; };
+		44A2434D5742875BDF8D5601FC3C6168 /* PurchaseController-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E6C2A5361176BF8A0739C15F24BFA6 /* PurchaseController-Bridging-Header.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		49D0B62582EC17DF5D8040778C7093A8 /* PurchaseController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE4B1ACC6816ACBD1B7718CC5BF0CDC /* PurchaseController+Extensions.swift */; };
+		504C05A0CB3FD130FFEDDAA2F44CE0F3 /* ReceiptValidatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF5C3A57C078D1588F21981541D7D4A /* ReceiptValidatorProtocol.swift */; };
+		5405B14108CDB6B13B58C69BC2ACE4B5 /* ReceiptFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD6D654FC80E9F7FC60D45257048106 /* ReceiptFields.swift */; };
+		5752A24DF9E1D8ADEC5393920EF19778 /* SwiftyStoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 548E551FAC321D0F95CA034C3F4CB1CD /* SwiftyStoreKit.framework */; };
 		660F8FAB574C2A7BFE1CC81AE30E4145 /* Pods-PurchaseController_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 22BB1552CB5EA84AE3B31284097CFEA7 /* Pods-PurchaseController_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6BF2E15F4FC918FC6B4EDDF086FF89C0 /* PaymentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4A3F11393DEBA185703AF48A2F04AB /* PaymentsController.swift */; };
-		732670DDEF068FC5CEAED2480F3DC84D /* OS.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55BAA9403E237C4B67727FB4EABB4AB /* OS.swift */; };
-		77292F9FC6D5AF7A3D6158B93E6C1DC7 /* SwiftyStoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 548E551FAC321D0F95CA034C3F4CB1CD /* SwiftyStoreKit.framework */; };
-		826343536AE74EB702E6475DD9129D86 /* SwiftyStoreKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 645BF586D68029B99C08C7BE9CBE8981 /* SwiftyStoreKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8698B4A53E38946FD1F78C9BC8A3F91C /* ReadableDebugStringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960DDEAB420B14EADF7D1887304EC3F3 /* ReadableDebugStringProtocol.swift */; };
-		8809899E7251A82DDE98CDA6EEFE730C /* CompleteTransactionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359163EFAD053A4FA02BED1BE46233F /* CompleteTransactionsController.swift */; };
-		8C8A87832DE0807C00448E452CDDDCB3 /* SwiftyStoreKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 239E9577CC2A1A1D3A60F337FBEB759E /* SwiftyStoreKit-dummy.m */; };
-		8CD48384322C89C43B7C8C999A0BAA15 /* PurchaseController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545A2C13F9D480E3C0E2799C1F2B548E /* PurchaseController+Extensions.swift */; };
-		957D67ADC37DA73EDA7669AAE6AE0EFF /* SKProduct+LocalizedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6758656DDC6F11F76E5420661F243F07 /* SKProduct+LocalizedPrice.swift */; };
+		7014E9593595C4346A5638B96D05006A /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917B064C871D165D014498FD70AF076E /* PurchaseController.swift */; };
+		79F10312C1F27AF317D57C75CBF61895 /* ReadableDebugStringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46222DEB2CE76CFFBFF972A73A748CEF /* ReadableDebugStringProtocol.swift */; };
+		8603088273B2E7705BCC47C42284FE2D /* AppleReceiptValidatorImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BB91643A6D4D1DACEAB8614E03C421 /* AppleReceiptValidatorImplementation.swift */; };
+		875D32A0741152D9E9543B67F2D8E173 /* InAppProductQueryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BB49B89F73E434607ED498DDB8D9AE /* InAppProductQueryRequest.swift */; };
+		8B5AD991021BFF5812B3D489EF43A10F /* ReceiptTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB5E57C442013CBD2221CFFBF02C115 /* ReceiptTransaction.swift */; };
+		947126E2CBA21B25E7700CAEB7F7CD12 /* PurchaseController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CC481B8602D70C40812146C65699C239 /* PurchaseController-dummy.m */; };
+		94F83FF3A4BCA814D19B21D569FA22A4 /* TransactionReceiptFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 51C57514AFE3618939EF10AB466B6B02 /* TransactionReceiptFetcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9974C2F83EF50F9937061EB630B41CDC /* PendingRenewalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351A054AB2419719F76A090A00467E0A /* PendingRenewalInfo.swift */; };
+		9A84F168DF69BDD1169A20DE9DC98B5C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD3E390129CFCC2FB7F725234FA16E5 /* Foundation.framework */; };
+		9C51222C30EFEC8EB99B28D23E1D1961 /* InAppPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E07D0F6D7126264F31E0A948086DBBF /* InAppPurchase.swift */; };
 		A839C0A2D8309837AB68ED01F0ECE654 /* Pods-PurchaseController_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BF2648626FF775B3AB33D880FDBD5C /* Pods-PurchaseController_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BE5553204DF5FAC23D92E10E0AAD2280 /* AppleReceiptValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C0683B86C9777844B800F6BDCE69064 /* AppleReceiptValidator.swift */; };
-		CB33A7F95488353E964125F556E7399B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD3E390129CFCC2FB7F725234FA16E5 /* Foundation.framework */; };
+		B90E15D2EBB835C5F8F1E74FCA9CDE52 /* ReceiptValidationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4A2AA313E3FBFB1E09BFF96A7567D6 /* ReceiptValidationResponse.swift */; };
+		BBD4AA88F030F2EAE4E1E17F8132FEB2 /* PaymentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4A3F11393DEBA185703AF48A2F04AB /* PaymentsController.swift */; };
 		CD16969D421FFDDE306AB2BF3EEBCE6A /* Pods-PurchaseController_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 65386D896C3ECB21DB2487CF7A890107 /* Pods-PurchaseController_Example-dummy.m */; };
-		D0C44693FFF13A187D065F6EFC9DF37C /* InAppReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C52C6D2CED50BF5FC92C08ECA13E3B /* InAppReceipt.swift */; };
-		D56B2CA0FD7BB72C4710CCD55CDF4C26 /* PaymentQueueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97AA14718160C4AA81F37D3BA901E8A /* PaymentQueueController.swift */; };
+		CE4B15CC1F9A2D106E339B2DE30F2663 /* TransactionReceiptFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 600C31CEADA446CB26F5E3C2F214AAD4 /* TransactionReceiptFetcher.m */; };
+		D007830460A19B88DA10E1311F01A12F /* SwiftyStoreKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3765D1591BEDF9A854D5674C5AA13071 /* SwiftyStoreKit.swift */; };
+		D45BCAD1D3B0D4ED08C35C525BDC9254 /* PurchaseItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024E9E784904D0BE4C309709EDE50599 /* PurchaseItem.swift */; };
 		D7E01CB993370CC1FEC703DA39AA8BA6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD3E390129CFCC2FB7F725234FA16E5 /* Foundation.framework */; };
-		D7FF6AF99829D9715FC2EFBDA6E0113F /* PendingRenewalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EE69B53A291A2B6A802A1EDA6E61E9 /* PendingRenewalInfo.swift */; };
-		DA84964C2A18E9EF5B834DFB57D37A1B /* ReceiptTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A4445DC8EBF67CBAD1352D538E752F /* ReceiptTransaction.swift */; };
+		DB8929EFCD687F6526D4CB8747E7514A /* SwiftyStoreKit-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 645BF586D68029B99C08C7BE9CBE8981 /* SwiftyStoreKit-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DCB92958E5D3E86F5EA73AD67B2165C3 /* SKProduct+LocalizedPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6758656DDC6F11F76E5420661F243F07 /* SKProduct+LocalizedPrice.swift */; };
+		DE772955BB030444E8951EB843DD2EB6 /* RestorePurchasesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12768A30571A6DB1788C354ED1134D0 /* RestorePurchasesController.swift */; };
 		DFB50EF07347168580D105DEE1B4FA2B /* Pods-PurchaseController_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D76C81EE4DA5FAF3EFCD38783050AE1E /* Pods-PurchaseController_Tests-dummy.m */; };
-		E33FD6F4A7241F776B65DBCB26498B50 /* InAppProductQueryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13BB49B89F73E434607ED498DDB8D9AE /* InAppProductQueryRequest.swift */; };
-		E9081C5F416F557C913A069702A3B8F5 /* PurchaseErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88957E16DB507865EDB53DA3A423A201 /* PurchaseErrorHandling.swift */; };
-		F4397F286A2C423C9613DE932F74F6D7 /* PurchaseController-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 41B734213AA232BFC1225C7A0C3ED35D /* PurchaseController-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F5F1C8F652D4B48CBD2A69659F2681B5 /* ReceiptValidationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6741F14D56069EFA5FDF723E86E38499 /* ReceiptValidationResponse.swift */; };
-		F6C33750335C5809F76D8F52BD3C91C6 /* ProductsInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F30F948B578A0FA3523478D7AADB01 /* ProductsInfoController.swift */; };
-		F8D2E7245E034432295E4686047B3838 /* ReceiptFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C644D75A3F22A4D56D04A2AE03CCA2 /* ReceiptFields.swift */; };
-		F950F98968E6B790E92E3CACA1F7E13F /* LocalReceiptValidatorImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EEF5208DA98E94BE3E5665E6CEC462 /* LocalReceiptValidatorImplementation.swift */; };
+		DFF89C98DC407BDFB0AC47F2C221A45E /* InAppReceiptRefreshRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8F004E5E9B3C1924338C0DE8D1730D /* InAppReceiptRefreshRequest.swift */; };
+		F89A65302F073468782014CEDF54D833 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFD3E390129CFCC2FB7F725234FA16E5 /* Foundation.framework */; };
+		F9207758F00F588C546738D65F95C62D /* LocalReceiptValidatorImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6112E668F775BA77479F57394E9149 /* LocalReceiptValidatorImplementation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		0AFB15EC0E51991AF5BC54AC32DFEC46 /* PBXContainerItemProxy */ = {
+		134F4870A692D59B60E8A21A78D46FCD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -96,13 +96,6 @@
 			remoteGlobalIDString = 06D25A4FF2ED1E3CE5A9A0822BE1F300;
 			remoteInfo = GRKOpenSSLFramework;
 		};
-		5FDF42FB7A821343917AE8A3097005A5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 06D25A4FF2ED1E3CE5A9A0822BE1F300;
-			remoteInfo = GRKOpenSSLFramework;
-		};
 		601D145F312851D4AEEEC6A79EAA4D9B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
@@ -110,90 +103,98 @@
 			remoteGlobalIDString = FCD4F1901DD86FEB184BFDD6673F4A7B;
 			remoteInfo = SwiftyStoreKit;
 		};
+		913DB2D0CF60D2D89920556D6C5B2FD3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 06D25A4FF2ED1E3CE5A9A0822BE1F300;
+			remoteInfo = GRKOpenSSLFramework;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		01D56FDDFDF338A3D7303B6D382FF2E6 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
+		024E9E784904D0BE4C309709EDE50599 /* PurchaseItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PurchaseItem.swift; sourceTree = "<group>"; };
 		0FD046F6601994DF00DCFFA1F645B421 /* Pods-PurchaseController_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PurchaseController_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		13BB49B89F73E434607ED498DDB8D9AE /* InAppProductQueryRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InAppProductQueryRequest.swift; path = SwiftyStoreKit/InAppProductQueryRequest.swift; sourceTree = "<group>"; };
-		1C20A4D05AFA0BE3D2F6C9C2514ECB3F /* Receipt.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Receipt.swift; sourceTree = "<group>"; };
-		207C75B17D60A0D20666B4374EF4F988 /* InAppPurchase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InAppPurchase.swift; sourceTree = "<group>"; };
+		1A7385CC8D4A531A33FF596AD3A3518C /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		21650B9B5479A6DD12AED2EA575E1CEC /* PurchaseController-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PurchaseController-umbrella.h"; sourceTree = "<group>"; };
 		22BB1552CB5EA84AE3B31284097CFEA7 /* Pods-PurchaseController_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PurchaseController_Tests-umbrella.h"; sourceTree = "<group>"; };
 		239E9577CC2A1A1D3A60F337FBEB759E /* SwiftyStoreKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyStoreKit-dummy.m"; sourceTree = "<group>"; };
 		2718844350B02667B3A24217E6037669 /* SwiftyStoreKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SwiftyStoreKit-Info.plist"; sourceTree = "<group>"; };
-		2971DB0B10F7EA944227965BBA0E063E /* Pods_PurchaseController_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurchaseController_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2971DB0B10F7EA944227965BBA0E063E /* Pods_PurchaseController_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_PurchaseController_Tests.framework; path = "Pods-PurchaseController_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C8FD0D4053B12EABBB9C7924FBA670A /* Pods-PurchaseController_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PurchaseController_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		32B68D5B8C0127052BE81786F59B46F6 /* SwiftyStoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyStoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E07D0F6D7126264F31E0A948086DBBF /* InAppPurchase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InAppPurchase.swift; sourceTree = "<group>"; };
+		32B68D5B8C0127052BE81786F59B46F6 /* SwiftyStoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftyStoreKit.framework; path = SwiftyStoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3433C5BFC2DFA7E7E827531EDDA6A152 /* PurchaseErrorHandling.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PurchaseErrorHandling.swift; sourceTree = "<group>"; };
+		351A054AB2419719F76A090A00467E0A /* PendingRenewalInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PendingRenewalInfo.swift; sourceTree = "<group>"; };
+		3736A65A8CF50438B2BA0E4986C14410 /* PurchaseController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PurchaseController.xcconfig; sourceTree = "<group>"; };
 		3765D1591BEDF9A854D5674C5AA13071 /* SwiftyStoreKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyStoreKit.swift; path = SwiftyStoreKit/SwiftyStoreKit.swift; sourceTree = "<group>"; };
 		3C0683B86C9777844B800F6BDCE69064 /* AppleReceiptValidator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppleReceiptValidator.swift; path = SwiftyStoreKit/AppleReceiptValidator.swift; sourceTree = "<group>"; };
-		3F00509E4BDC3B18C22F5E6FCF96B65A /* PurchaseItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PurchaseItem.swift; sourceTree = "<group>"; };
-		3F3984D6AFBD4E7EE1732B9E96225FEF /* AppleReceiptValidatorImplementation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppleReceiptValidatorImplementation.swift; sourceTree = "<group>"; };
 		3F4A3F11393DEBA185703AF48A2F04AB /* PaymentsController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PaymentsController.swift; path = SwiftyStoreKit/PaymentsController.swift; sourceTree = "<group>"; };
-		41B734213AA232BFC1225C7A0C3ED35D /* PurchaseController-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PurchaseController-umbrella.h"; sourceTree = "<group>"; };
+		46222DEB2CE76CFFBFF972A73A748CEF /* ReadableDebugStringProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadableDebugStringProtocol.swift; sourceTree = "<group>"; };
 		4A2D44D6620AAF2E248497717CABF6A4 /* Pods-PurchaseController_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PurchaseController_Example-Info.plist"; sourceTree = "<group>"; };
-		4DF1FF2F7AD0F4EDF7183D417DD8A091 /* TransactionReceiptFetcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TransactionReceiptFetcher.h; path = PurchaseController/Classes/TransactionReceiptFetcher.h; sourceTree = "<group>"; };
 		4EA4B143839C9F4116FEBD0B02C23D4B /* Pods-PurchaseController_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PurchaseController_Example.release.xcconfig"; sourceTree = "<group>"; };
-		5337837A22175C868D1C4D7B866F45AE /* PurchasePersistance.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PurchasePersistance.swift; path = PurchaseController/Classes/PurchasePersistance.swift; sourceTree = "<group>"; };
-		545A2C13F9D480E3C0E2799C1F2B548E /* PurchaseController+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "PurchaseController+Extensions.swift"; path = "PurchaseController/Classes/PurchaseController+Extensions.swift"; sourceTree = "<group>"; };
+		4FD6D654FC80E9F7FC60D45257048106 /* ReceiptFields.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptFields.swift; sourceTree = "<group>"; };
+		51C57514AFE3618939EF10AB466B6B02 /* TransactionReceiptFetcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = TransactionReceiptFetcher.h; sourceTree = "<group>"; };
 		548E551FAC321D0F95CA034C3F4CB1CD /* SwiftyStoreKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyStoreKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5944EC9132FD63FE4AFA0C2C016F15D8 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		5D66A92C0AD4FFF7E2A23BAAA58EB4BF /* openssl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = openssl.framework; path = "OpenSSL-iOS/bin/openssl.framework"; sourceTree = "<group>"; };
-		612852DD7735858D473C963F37F08609 /* PurchaseController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PurchaseController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E4A2AA313E3FBFB1E09BFF96A7567D6 /* ReceiptValidationResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptValidationResponse.swift; sourceTree = "<group>"; };
+		600C31CEADA446CB26F5E3C2F214AAD4 /* TransactionReceiptFetcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = TransactionReceiptFetcher.m; sourceTree = "<group>"; };
+		60E97EFC92E9E9A8E83D5CE643E81EBD /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		612852DD7735858D473C963F37F08609 /* PurchaseController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PurchaseController.framework; path = PurchaseController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		645BF586D68029B99C08C7BE9CBE8981 /* SwiftyStoreKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyStoreKit-umbrella.h"; sourceTree = "<group>"; };
 		65386D896C3ECB21DB2487CF7A890107 /* Pods-PurchaseController_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PurchaseController_Example-dummy.m"; sourceTree = "<group>"; };
-		6741F14D56069EFA5FDF723E86E38499 /* ReceiptValidationResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptValidationResponse.swift; sourceTree = "<group>"; };
 		6758656DDC6F11F76E5420661F243F07 /* SKProduct+LocalizedPrice.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "SKProduct+LocalizedPrice.swift"; path = "SwiftyStoreKit/SKProduct+LocalizedPrice.swift"; sourceTree = "<group>"; };
-		6A07EFA75F3542F79ECB9741F13B2063 /* Pods_PurchaseController_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PurchaseController_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		69E94F40B4D9A45C407B03174AB1BBAD /* Receipt.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Receipt.swift; sourceTree = "<group>"; };
+		6A07EFA75F3542F79ECB9741F13B2063 /* Pods_PurchaseController_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_PurchaseController_Example.framework; path = "Pods-PurchaseController_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BB68CA82B0308FC67F63CA41B111849 /* Pods-PurchaseController_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PurchaseController_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		6C9ECB9B56F65416C284DEE8FB4DEB19 /* SwiftyStoreKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyStoreKit-prefix.pch"; sourceTree = "<group>"; };
-		736ED901F6E3F583E9956C976D3961FC /* PurchaseController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PurchaseController.swift; path = PurchaseController/Classes/PurchaseController.swift; sourceTree = "<group>"; };
+		6F6112E668F775BA77479F57394E9149 /* LocalReceiptValidatorImplementation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocalReceiptValidatorImplementation.swift; sourceTree = "<group>"; };
+		7164973CFE88850F235F4CB7D6E5F8CA /* PurchaseController.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = PurchaseController.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		758D252A96DFB3408449FEB708A0A982 /* SwiftyStoreKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyStoreKit.xcconfig; sourceTree = "<group>"; };
-		81122B77579229F64BC6C6339508E8D2 /* PurchaseController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PurchaseController.xcconfig; sourceTree = "<group>"; };
 		8359163EFAD053A4FA02BED1BE46233F /* CompleteTransactionsController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CompleteTransactionsController.swift; path = SwiftyStoreKit/CompleteTransactionsController.swift; sourceTree = "<group>"; };
-		8414278C1F6CAEEF1886AC81DBCCD9D4 /* PurchaseController.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = PurchaseController.modulemap; sourceTree = "<group>"; };
-		84DC9A477D73AFA51598476818FBFC9E /* ReceiptValidatorProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptValidatorProtocol.swift; sourceTree = "<group>"; };
 		85EAB688EEA1CD0132F739CFA729BB29 /* GRKOpenSSLFramework.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GRKOpenSSLFramework.xcconfig; sourceTree = "<group>"; };
-		88957E16DB507865EDB53DA3A423A201 /* PurchaseErrorHandling.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PurchaseErrorHandling.swift; path = PurchaseController/Classes/PurchaseErrorHandling.swift; sourceTree = "<group>"; };
+		87AD7FB70EF09842CABDAE435F5EF401 /* PurchaseController-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "PurchaseController-Info.plist"; sourceTree = "<group>"; };
+		89E6C2A5361176BF8A0739C15F24BFA6 /* PurchaseController-Bridging-Header.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PurchaseController-Bridging-Header.h"; sourceTree = "<group>"; };
 		8B5DACBEA1876001F389351CA18848F9 /* Pods-PurchaseController_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-PurchaseController_Example.modulemap"; sourceTree = "<group>"; };
+		8DE4B1ACC6816ACBD1B7718CC5BF0CDC /* PurchaseController+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "PurchaseController+Extensions.swift"; sourceTree = "<group>"; };
+		917B064C871D165D014498FD70AF076E /* PurchaseController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
 		9365DAA7DD4945ED6959621B7F252A7C /* SwiftyStoreKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SwiftyStoreKit.modulemap; sourceTree = "<group>"; };
-		960DDEAB420B14EADF7D1887304EC3F3 /* ReadableDebugStringProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReadableDebugStringProtocol.swift; path = PurchaseController/Classes/ReadableDebugStringProtocol.swift; sourceTree = "<group>"; };
-		97C644D75A3F22A4D56D04A2AE03CCA2 /* ReceiptFields.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptFields.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E7DC09565832264E1D3BA13F2FB37E1 /* Pods-PurchaseController_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PurchaseController_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		A12768A30571A6DB1788C354ED1134D0 /* RestorePurchasesController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RestorePurchasesController.swift; path = SwiftyStoreKit/RestorePurchasesController.swift; sourceTree = "<group>"; };
 		B05CE49BD66A3946234F7F3239CE400F /* Pods-PurchaseController_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PurchaseController_Example-frameworks.sh"; sourceTree = "<group>"; };
 		B383D8EC105A317984B82D43859E5F30 /* Pods-PurchaseController_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-PurchaseController_Tests.modulemap"; sourceTree = "<group>"; };
-		B740FB5949B996047CA632F26A999249 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		C1F30F948B578A0FA3523478D7AADB01 /* ProductsInfoController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProductsInfoController.swift; path = SwiftyStoreKit/ProductsInfoController.swift; sourceTree = "<group>"; };
-		C2136259BC3DB0E2A4AF3FE5F6EAECA9 /* PurchaseController-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "PurchaseController-Info.plist"; sourceTree = "<group>"; };
-		C4A4445DC8EBF67CBAD1352D538E752F /* ReceiptTransaction.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReceiptTransaction.swift; path = PurchaseController/Classes/ReceiptTransaction.swift; sourceTree = "<group>"; };
-		C4D13ED429FA87D57029A0372CF4FD04 /* PurchaseController.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = PurchaseController.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		C55BAA9403E237C4B67727FB4EABB4AB /* OS.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OS.swift; path = SwiftyStoreKit/OS.swift; sourceTree = "<group>"; };
 		C6E7F604539348DC8458506CBC38FFE3 /* InAppReceiptVerificator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InAppReceiptVerificator.swift; path = SwiftyStoreKit/InAppReceiptVerificator.swift; sourceTree = "<group>"; };
-		C7EEF5208DA98E94BE3E5665E6CEC462 /* LocalReceiptValidatorImplementation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocalReceiptValidatorImplementation.swift; sourceTree = "<group>"; };
 		C97AA14718160C4AA81F37D3BA901E8A /* PaymentQueueController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PaymentQueueController.swift; path = SwiftyStoreKit/PaymentQueueController.swift; sourceTree = "<group>"; };
 		CBDA9D0752A0929D614CF5067EB2B702 /* Pods-PurchaseController_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PurchaseController_Example-acknowledgements.plist"; sourceTree = "<group>"; };
+		CC481B8602D70C40812146C65699C239 /* PurchaseController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PurchaseController-dummy.m"; sourceTree = "<group>"; };
+		CFB5E57C442013CBD2221CFFBF02C115 /* ReceiptTransaction.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptTransaction.swift; sourceTree = "<group>"; };
 		D0FE9B8DE66AAB2702106C32ECA5AB1C /* Pods-PurchaseController_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PurchaseController_Tests-Info.plist"; sourceTree = "<group>"; };
 		D2FB34C9DA28EF02D52F25E634292C85 /* Pods-PurchaseController_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PurchaseController_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
-		D404185F5EA56E8966FBC97721ADF07F /* PurchaseController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PurchaseController-dummy.m"; sourceTree = "<group>"; };
+		D35592592A28A4F5D980D38905C3E895 /* PurchaseController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PurchaseController-prefix.pch"; sourceTree = "<group>"; };
+		D5222B1D439CBE8049046FEAB7294930 /* PurchaseController.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = PurchaseController.modulemap; sourceTree = "<group>"; };
 		D53392285556A5173AD70832282E1DE4 /* Pods-PurchaseController_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PurchaseController_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		D6FE133E78E6D30C718D5AF10D61264C /* PurchasePersistance.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PurchasePersistance.swift; sourceTree = "<group>"; };
 		D76C81EE4DA5FAF3EFCD38783050AE1E /* Pods-PurchaseController_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PurchaseController_Tests-dummy.m"; sourceTree = "<group>"; };
+		E0BB91643A6D4D1DACEAB8614E03C421 /* AppleReceiptValidatorImplementation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppleReceiptValidatorImplementation.swift; sourceTree = "<group>"; };
 		E4C52C6D2CED50BF5FC92C08ECA13E3B /* InAppReceipt.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InAppReceipt.swift; path = SwiftyStoreKit/InAppReceipt.swift; sourceTree = "<group>"; };
-		EA7016399CB081513C5F45DA44585A0D /* PurchaseController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PurchaseController-prefix.pch"; sourceTree = "<group>"; };
-		ED4BCE74CE1597F5A2F1BAEF24EC7B89 /* TransactionReceiptFetcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TransactionReceiptFetcher.m; path = PurchaseController/Classes/TransactionReceiptFetcher.m; sourceTree = "<group>"; };
 		EF8F004E5E9B3C1924338C0DE8D1730D /* InAppReceiptRefreshRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InAppReceiptRefreshRequest.swift; path = SwiftyStoreKit/InAppReceiptRefreshRequest.swift; sourceTree = "<group>"; };
 		F10C246CC804BA7C11187AD3C12D7C17 /* SwiftyStoreKit+Types.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "SwiftyStoreKit+Types.swift"; path = "SwiftyStoreKit/SwiftyStoreKit+Types.swift"; sourceTree = "<group>"; };
-		F4EE69B53A291A2B6A802A1EDA6E61E9 /* PendingRenewalInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PendingRenewalInfo.swift; path = PurchaseController/Classes/PendingRenewalInfo.swift; sourceTree = "<group>"; };
 		F5BF2648626FF775B3AB33D880FDBD5C /* Pods-PurchaseController_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PurchaseController_Example-umbrella.h"; sourceTree = "<group>"; };
+		FBF5C3A57C078D1588F21981541D7D4A /* ReceiptValidatorProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptValidatorProtocol.swift; sourceTree = "<group>"; };
 		FFD3E390129CFCC2FB7F725234FA16E5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		8B917D242C2158CE473E356D4585F951 /* Frameworks */ = {
+		33642C19F179414805A4512BC7254A1A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B33524BB1629FD6A9143BD198CA7B01 /* Foundation.framework in Frameworks */,
+				9A84F168DF69BDD1169A20DE9DC98B5C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,27 +214,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E7D9398666A5875A6F56C0CA75D87C9C /* Frameworks */ = {
+		FB4B119B14A5961FC010D10E582C8BAA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB33A7F95488353E964125F556E7399B /* Foundation.framework in Frameworks */,
-				586312DA5EA914673C6C05261CE0D5D8 /* StoreKit.framework in Frameworks */,
-				77292F9FC6D5AF7A3D6158B93E6C1DC7 /* SwiftyStoreKit.framework in Frameworks */,
+				F89A65302F073468782014CEDF54D833 /* Foundation.framework in Frameworks */,
+				22BF170266BE0FB8219DB65D33E6E2ED /* StoreKit.framework in Frameworks */,
+				5752A24DF9E1D8ADEC5393920EF19778 /* SwiftyStoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		116FA6C0C97BD7E9C1FEAA2B21DB3546 /* Pod */ = {
+		10220EF27B1017DCF0DD04B94CE63795 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				B740FB5949B996047CA632F26A999249 /* LICENSE */,
-				C4D13ED429FA87D57029A0372CF4FD04 /* PurchaseController.podspec */,
-				5944EC9132FD63FE4AFA0C2C016F15D8 /* README.md */,
+				2E07D0F6D7126264F31E0A948086DBBF /* InAppPurchase.swift */,
+				024E9E784904D0BE4C309709EDE50599 /* PurchaseItem.swift */,
+				69E94F40B4D9A45C407B03174AB1BBAD /* Receipt.swift */,
+				4FD6D654FC80E9F7FC60D45257048106 /* ReceiptFields.swift */,
+				5E4A2AA313E3FBFB1E09BFF96A7567D6 /* ReceiptValidationResponse.swift */,
 			);
-			name = Pod;
+			name = Models;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		1C0FEE15D7D80D9E1B6315721DEC1B9B /* Pods-PurchaseController_Tests */ = {
@@ -252,22 +256,13 @@
 			path = "Target Support Files/Pods-PurchaseController_Tests";
 			sourceTree = "<group>";
 		};
-		1E1CF736A0222C94208DD079F35E9B2B /* PurchaseController */ = {
+		25FF6E4D6E6154C14EA232474EDD0FB0 /* PurchaseController */ = {
 			isa = PBXGroup;
 			children = (
-				F4EE69B53A291A2B6A802A1EDA6E61E9 /* PendingRenewalInfo.swift */,
-				736ED901F6E3F583E9956C976D3961FC /* PurchaseController.swift */,
-				545A2C13F9D480E3C0E2799C1F2B548E /* PurchaseController+Extensions.swift */,
-				88957E16DB507865EDB53DA3A423A201 /* PurchaseErrorHandling.swift */,
-				5337837A22175C868D1C4D7B866F45AE /* PurchasePersistance.swift */,
-				960DDEAB420B14EADF7D1887304EC3F3 /* ReadableDebugStringProtocol.swift */,
-				C4A4445DC8EBF67CBAD1352D538E752F /* ReceiptTransaction.swift */,
-				4DF1FF2F7AD0F4EDF7183D417DD8A091 /* TransactionReceiptFetcher.h */,
-				ED4BCE74CE1597F5A2F1BAEF24EC7B89 /* TransactionReceiptFetcher.m */,
-				4BAFA9F01CB2FB4A823B32EAAF5A4DF0 /* Models */,
-				116FA6C0C97BD7E9C1FEAA2B21DB3546 /* Pod */,
-				A0CFB9637B3C879069662740FA967C6D /* ReceiptValidation */,
-				D75EE3BA79B8F2DBB0210965E0B76E40 /* Support Files */,
+				AAA5C2380461B2BBFE96A8FB9382D7E1 /* Classes */,
+				DF725FD131D81DC0E376A579A08CB303 /* Headers */,
+				A4825AC3D8681F3C5126BC4CDBE49AF0 /* Pod */,
+				6FE584D0C39902D5C7F0BFAF409F9667 /* Support Files */,
 			);
 			name = PurchaseController;
 			path = ../..;
@@ -321,19 +316,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4BAFA9F01CB2FB4A823B32EAAF5A4DF0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				207C75B17D60A0D20666B4374EF4F988 /* InAppPurchase.swift */,
-				3F00509E4BDC3B18C22F5E6FCF96B65A /* PurchaseItem.swift */,
-				1C20A4D05AFA0BE3D2F6C9C2514ECB3F /* Receipt.swift */,
-				97C644D75A3F22A4D56D04A2AE03CCA2 /* ReceiptFields.swift */,
-				6741F14D56069EFA5FDF723E86E38499 /* ReceiptValidationResponse.swift */,
-			);
-			name = Models;
-			path = PurchaseController/Classes/Models;
-			sourceTree = "<group>";
-		};
 		5234CEBC17CFA00B379FDBFEABC7997F /* SwiftyStoreKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -353,7 +335,19 @@
 				F10C246CC804BA7C11187AD3C12D7C17 /* SwiftyStoreKit+Types.swift */,
 				395BF0BAFAC403E20E83F6B097858808 /* Support Files */,
 			);
+			name = SwiftyStoreKit;
 			path = SwiftyStoreKit;
+			sourceTree = "<group>";
+		};
+		54F50D82FD9572D63EFD5290B90A63C9 /* ReceiptValidation */ = {
+			isa = PBXGroup;
+			children = (
+				E0BB91643A6D4D1DACEAB8614E03C421 /* AppleReceiptValidatorImplementation.swift */,
+				6F6112E668F775BA77479F57394E9149 /* LocalReceiptValidatorImplementation.swift */,
+				FBF5C3A57C078D1588F21981541D7D4A /* ReceiptValidatorProtocol.swift */,
+			);
+			name = ReceiptValidation;
+			path = ReceiptValidation;
 			sourceTree = "<group>";
 		};
 		559C8A66D7EDECBD8A4EBABB2AC019E7 /* Pods */ = {
@@ -365,23 +359,47 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		A0CFB9637B3C879069662740FA967C6D /* ReceiptValidation */ = {
+		6FE584D0C39902D5C7F0BFAF409F9667 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				3F3984D6AFBD4E7EE1732B9E96225FEF /* AppleReceiptValidatorImplementation.swift */,
-				C7EEF5208DA98E94BE3E5665E6CEC462 /* LocalReceiptValidatorImplementation.swift */,
-				84DC9A477D73AFA51598476818FBFC9E /* ReceiptValidatorProtocol.swift */,
+				D5222B1D439CBE8049046FEAB7294930 /* PurchaseController.modulemap */,
+				3736A65A8CF50438B2BA0E4986C14410 /* PurchaseController.xcconfig */,
+				CC481B8602D70C40812146C65699C239 /* PurchaseController-dummy.m */,
+				87AD7FB70EF09842CABDAE435F5EF401 /* PurchaseController-Info.plist */,
+				D35592592A28A4F5D980D38905C3E895 /* PurchaseController-prefix.pch */,
+				21650B9B5479A6DD12AED2EA575E1CEC /* PurchaseController-umbrella.h */,
 			);
-			name = ReceiptValidation;
-			path = PurchaseController/Classes/ReceiptValidation;
+			name = "Support Files";
+			path = "Example/Pods/Target Support Files/PurchaseController";
 			sourceTree = "<group>";
 		};
-		B5759627B4356D38525D9AAC8A65D6DF /* Development Pods */ = {
+		A4825AC3D8681F3C5126BC4CDBE49AF0 /* Pod */ = {
 			isa = PBXGroup;
 			children = (
-				1E1CF736A0222C94208DD079F35E9B2B /* PurchaseController */,
+				60E97EFC92E9E9A8E83D5CE643E81EBD /* LICENSE */,
+				7164973CFE88850F235F4CB7D6E5F8CA /* PurchaseController.podspec */,
+				1A7385CC8D4A531A33FF596AD3A3518C /* README.md */,
 			);
-			name = "Development Pods";
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		AAA5C2380461B2BBFE96A8FB9382D7E1 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				351A054AB2419719F76A090A00467E0A /* PendingRenewalInfo.swift */,
+				917B064C871D165D014498FD70AF076E /* PurchaseController.swift */,
+				8DE4B1ACC6816ACBD1B7718CC5BF0CDC /* PurchaseController+Extensions.swift */,
+				3433C5BFC2DFA7E7E827531EDDA6A152 /* PurchaseErrorHandling.swift */,
+				D6FE133E78E6D30C718D5AF10D61264C /* PurchasePersistance.swift */,
+				46222DEB2CE76CFFBFF972A73A748CEF /* ReadableDebugStringProtocol.swift */,
+				CFB5E57C442013CBD2221CFFBF02C115 /* ReceiptTransaction.swift */,
+				51C57514AFE3618939EF10AB466B6B02 /* TransactionReceiptFetcher.h */,
+				600C31CEADA446CB26F5E3C2F214AAD4 /* TransactionReceiptFetcher.m */,
+				10220EF27B1017DCF0DD04B94CE63795 /* Models */,
+				54F50D82FD9572D63EFD5290B90A63C9 /* ReceiptValidation */,
+			);
+			name = Classes;
+			path = PurchaseController/Classes;
 			sourceTree = "<group>";
 		};
 		BC1C81B042F9D92F593E7B6ED95868FA /* Frameworks */ = {
@@ -399,6 +417,7 @@
 				4626BBFED3E396F432E804B6FDC15EC1 /* Frameworks */,
 				BFB4648014F3E56AE98AD6A33128BE9A /* Support Files */,
 			);
+			name = GRKOpenSSLFramework;
 			path = GRKOpenSSLFramework;
 			sourceTree = "<group>";
 		};
@@ -411,30 +430,24 @@
 			path = "../Target Support Files/GRKOpenSSLFramework";
 			sourceTree = "<group>";
 		};
+		CDBD564E4842CCA3281D60AA0F6C56AB /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				25FF6E4D6E6154C14EA232474EDD0FB0 /* PurchaseController */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
-				B5759627B4356D38525D9AAC8A65D6DF /* Development Pods */,
+				CDBD564E4842CCA3281D60AA0F6C56AB /* Development Pods */,
 				BC1C81B042F9D92F593E7B6ED95868FA /* Frameworks */,
 				559C8A66D7EDECBD8A4EBABB2AC019E7 /* Pods */,
 				DD04D83149745D06DAEA78E583A307D5 /* Products */,
 				3117CD4DFBC210B0A0DDC02625BDBA50 /* Targets Support Files */,
 			);
-			sourceTree = "<group>";
-		};
-		D75EE3BA79B8F2DBB0210965E0B76E40 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				8414278C1F6CAEEF1886AC81DBCCD9D4 /* PurchaseController.modulemap */,
-				81122B77579229F64BC6C6339508E8D2 /* PurchaseController.xcconfig */,
-				D404185F5EA56E8966FBC97721ADF07F /* PurchaseController-dummy.m */,
-				C2136259BC3DB0E2A4AF3FE5F6EAECA9 /* PurchaseController-Info.plist */,
-				EA7016399CB081513C5F45DA44585A0D /* PurchaseController-prefix.pch */,
-				41B734213AA232BFC1225C7A0C3ED35D /* PurchaseController-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "Example/Pods/Target Support Files/PurchaseController";
 			sourceTree = "<group>";
 		};
 		DAC910204D9660A18BB7E81BB2DD2830 /* iOS */ = {
@@ -457,9 +470,28 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		DF725FD131D81DC0E376A579A08CB303 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				89E6C2A5361176BF8A0739C15F24BFA6 /* PurchaseController-Bridging-Header.h */,
+			);
+			name = Headers;
+			path = PurchaseController/Headers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		5D8BAAB7EAAB3B607E6FB82E2423FFA9 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44A2434D5742875BDF8D5601FC3C6168 /* PurchaseController-Bridging-Header.h in Headers */,
+				3B3DDDF2A4DD7DBBF23F168A0DE229BD /* PurchaseController-umbrella.h in Headers */,
+				94F83FF3A4BCA814D19B21D569FA22A4 /* TransactionReceiptFetcher.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7A8FDF2E1827E05FEE759A9E3AB836E3 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -468,20 +500,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8F184091B3B077A94278E9C5507D1309 /* Headers */ = {
+		B3855CF7930542F9766CE4C6CA01FE66 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				826343536AE74EB702E6475DD9129D86 /* SwiftyStoreKit-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BEE43161F5D6321555C894E6833B4091 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F4397F286A2C423C9613DE932F74F6D7 /* PurchaseController-umbrella.h in Headers */,
-				1BFBB0024F8EF6F6B27A2D026A284940 /* TransactionReceiptFetcher.h in Headers */,
+				DB8929EFCD687F6526D4CB8747E7514A /* SwiftyStoreKit-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,18 +521,18 @@
 /* Begin PBXNativeTarget section */
 		3388B8BFD8E6D843A864A0BAA57FF047 /* PurchaseController */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FDEF679CF8C1434209CB8C0E766F0724 /* Build configuration list for PBXNativeTarget "PurchaseController" */;
+			buildConfigurationList = 96BEFCE9A4C7CFAB127765586CE46CE5 /* Build configuration list for PBXNativeTarget "PurchaseController" */;
 			buildPhases = (
-				BEE43161F5D6321555C894E6833B4091 /* Headers */,
-				F8B88292B27CEF6E095EBFF3FE2C085D /* Sources */,
-				E7D9398666A5875A6F56C0CA75D87C9C /* Frameworks */,
-				63AC6C9E05D632A8B07D9726756AC577 /* Resources */,
+				5D8BAAB7EAAB3B607E6FB82E2423FFA9 /* Headers */,
+				568668374F5C0BE260DF8D59E6242771 /* Sources */,
+				FB4B119B14A5961FC010D10E582C8BAA /* Frameworks */,
+				C5F36CEDA0BF87039E404B5B605C9C60 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				8EA287F6310863D0400BEF85749907DF /* PBXTargetDependency */,
-				DDB6D869449BEF3DB428DC35B5FFBEB5 /* PBXTargetDependency */,
+				5C744506E3E3979AB61AF689BC27A64E /* PBXTargetDependency */,
+				F96B198A07918A907DEB9A83209E07D6 /* PBXTargetDependency */,
 			);
 			name = PurchaseController;
 			productName = PurchaseController;
@@ -558,12 +581,12 @@
 		};
 		FCD4F1901DD86FEB184BFDD6673F4A7B /* SwiftyStoreKit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B771A6A994558CE579534CEFE9E9CA60 /* Build configuration list for PBXNativeTarget "SwiftyStoreKit" */;
+			buildConfigurationList = 03ACD655240F820DBBD568D1D51CBE1E /* Build configuration list for PBXNativeTarget "SwiftyStoreKit" */;
 			buildPhases = (
-				8F184091B3B077A94278E9C5507D1309 /* Headers */,
-				3E285DA05C3951F6F0E7E4E01291DCEC /* Sources */,
-				8B917D242C2158CE473E356D4585F951 /* Frameworks */,
-				44CF846611A6B91287BEF577C5DBFD85 /* Resources */,
+				B3855CF7930542F9766CE4C6CA01FE66 /* Headers */,
+				8FE41687748841B08D49DC7E247955BD /* Sources */,
+				33642C19F179414805A4512BC7254A1A /* Frameworks */,
+				3C2A89F5126CCF4C74A8A3DF124A2F62 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -605,14 +628,7 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		44CF846611A6B91287BEF577C5DBFD85 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		63AC6C9E05D632A8B07D9726756AC577 /* Resources */ = {
+		3C2A89F5126CCF4C74A8A3DF124A2F62 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -633,6 +649,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C5F36CEDA0BF87039E404B5B605C9C60 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -644,25 +667,49 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3E285DA05C3951F6F0E7E4E01291DCEC /* Sources */ = {
+		568668374F5C0BE260DF8D59E6242771 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE5553204DF5FAC23D92E10E0AAD2280 /* AppleReceiptValidator.swift in Sources */,
-				8809899E7251A82DDE98CDA6EEFE730C /* CompleteTransactionsController.swift in Sources */,
-				E33FD6F4A7241F776B65DBCB26498B50 /* InAppProductQueryRequest.swift in Sources */,
-				D0C44693FFF13A187D065F6EFC9DF37C /* InAppReceipt.swift in Sources */,
-				0D5734BE8A680B757F87DF3C5F364485 /* InAppReceiptRefreshRequest.swift in Sources */,
-				26A032E6BEAF370E35B29D5F66DB1000 /* InAppReceiptVerificator.swift in Sources */,
-				732670DDEF068FC5CEAED2480F3DC84D /* OS.swift in Sources */,
-				D56B2CA0FD7BB72C4710CCD55CDF4C26 /* PaymentQueueController.swift in Sources */,
-				6BF2E15F4FC918FC6B4EDDF086FF89C0 /* PaymentsController.swift in Sources */,
-				F6C33750335C5809F76D8F52BD3C91C6 /* ProductsInfoController.swift in Sources */,
-				1916C02F1A4897F869F626E8323B2877 /* RestorePurchasesController.swift in Sources */,
-				957D67ADC37DA73EDA7669AAE6AE0EFF /* SKProduct+LocalizedPrice.swift in Sources */,
-				048782DF73CBFB16BDA0BBB4CADB143F /* SwiftyStoreKit+Types.swift in Sources */,
-				8C8A87832DE0807C00448E452CDDDCB3 /* SwiftyStoreKit-dummy.m in Sources */,
-				2ADF46F6E4997BC8E2CF7E13A5EFFFC0 /* SwiftyStoreKit.swift in Sources */,
+				8603088273B2E7705BCC47C42284FE2D /* AppleReceiptValidatorImplementation.swift in Sources */,
+				9C51222C30EFEC8EB99B28D23E1D1961 /* InAppPurchase.swift in Sources */,
+				F9207758F00F588C546738D65F95C62D /* LocalReceiptValidatorImplementation.swift in Sources */,
+				9974C2F83EF50F9937061EB630B41CDC /* PendingRenewalInfo.swift in Sources */,
+				49D0B62582EC17DF5D8040778C7093A8 /* PurchaseController+Extensions.swift in Sources */,
+				947126E2CBA21B25E7700CAEB7F7CD12 /* PurchaseController-dummy.m in Sources */,
+				7014E9593595C4346A5638B96D05006A /* PurchaseController.swift in Sources */,
+				295B4E0133C8C86279537DC170B04347 /* PurchaseErrorHandling.swift in Sources */,
+				D45BCAD1D3B0D4ED08C35C525BDC9254 /* PurchaseItem.swift in Sources */,
+				0255B81B657083D727F2B3A140F60FE7 /* PurchasePersistance.swift in Sources */,
+				79F10312C1F27AF317D57C75CBF61895 /* ReadableDebugStringProtocol.swift in Sources */,
+				42D3B625274BEBB8A8D135D753A46B75 /* Receipt.swift in Sources */,
+				5405B14108CDB6B13B58C69BC2ACE4B5 /* ReceiptFields.swift in Sources */,
+				8B5AD991021BFF5812B3D489EF43A10F /* ReceiptTransaction.swift in Sources */,
+				B90E15D2EBB835C5F8F1E74FCA9CDE52 /* ReceiptValidationResponse.swift in Sources */,
+				504C05A0CB3FD130FFEDDAA2F44CE0F3 /* ReceiptValidatorProtocol.swift in Sources */,
+				CE4B15CC1F9A2D106E339B2DE30F2663 /* TransactionReceiptFetcher.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8FE41687748841B08D49DC7E247955BD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DC44CEC5D35838AAF0A146667C9F456 /* AppleReceiptValidator.swift in Sources */,
+				30034B0A26EEB8CD86B00351C5C34237 /* CompleteTransactionsController.swift in Sources */,
+				875D32A0741152D9E9543B67F2D8E173 /* InAppProductQueryRequest.swift in Sources */,
+				0AB6CB6DE7F256E7AD70B6779DC7B102 /* InAppReceipt.swift in Sources */,
+				DFF89C98DC407BDFB0AC47F2C221A45E /* InAppReceiptRefreshRequest.swift in Sources */,
+				12DB8DC1A55D778449647267F3056764 /* InAppReceiptVerificator.swift in Sources */,
+				063DF5D5616346D2EFED46D71753199E /* OS.swift in Sources */,
+				4494D3ACB7EBE036D28045E59D1CCA15 /* PaymentQueueController.swift in Sources */,
+				BBD4AA88F030F2EAE4E1E17F8132FEB2 /* PaymentsController.swift in Sources */,
+				320AA4991CE2E466731345ED661E2C43 /* ProductsInfoController.swift in Sources */,
+				DE772955BB030444E8951EB843DD2EB6 /* RestorePurchasesController.swift in Sources */,
+				DCB92958E5D3E86F5EA73AD67B2165C3 /* SKProduct+LocalizedPrice.swift in Sources */,
+				04A6ABC8616B744A5E1526588CF22F9C /* SwiftyStoreKit+Types.swift in Sources */,
+				173B2A3A9FF0C8A39FFA6E5A2A373B6D /* SwiftyStoreKit-dummy.m in Sources */,
+				D007830460A19B88DA10E1311F01A12F /* SwiftyStoreKit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -674,33 +721,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F8B88292B27CEF6E095EBFF3FE2C085D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				55C07FC799C0324265D82B6B44D9EDC1 /* AppleReceiptValidatorImplementation.swift in Sources */,
-				5F888DD1ABD8281790533025B07BD86A /* InAppPurchase.swift in Sources */,
-				F950F98968E6B790E92E3CACA1F7E13F /* LocalReceiptValidatorImplementation.swift in Sources */,
-				D7FF6AF99829D9715FC2EFBDA6E0113F /* PendingRenewalInfo.swift in Sources */,
-				8CD48384322C89C43B7C8C999A0BAA15 /* PurchaseController+Extensions.swift in Sources */,
-				456F39173B8A7CB103091EB143E22E3A /* PurchaseController-dummy.m in Sources */,
-				4ADFE1D671D236F85CFE0B84AFAE4CF7 /* PurchaseController.swift in Sources */,
-				E9081C5F416F557C913A069702A3B8F5 /* PurchaseErrorHandling.swift in Sources */,
-				4B814612C874C7F187F2897D5B9C626B /* PurchaseItem.swift in Sources */,
-				53AA3097FDFF37FC204A072C359CE80D /* PurchasePersistance.swift in Sources */,
-				8698B4A53E38946FD1F78C9BC8A3F91C /* ReadableDebugStringProtocol.swift in Sources */,
-				5E60E039B333AA8939E7927A8D70D0D0 /* Receipt.swift in Sources */,
-				F8D2E7245E034432295E4686047B3838 /* ReceiptFields.swift in Sources */,
-				DA84964C2A18E9EF5B834DFB57D37A1B /* ReceiptTransaction.swift in Sources */,
-				F5F1C8F652D4B48CBD2A69659F2681B5 /* ReceiptValidationResponse.swift in Sources */,
-				3CD5BEFE606E9D25166B19E83B20CEA5 /* ReceiptValidatorProtocol.swift in Sources */,
-				07E8610AFD220304EFCDF7D4AAFE3725 /* TransactionReceiptFetcher.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5C744506E3E3979AB61AF689BC27A64E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GRKOpenSSLFramework;
+			target = 06D25A4FF2ED1E3CE5A9A0822BE1F300 /* GRKOpenSSLFramework */;
+			targetProxy = 913DB2D0CF60D2D89920556D6C5B2FD3 /* PBXContainerItemProxy */;
+		};
 		768B5F12A37BBBFB43C80CD243D8E534 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SwiftyStoreKit;
@@ -713,18 +742,6 @@
 			target = 06D25A4FF2ED1E3CE5A9A0822BE1F300 /* GRKOpenSSLFramework */;
 			targetProxy = 4AC3F1BE90F5C1BD4A041481EAC07214 /* PBXContainerItemProxy */;
 		};
-		8EA287F6310863D0400BEF85749907DF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = GRKOpenSSLFramework;
-			target = 06D25A4FF2ED1E3CE5A9A0822BE1F300 /* GRKOpenSSLFramework */;
-			targetProxy = 5FDF42FB7A821343917AE8A3097005A5 /* PBXContainerItemProxy */;
-		};
-		DDB6D869449BEF3DB428DC35B5FFBEB5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftyStoreKit;
-			target = FCD4F1901DD86FEB184BFDD6673F4A7B /* SwiftyStoreKit */;
-			targetProxy = 0AFB15EC0E51991AF5BC54AC32DFEC46 /* PBXContainerItemProxy */;
-		};
 		E991EB309DF1E872B288771D5B4CAE1A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = PurchaseController;
@@ -736,6 +753,12 @@
 			name = "Pods-PurchaseController_Example";
 			target = 8B51469690B50B3DFFC05671D420C91D /* Pods-PurchaseController_Example */;
 			targetProxy = 236678880185C29C3AC0C9EFACD3BD32 /* PBXContainerItemProxy */;
+		};
+		F96B198A07918A907DEB9A83209E07D6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftyStoreKit;
+			target = FCD4F1901DD86FEB184BFDD6673F4A7B /* SwiftyStoreKit */;
+			targetProxy = 134F4870A692D59B60E8A21A78D46FCD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -839,9 +862,9 @@
 			};
 			name = Debug;
 		};
-		25005CC3C4D6C0B07DD19875566C1F44 /* Release */ = {
+		2F6CA3CA7DD59319D729354BF0C7CC77 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 81122B77579229F64BC6C6339508E8D2 /* PurchaseController.xcconfig */;
+			baseConfigurationReference = 3736A65A8CF50438B2BA0E4986C14410 /* PurchaseController.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -886,37 +909,6 @@
 			};
 			name = Release;
 		};
-		480BBEBA2E3AD1D807EBB2839AFF64A2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 758D252A96DFB3408449FEB708A0A982 /* SwiftyStoreKit.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/SwiftyStoreKit/SwiftyStoreKit-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/SwiftyStoreKit/SwiftyStoreKit-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/SwiftyStoreKit/SwiftyStoreKit.modulemap";
-				PRODUCT_MODULE_NAME = SwiftyStoreKit;
-				PRODUCT_NAME = SwiftyStoreKit;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		5FDAC5D6645481D1545F628DF5D415D8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4EA4B143839C9F4116FEBD0B02C23D4B /* Pods-PurchaseController_Example.release.xcconfig */;
@@ -952,11 +944,10 @@
 			};
 			name = Release;
 		};
-		7008E03E4E8701C707B7D52A8A027026 /* Debug */ = {
+		63A96C1F6B370BF483A4752791AD9049 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 81122B77579229F64BC6C6339508E8D2 /* PurchaseController.xcconfig */;
+			baseConfigurationReference = 758D252A96DFB3408449FEB708A0A982 /* SwiftyStoreKit.xcconfig */;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -966,14 +957,14 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/PurchaseController/PurchaseController-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/PurchaseController/PurchaseController-Info.plist";
+				GCC_PREFIX_HEADER = "Target Support Files/SwiftyStoreKit/SwiftyStoreKit-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SwiftyStoreKit/SwiftyStoreKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/PurchaseController/PurchaseController.modulemap";
-				PRODUCT_MODULE_NAME = PurchaseController;
-				PRODUCT_NAME = PurchaseController;
+				MODULEMAP_FILE = "Target Support Files/SwiftyStoreKit/SwiftyStoreKit.modulemap";
+				PRODUCT_MODULE_NAME = SwiftyStoreKit;
+				PRODUCT_NAME = SwiftyStoreKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
@@ -1118,13 +1109,14 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Release;
 		};
-		C8AE8ADAAADBB3F2475F27818923F82E /* Release */ = {
+		CDFBAB5BF0AF025BFEA3A2654E2CC778 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 758D252A96DFB3408449FEB708A0A982 /* SwiftyStoreKit.xcconfig */;
 			buildSettings = {
@@ -1156,9 +1148,50 @@
 			};
 			name = Release;
 		};
+		CF40AB0A2E123FD91F45FAF412AAFCA8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3736A65A8CF50438B2BA0E4986C14410 /* PurchaseController.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/PurchaseController/PurchaseController-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/PurchaseController/PurchaseController-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/PurchaseController/PurchaseController.modulemap";
+				PRODUCT_MODULE_NAME = PurchaseController;
+				PRODUCT_NAME = PurchaseController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		03ACD655240F820DBBD568D1D51CBE1E /* Build configuration list for PBXNativeTarget "SwiftyStoreKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				63A96C1F6B370BF483A4752791AD9049 /* Debug */,
+				CDFBAB5BF0AF025BFEA3A2654E2CC778 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1177,6 +1210,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		96BEFCE9A4C7CFAB127765586CE46CE5 /* Build configuration list for PBXNativeTarget "PurchaseController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF40AB0A2E123FD91F45FAF412AAFCA8 /* Debug */,
+				2F6CA3CA7DD59319D729354BF0C7CC77 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		AFB9A021773E90EB32B1B9468125DDE6 /* Build configuration list for PBXNativeTarget "Pods-PurchaseController_Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1186,29 +1228,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B771A6A994558CE579534CEFE9E9CA60 /* Build configuration list for PBXNativeTarget "SwiftyStoreKit" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				480BBEBA2E3AD1D807EBB2839AFF64A2 /* Debug */,
-				C8AE8ADAAADBB3F2475F27818923F82E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		EAFF08630C43E23630E7EDA4AEE56B6B /* Build configuration list for PBXAggregateTarget "GRKOpenSSLFramework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AB1C8CDA3711FAEA2AD4683B438B6F88 /* Debug */,
 				4693D7BC36B2E42825EE1DA21D326829 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		FDEF679CF8C1434209CB8C0E766F0724 /* Build configuration list for PBXNativeTarget "PurchaseController" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7008E03E4E8701C707B7D52A8A027026 /* Debug */,
-				25005CC3C4D6C0B07DD19875566C1F44 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
