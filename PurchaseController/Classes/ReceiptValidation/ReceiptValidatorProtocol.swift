@@ -15,8 +15,8 @@ public enum ReceiptValidationResult {
 ///
 /// Common approaches are:
 /// - local validation
-/// - server-side validation
-/// - appStore validation
+/// - server-to-server validation
+/// - client-to-server(appStore) validation
 ///
 /// # See also
 /// [Receipt Validation](https://developer.apple.com/library/archive/releasenotes/General/ValidateAppStoreReceipt/Introduction.html)
