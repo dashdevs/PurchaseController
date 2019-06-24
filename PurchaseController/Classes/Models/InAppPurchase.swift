@@ -24,17 +24,17 @@ struct InAppPurchase: ReadableDebugStringProtocol {
 
     /// The date and time that the item was purchased.
     let purchaseDate: Date?
-    let purchaseDateMs: Date?
+    let purchaseDateMs: TimeInterval?
     let purchaseDatePst: Date?
 
     /// For a transaction that restores a previous transaction, the date of the original transaction.
     let originalPurchaseDate: Date?
-    let originalPurchaseDateMs: Date?
+    let originalPurchaseDateMs: TimeInterval?
     let originalPurchaseDatePst: Date?
     
     /// The date that the app receipt expires.
     let expiresDate: Date?
-    let expiresDateMs: Date?
+    let expiresDateMs: TimeInterval?
     let expiresDatePst: Date?
 
     /// For an expired subscription, the reason for the subscription expiration.
@@ -75,7 +75,11 @@ struct InAppPurchase: ReadableDebugStringProtocol {
     
     /// Payment transaction object
     public var purchaseTransaction: PaymentTransaction {
-        return ReceiptTransaction(transactionDate: purchaseDateMs,
+        let date: Date? = {
+            guard let timeInterval = purchaseDateMs else { return purchaseDate}
+            return Date(timeIntervalSince1970: timeInterval)
+        }()
+        return ReceiptTransaction(transactionDate: date,
                                   transactionState: .purchased,
                                   transactionIdentifier: transactionId,
                                   downloads: [])
@@ -83,7 +87,11 @@ struct InAppPurchase: ReadableDebugStringProtocol {
     
     /// Original payment transaction object
     public var originalPurchaseTransaction: PaymentTransaction {
-        return ReceiptTransaction(transactionDate: originalPurchaseDateMs,
+        let date: Date? = {
+            guard let timeInterval = originalPurchaseDateMs else { return originalPurchaseDate}
+            return Date(timeIntervalSince1970: timeInterval)
+        }()
+        return ReceiptTransaction(transactionDate: date,
                                   transactionState: .purchased,
                                   transactionIdentifier: originalTransactionId,
                                   downloads: [])
@@ -113,21 +121,21 @@ struct InAppPurchase: ReadableDebugStringProtocol {
         self.originalTransactionId = originalTransactionIdentifier
         
         self.purchaseDate = purchaseDate
-        self.purchaseDateMs = purchaseDate
         self.purchaseDatePst = purchaseDate
+        self.purchaseDateMs = purchaseDate?.timeIntervalSince1970
         
         self.originalPurchaseDate = originalPurchaseDate
-        self.originalPurchaseDateMs = originalPurchaseDate
         self.originalPurchaseDatePst = originalPurchaseDate
+        self.originalPurchaseDateMs = originalPurchaseDate?.timeIntervalSince1970
 
         self.expiresDate = subscriptionExpirationDate
-        self.expiresDateMs = subscriptionExpirationDate
         self.expiresDatePst = subscriptionExpirationDate
+        self.expiresDateMs = subscriptionExpirationDate?.timeIntervalSince1970
 
         self.isInIntroOfferPeriod = subscriptionIntroductoryPricePeriod
         self.cancellationDate = cancellationDate
         self.webOrderLineItemId = webOrderLineItemId
-        
+
         self.subscriptionExpirationIntent = nil
         self.subscriptionRetryFlag = nil
         self.cancellationReason = nil
@@ -184,15 +192,24 @@ extension InAppPurchase: Codable {
         
         purchaseDate = try values.decodeIfPresent(Date.self, forKey: .purchaseDate)
         purchaseDatePst = try values.decodeIfPresent(Date.self, forKey: .purchaseDatePst)
-        purchaseDateMs = try values.decodeIfPresent(Date.self, forKey: .purchaseDateMs)
-        
+        purchaseDateMs = {
+            guard let str = try? values.decode(String.self, forKey: .purchaseDateMs) else { return nil }
+            return TimeInterval(millisecondsString: str)
+        }()
+
         originalPurchaseDate = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDate)
         originalPurchaseDatePst = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDatePst)
-        originalPurchaseDateMs = try values.decodeIfPresent(Date.self, forKey: .originalPurchaseDateMs)
-        
+        originalPurchaseDateMs = {
+            guard let str = try? values.decode(String.self, forKey: .originalPurchaseDateMs) else { return nil }
+            return TimeInterval(millisecondsString: str)
+        }()
+
         expiresDate = try values.decodeIfPresent(Date.self, forKey: .expiresDate)
         expiresDatePst = try values.decodeIfPresent(Date.self, forKey: .expiresDatePst)
-        expiresDateMs = try values.decodeIfPresent(Date.self, forKey: .expiresDateMs)
+        expiresDateMs = {
+            guard let str = try? values.decode(String.self, forKey: .expiresDateMs) else { return nil }
+            return TimeInterval(millisecondsString: str)
+        }()
         
         if let subscriptionExpirationIntentStr = try values.decodeIfPresent(String.self, forKey: .subscriptionExpirationIntent) {
             subscriptionExpirationIntent = Int(subscriptionExpirationIntentStr)
@@ -257,15 +274,15 @@ extension InAppPurchase: Codable {
         
         try container.encode(purchaseDate, forKey: .purchaseDate)
         try container.encode(purchaseDatePst, forKey: .purchaseDatePst)
-        try container.encode(purchaseDateMs?.timeIntervalSince1970, forKey: .purchaseDateMs)
+        try container.encode(purchaseDateMs, forKey: .purchaseDateMs)
 
         try container.encode(originalPurchaseDate, forKey: .originalPurchaseDate)
         try container.encode(originalPurchaseDatePst, forKey: .originalPurchaseDatePst)
-        try container.encode(originalPurchaseDateMs?.timeIntervalSince1970, forKey: .originalPurchaseDateMs)
+        try container.encode(originalPurchaseDateMs, forKey: .originalPurchaseDateMs)
 
         try container.encode(expiresDate, forKey: .expiresDate)
         try container.encode(expiresDatePst, forKey: .expiresDatePst)
-        try container.encode(expiresDateMs?.timeIntervalSince1970, forKey: .expiresDateMs)
+        try container.encode(expiresDateMs, forKey: .expiresDateMs)
 
         try container.encode(subscriptionExpirationIntent, forKey: .subscriptionExpirationIntent)
         try container.encode(subscriptionRetryFlag, forKey: .subscriptionRetryFlag)

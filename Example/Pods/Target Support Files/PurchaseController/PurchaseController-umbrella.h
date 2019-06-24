@@ -10,7 +10,6 @@
 #endif
 #endif
 
-#import "pkcs7_union_accessors.h"
 #import "TransactionReceiptFetcher.h"
 
 FOUNDATION_EXPORT double PurchaseControllerVersionNumber;
