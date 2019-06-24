@@ -16,7 +16,8 @@ import PurchaseController
     @objc func restore()
     @objc func retrieve()
     @objc func refreshReceipt()
-    @objc func validateReceipt()
+    @objc func validateReceiptLocally()
+    @objc func validateReceiptRemotely()
     @objc func validateSubscription()
     @objc func synchronizePurchases()
 }
@@ -81,7 +82,11 @@ extension MainViewController: MainViewControllerPresentable {
         purchaseController.fetchReceipt()
     }
     
-    @objc func validateReceipt() {
+    @objc func validateReceiptLocally() {
+        purchaseController.validateReceipt(using: LocalReceiptValidatorImplementation())
+    }
+    
+    @objc func validateReceiptRemotely() {
         purchaseController.validateReceipt(using: AppleReceiptValidatorImplementation(sharedSecret: nil, isSandbox: true))
     }
     

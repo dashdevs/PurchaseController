@@ -13,7 +13,7 @@ enum SectionTableItemModel: String {
     case action = "Actions"
     
     private var purchaseSection: [TableItemModel] { return [.consumable, .nonConsumable, .autoRenewSubscription, .nonRenewSubscription] }
-    private var actionSection: [TableItemModel] { return [.retrieve, .restore, .validateReceipt, .refreshReceipt, .synchronizePurchases, .validateSubscription] }
+    private var actionSection: [TableItemModel] { return [.retrieve, .restore, .validateReceiptLocally, .validateReceiptRemotely, .refreshReceipt, .synchronizePurchases, .validateSubscription] }
     
     var items: [TableItemModel] {
         switch self {
