@@ -13,7 +13,7 @@ enum ReceiptType: String, Codable {
     case productionSandbox = "ProductionSandbox"
 }
 
-public struct Receipt: ReadableDebugStringProtocol {
+public struct Receipt: ReadableDebugStringProtocol, DataFormatsEncodable {
     
     // MARK: - Properties
     
