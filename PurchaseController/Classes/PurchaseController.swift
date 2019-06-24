@@ -39,7 +39,6 @@ public enum PurchaseActionResult {
     case completionSuccess
     case receiptValidationSuccess
     case fetchReceiptSuccess(Data)
-    case receiptDecodeSuccess(ReceiptValidationResponse)
     case purchaseSyncronizationSuccess
 }
 
@@ -55,8 +54,8 @@ public protocol PurchaseStateHandler {
 @available(iOS 10.0, *)
 public final class PurchaseController {
     
-    /// receipt dictionary. Availadble ONLY after verifyReceipt(sharedSecret: isSandbox:) call.
-    public private(set) var sessionReceipt: ReceiptInfo?
+    /// receipt object. Availadble ONLY after verifyReceipt() call.
+    public private(set) var sessionReceipt: Receipt?
     private static let globalPersistor = PurchasePersistorImplementation()
     private var persistor: PurchasePersistor
     private var stateHandler: PurchaseStateHandler?
@@ -65,7 +64,6 @@ public final class PurchaseController {
             stateHandler?.update(newState: newValue, from: purchaseActionState)
         }
     }
-    private var receiptValidationResponse: ReceiptValidationResponse?
     
     /// Initializer with default non-secure persistor
     ///
@@ -88,6 +86,13 @@ public final class PurchaseController {
     
     // MARK: - Public
     
+    /// Function used to access all local purchased products.
+    ///
+    /// - Returns: array of PurchaseItem.
+    public func localPurschasedProducts() -> [PurchaseItem] {
+        return persistor.fetchPurchasedProducts()
+    }
+    
     /// Filter function, used to access to local purchased products
     ///
     /// - Parameter filter: filter closure used for comparing PurchaseItem objects
@@ -96,11 +101,18 @@ public final class PurchaseController {
         return try persistor.fetchPurchasedProducts().filter(filter)
     }
     
-    /// Filter function used to access to local products
+    /// Function used to access all local products available for purchase.
     ///
-    /// - Parameter filter: filter closure, used to comparing to SKProduct objects
-    /// - Returns: array of SKProduct after filter applying
-    public func localProducts(by filter: (SKProduct) throws -> Bool) throws -> [SKProduct] {
+    /// - Returns: array of SKProduct.
+    public func localAvailableProducts() -> [SKProduct] {
+        return persistor.fetchProducts()
+    }
+    
+    /// Filter function used to access to local products available for purchase.
+    ///
+    /// - Parameter filter: filter closure, used to comparing to SKProduct objects.
+    /// - Returns: array of SKProduct after filter applying.
+    public func localAvailableProducts(by filter: (SKProduct) throws -> Bool) throws -> [SKProduct] {
         return try persistor.fetchProducts().filter(filter)
     }
     
@@ -170,10 +182,10 @@ public final class PurchaseController {
     ///   - atomically: defines if the transaction should be completed immediately.
     public func purchase(with identifier: String, atomically: Bool = true) {
         self.purchaseActionState = .loading
-        guard let localСompared = try? localProducts(by: { $0.productIdentifier == identifier }),
+        guard let localСompared = try? localAvailableProducts(by: { $0.productIdentifier == identifier }),
             let product = localСompared.first else {
-            self.purchaseActionState = .finish(PurchaseActionResult.error(.noLocalProduct))
-            return 
+                self.purchaseActionState = .finish(PurchaseActionResult.error(.noLocalProduct))
+                return 
         }
         SwiftyStoreKit.purchaseProduct(product, atomically: atomically) { [unowned self] (results) in
             switch results {
@@ -188,9 +200,9 @@ public final class PurchaseController {
     }
     
     /// Function used to verify receipt using validator object.
+    ///
     /// Receipt is stored on appStoreReceiptURL path.
     /// Validated receipt dict is stored in sessionReceipt.
-    /// More info here: https://developer.apple.com/library/archive/releasenotes/General/ValidateAppStoreReceipt.
     ///
     /// Notifies handler with .receiptSerializationError if a receipt can not serialization
     ///
@@ -198,25 +210,19 @@ public final class PurchaseController {
     ///
     /// Notifies handler with .error if any error occured
     ///
-    /// - Parameters:
-    ///   - sharedSecret: shared secret from Appstore Connect.
-    ///     More info here: https://www.appypie.com/faqs/how-can-i-get-shared-secret-key-for-in-app-purchase
-    ///   - isSandbox: defines is there sandbox environment or not
-    public func verifyReceipt(sharedSecret: String, isSandbox: Bool = true) {
-        self.purchaseActionState = .loading
-        let appleValidator = AppleReceiptValidator(service: isSandbox ? .sandbox : .production,
-                                                   sharedSecret: sharedSecret)
-        SwiftyStoreKit.verifyReceipt(using: appleValidator) { [unowned self] result in
-            switch result {
-            case .success(let receipt):
+    /// - Parameter validator: Receipt validator.
+    public func validateReceipt(using validator: ReceiptValidatorProtocol) {
+        validator.validate { [unowned self] validationResult in
+            switch validationResult {
+            case let .success(receipt):
                 self.sessionReceipt = receipt
                 self.purchaseActionState = .finish(PurchaseActionResult.receiptValidationSuccess)
-            case .error(let error):
+            case let .error(error):
                 self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
             }
         }
     }
-
+    
     /// Function used to fetch receipt in local storage.
     ///
     /// Notifies handler with appropriate error state if cannot fetch receipt
@@ -234,31 +240,7 @@ public final class PurchaseController {
             }
         })
     }
-
-    /// Function used to decode session receipt if exist.
-    ///
-    /// Notifies handler with .noReceiptData if no receipt exist
-    ///
-    /// Notifies handler with .receiptDecodeSuccess state if decode was successfull
-    ///
-    /// Notifies handler with .error if any error occured
-    ///
-    /// - Parameter sessionReceipt: verified receipt in dictionary format
-    public func decodeIfPresent(sessionReceipt: ReceiptInfo?) {
-        self.purchaseActionState = .loading
-        guard let sessionReceipt = sessionReceipt else {
-            self.purchaseActionState = .finish(PurchaseActionResult.error(.noReceiptData))
-            return
-        }
-        
-        let response = sessionReceipt.createReceiptValidation()
-        if let receipt = response.response {
-            self.receiptValidationResponse = receipt
-            self.purchaseActionState = .finish(PurchaseActionResult.receiptDecodeSuccess(receipt))
-        } else if let error = response.error {
-            self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
-        }
-    }
+    
     
     /// Function used to synchronize decoded receipt purchases with local saved.
     ///
@@ -267,16 +249,16 @@ public final class PurchaseController {
     /// Notifies handler with .purchaseSynchronizationError if no purchases in receipt or receipt do not decoded
     public func synchronizeLocalPurchasesFromReceipt() {
         self.purchaseActionState = .loading
-        guard let purchases = self.receiptValidationResponse?.receipt?.inApp else {
+        guard let purchases = self.sessionReceipt?.inApp else {
             self.purchaseActionState = .finish(.error(.purchaseSynchronizationError))
             return
         }
-
+        
         let missingPurchases = purchases.filter { (inAppPurchase) -> Bool in
             return !self.persistor.fetchPurchasedProducts().contains(where: { (purchase) -> Bool in
                 return purchase.transaction.transactionIdentifier == inAppPurchase.transactionId
             })
-        }.makeItems(with: persistor)
+            }.makeItems(with: persistor)
         self.persistor.persistPurchased(products: missingPurchases)
         self.purchaseActionState = .finish(PurchaseActionResult.purchaseSyncronizationSuccess)
     }
@@ -297,23 +279,26 @@ public final class PurchaseController {
             return
         }
         
-        let purchaseResult = SwiftyStoreKit.verifySubscription(
-            ofType: type,
-            productId: productID,
-            inReceipt: receipt)
-        switch purchaseResult {
-        case .purchased(_, let items):
-            let sorted = items.sorted(by: { (lo, ro) -> Bool in
-                return lo.purchaseDate.timeIntervalSince1970 > ro.purchaseDate.timeIntervalSince1970
-            })
-            guard let latestActualSubscription = sorted.first else {
-                self.purchaseActionState = .finish(PurchaseActionResult.error(.noActiveSubscription))
-                return
-            }
-            self.purchaseActionState = .finish(PurchaseActionResult.subscriptionValidationSucess(latestActualSubscription))
-        case .notPurchased, .expired(_, _):
-            self.purchaseActionState = .finish(PurchaseActionResult.error(.noActiveSubscription))
-        }
+        self.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.noReceiptData))
+        return
+        // TODO: receipt as dictionary
+        //        let purchaseResult = SwiftyStoreKit.verifySubscription(
+        //            ofType: type,
+        //            productId: productID,
+        //            inReceipt: receipt)
+        //        switch purchaseResult {
+        //        case .purchased(_, let items):
+        //            let sorted = items.sorted(by: { (lo, ro) -> Bool in
+        //                return lo.purchaseDate.timeIntervalSince1970 > ro.purchaseDate.timeIntervalSince1970
+        //            })
+        //            guard let latestActualSubscription = sorted.first else {
+        //                self.purchaseActionState = .finish(PurchaseActionResult.error(.noActiveSubscription))
+        //                return
+        //            }
+        //            self.purchaseActionState = .finish(PurchaseActionResult.subscriptionValidationSucess(latestActualSubscription))
+        //        case .notPurchased, .expired(_, _):
+        //            self.purchaseActionState = .finish(PurchaseActionResult.error(.noActiveSubscription))
+        //        }
     }
     
     /// Function used to complete previous transactions
@@ -325,3 +310,4 @@ public final class PurchaseController {
         })
     }
 }
+
