@@ -263,42 +263,6 @@ extension InAppPurchase: Codable {
             subscriptionPriceConsentStatus = nil
         }
     }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(quantity, forKey: .quantity)
-        try container.encode(productId, forKey: .productId)
-        try container.encode(transactionId, forKey: .transactionId)
-        try container.encode(originalTransactionId, forKey: .originalTransactionId)
-        
-        try container.encode(purchaseDate, forKey: .purchaseDate)
-        try container.encode(purchaseDatePst, forKey: .purchaseDatePst)
-        try container.encode(purchaseDateMs, forKey: .purchaseDateMs)
-
-        try container.encode(originalPurchaseDate, forKey: .originalPurchaseDate)
-        try container.encode(originalPurchaseDatePst, forKey: .originalPurchaseDatePst)
-        try container.encode(originalPurchaseDateMs, forKey: .originalPurchaseDateMs)
-
-        try container.encode(expiresDate, forKey: .expiresDate)
-        try container.encode(expiresDatePst, forKey: .expiresDatePst)
-        try container.encode(expiresDateMs, forKey: .expiresDateMs)
-
-        try container.encode(subscriptionExpirationIntent, forKey: .subscriptionExpirationIntent)
-        try container.encode(subscriptionRetryFlag, forKey: .subscriptionRetryFlag)
-        try container.encode(cancellationDate, forKey: .cancellationDate)
-        try container.encode(cancellationReason, forKey: .cancellationReason)
-
-        try container.encode(appItemId, forKey: .appItemId)
-        try container.encode(externalVersionIdentifier, forKey: .externalVersionIdentifier)
-        try container.encode(isTrialPeriod, forKey: .isTrialPeriod)
-        try container.encode(isInIntroOfferPeriod, forKey: .isInIntroOfferPeriod)
-        
-        try container.encode(webOrderLineItemId, forKey: .webOrderLineItemId)
-        try container.encode(subscriptionAutoRenewStatus, forKey: .subscriptionAutoRenewStatus)
-        try container.encode(subscriptionAutoRenewPreference, forKey: .subscriptionAutoRenewPreference)
-        try container.encode(subscriptionPriceConsentStatus, forKey: .subscriptionPriceConsentStatus)
-    }
 }
 
 extension TimeInterval {

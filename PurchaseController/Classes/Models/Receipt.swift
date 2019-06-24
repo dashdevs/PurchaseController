@@ -160,32 +160,4 @@ extension Receipt: Codable {
         versionExternalIdentifier = try values.decode(Int.self, forKey: .versionExternalIdentifier)
         downloadId = try values.decode(Int.self, forKey: .downloadId)
     }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(bundleId, forKey: .bundleId)
-        try container.encode(applicationVersion, forKey: .applicationVersion)
-        try container.encode(inApp, forKey: .inApp)
-        try container.encode(originalApplicationVersion, forKey: .originalApplicationVersion)
-
-        try container.encode(receiptCreationDate, forKey: .receiptCreationDate)
-        try container.encode(receiptCreationDatePst, forKey: .receiptCreationDatePst)
-        try container.encode(receiptCreationDateMs, forKey: .receiptCreationDateMs)
-        
-        try container.encode(receiptExpirationDate, forKey: .receiptExpirationDate)
-
-        try container.encode(originalPurchaseDate, forKey: .originalPurchaseDate)
-        try container.encode(originalPurchaseDatePst, forKey: .originalPurchaseDatePst)
-        try container.encode(originalPurchaseDateMs, forKey: .originalPurchaseDateMs)
-
-        try container.encode(requestDate, forKey: .requestDate)
-        try container.encode(requestDatePst, forKey: .requestDatePst)
-        try container.encode(requestDateMs, forKey: .requestDateMs)
-
-        try container.encode(receiptType, forKey: .receiptType)
-        try container.encode(appItemId, forKey: .appItemId)
-        try container.encode(adamId, forKey: .adamId)
-        try container.encode(versionExternalIdentifier, forKey: .versionExternalIdentifier)
-        try container.encode(downloadId, forKey: .downloadId)
-    }
 }
