@@ -11,7 +11,7 @@
     "dashdevs llc": "hello@dashdevs.com"
   },
   "source": {
-    "git": "https://bitbucket.org/itomych/purchasecontroller.git",
+    "git": "https://github.com/dashdevs/PurchaseController.git",
     "tag": "0.4.4"
   },
   "platforms": {
@@ -22,6 +22,9 @@
   "dependencies": {
     "SwiftyStoreKit": [
       "~> 0.14"
+    ],
+    "GRKOpenSSLFramework": [
+
     ]
   },
   "swift_versions": "4.2",
