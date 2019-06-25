@@ -258,10 +258,8 @@ extension ReceiptError: CustomNSError {
 }
 
 public extension Error {
-    /// Error convert function
-    ///
-    /// - Returns: converted self to PurchaseError
-    func asPurchaseError() -> PurchaseError {
+    /// self converted to PurchaseError.
+    var purchaseError: PurchaseError {
         switch (self as NSError).code {
         case NSURLErrorNotConnectedToInternet:
             return .networkError
@@ -272,19 +270,15 @@ public extension Error {
 }
 
 public extension SKError {
-    /// Error convert function
-    ///
-    /// - Returns: converted self to PurchaseError
-    func asPurchaseError() -> PurchaseError {
+    /// self converted to PurchaseError.
+    var purchaseError: PurchaseError {
         return PurchaseError(code: code.rawValue)
     }
 }
 
 public extension PurchaseError {
-    /// PurchaseError convert function
-    ///
-    /// - Returns: converted self to NSError
-    func asNSError() -> NSError {
+    /// self converted to NSError.
+    var nsError: NSError {
         return self as NSError
     }
 }

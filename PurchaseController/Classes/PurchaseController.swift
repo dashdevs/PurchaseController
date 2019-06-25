@@ -131,7 +131,7 @@ public final class PurchaseController {
         self.purchaseActionState = .loading
         SwiftyStoreKit.retrieveProductsInfo(products) { [unowned self] (results) in
             if let error = results.error {
-                self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
+                self.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
                 return
             }
             self.persistor.persist(products: results.retrievedProducts)
@@ -161,7 +161,7 @@ public final class PurchaseController {
             }
             self.persistor.persistPurchased(products: items)
             if let error = results.restoreFailedPurchases.first?.0 {
-                self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
+                self.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
                 return
             }
             self.purchaseActionState = .finish(PurchaseActionResult.restoreSuccess)
@@ -194,7 +194,7 @@ public final class PurchaseController {
                 self.persistor.persistPurchased(products: [item])
                 self.purchaseActionState = .finish(PurchaseActionResult.purchaseSuccess(item))
             case .error(let error):
-                self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
+                self.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
             }
         }
     }
@@ -218,7 +218,7 @@ public final class PurchaseController {
                 self.sessionReceipt = receipt
                 self.purchaseActionState = .finish(PurchaseActionResult.receiptValidationSuccess)
             case let .error(error):
-                self.purchaseActionState = .finish(PurchaseActionResult.error(error.asPurchaseError()))
+                self.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
             }
         }
     }
@@ -236,7 +236,7 @@ public final class PurchaseController {
             case .success(let receiptData):
                 self.purchaseActionState = .finish(.fetchReceiptSuccess(receiptData))
             case .error(let error):
-                self.purchaseActionState = .finish(.error(error.asPurchaseError()))
+                self.purchaseActionState = .finish(.error(error.purchaseError))
             }
         })
     }
