@@ -3,12 +3,31 @@ All notable changes to this project will be documented in this file.
 `PurchaseController` adheres to [Semantic Versioning](https://semver.org/).
 
 #### 0.x Releases
-- `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041) | [0.4.2](#042) | [0.4.3](#043) | [0.4.4](#044)
+- `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041) | [0.4.2](#042) | [0.4.3](#043) | [0.4.4](#044) | [0.4.5](#045)
 - `0.3.x` Releases - [0.3.0](#030)
 - `0.2.x` Releases - [0.2.0](#020) 
 - `0.1.x` Releases - [0.1.0](#010) 
 
 ---
+
+## [0.4.5](https://github.com/dashdevs/PurchaseController/releases/tag/0.4.5)
+Released on 2019-06-25. 
+
+#### Added
+- Contributing rules file and change log to project.
+    - Added by [Igor Kulik](https://github.com/igor-kulik) in pull request [`#2`](https://github.com/dashdevs/PurchaseController/pull/2). 
+- Receipt conversion to JSON dictioanary and Base64-encoded string.
+    - Added by [Igor Kulik](https://github.com/igor-kulik) in pull request [`#4`](https://github.com/dashdevs/PurchaseController/pull/4). 
+- Local receipt validation.
+    - Added by [Igor Kulik](https://github.com/igor-kulik) in commit [`c71abb5`](https://github.com/dashdevs/PurchaseController/commit/c71abb541c1226648c276f2e890396e8901da24c). 
+- Methods for fetching all products.
+    - Added by [Igor Kulik](https://github.com/igor-kulik) in commit [`fc3cfb9`](https://github.com/dashdevs/PurchaseController/commit/fc3cfb9befb89b867d9ecc97dacd466752100718). 
+
+#### Updated
+- Podspec file.
+    - Updated by [Igor Kulik](https://github.com/igor-kulik) in commit [`faf1bcc`](https://github.com/dashdevs/PurchaseController/commit/faf1bcc1dc00292ab4a8fa82f55d7676e0a06aa3). 
+- PurchaseError type.
+    - Updated by [Igor Kulik](https://github.com/igor-kulik) in pull request [`#1`](https://github.com/dashdevs/PurchaseController/pull/1). 
 
 ## [0.4.4](https://github.com/dashdevs/PurchaseController/releases/tag/0.4.4)
 Released on 2019-06-17. 
@@ -16,7 +35,7 @@ Released on 2019-06-17.
 #### Added
 - Completion methods for specific transaction.
     - Added by [Valeriy Jefimov](https://github.com/JefimovValeriy) in commit [`f0c29b4`](https://github.com/dashdevs/PurchaseController/commit/f0c29b416f96804b483cc7475c7fc705f164e731). 
-- Deprecated method to fetch receipt of particular transaction
+- Deprecated method to fetch receipt of particular transaction.
     - Added by [Valeriy Jefimov](https://github.com/JefimovValeriy) in commit [`65d0499`](https://github.com/dashdevs/PurchaseController/commit/65d0499f4ec8953e6598554153d451ad8207480c). 
 - `atomically` flag to `PurchaseController.purchase()` method.
     - Added by [Igor Kulik](https://github.com/igor-kulik) in commit [`2bcb7b5`](https://github.com/dashdevs/PurchaseController/commit/2bcb7b56e39ee1ed72335175eb5769c5ed6d0e07). 
