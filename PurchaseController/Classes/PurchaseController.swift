@@ -274,31 +274,28 @@ public final class PurchaseController {
     ///   - type: SubscriptionType (autoRenewable or nonRenewing)
     public func validateSubscription(productID: String, type: SubscriptionType) {
         self.purchaseActionState = .loading
-        guard let receipt = self.sessionReceipt else {
+        guard let receipt = self.sessionReceipt,
+        let receiptJson = try? receipt.asJsonObject(),
+        let receiptInfo = receiptJson as? ReceiptInfo else {
             self.purchaseActionState = .finish(PurchaseActionResult.error(ReceiptError.noReceiptData))
             return
         }
-        
-        self.purchaseActionState = .finish(PurchaseActionResult.error(ReceiptError.noReceiptData))
-        return
-        // TODO: receipt as dictionary
-        //        let purchaseResult = SwiftyStoreKit.verifySubscription(
-        //            ofType: type,
-        //            productId: productID,
-        //            inReceipt: receipt)
-        //        switch purchaseResult {
-        //        case .purchased(_, let items):
-        //            let sorted = items.sorted(by: { (lo, ro) -> Bool in
-        //                return lo.purchaseDate.timeIntervalSince1970 > ro.purchaseDate.timeIntervalSince1970
-        //            })
-        //            guard let latestActualSubscription = sorted.first else {
-        //                self.purchaseActionState = .finish(PurchaseActionResult.error(.noActiveSubscription))
-        //                return
-        //            }
-        //            self.purchaseActionState = .finish(PurchaseActionResult.subscriptionValidationSucess(latestActualSubscription))
-        //        case .notPurchased, .expired(_, _):
-        //            self.purchaseActionState = .finish(PurchaseActionResult.error(.noActiveSubscription))
-        //        }
+        let purchaseResult = SwiftyStoreKit.verifySubscription(ofType: type,
+                                                               productId: productID,
+                                                               inReceipt: receiptInfo)
+        switch purchaseResult {
+        case .purchased(_, let items):
+            let sorted = items.sorted(by: { (lo, ro) -> Bool in
+                return lo.purchaseDate.timeIntervalSince1970 > ro.purchaseDate.timeIntervalSince1970
+            })
+            guard let latestActualSubscription = sorted.first else {
+                self.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.noActiveSubscription))
+                return
+            }
+            self.purchaseActionState = .finish(PurchaseActionResult.subscriptionValidationSucess(latestActualSubscription))
+        case .notPurchased, .expired(_, _):
+            self.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.noActiveSubscription))
+        }
     }
     
     /// Function used to complete previous transactions
