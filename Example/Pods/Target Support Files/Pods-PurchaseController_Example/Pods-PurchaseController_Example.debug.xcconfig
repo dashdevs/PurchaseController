@@ -1,9 +1,9 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/PurchaseController" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyStoreKit"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/PurchaseController" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyStoreKit" "${PODS_ROOT}/GRKOpenSSLFramework/OpenSSL-iOS/bin"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/PurchaseController/PurchaseController.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyStoreKit/SwiftyStoreKit.framework/Headers"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_LDFLAGS = $(inherited) -framework "PurchaseController" -framework "StoreKit" -framework "SwiftyStoreKit"
+OTHER_LDFLAGS = $(inherited) -framework "PurchaseController" -framework "StoreKit" -framework "SwiftyStoreKit" -framework "openssl"
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

@@ -8,20 +8,21 @@
 
 Pod::Spec.new do |s|
   s.name             = 'PurchaseController'
-  s.version          = '0.4.4'
+  s.version          = '0.4.5'
   s.summary          = 'A helpful and convenient In App purchases framework'
 
   s.homepage         = 'http://dashdevs.com'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'dashdevs llc' => 'hello@dashdevs.com' }
-  s.source           = { :git => 'https://bitbucket.org/itomych/purchasecontroller.git', :tag => s.version }
+  s.source           = { :git => 'https://github.com/dashdevs/PurchaseController.git', :tag => s.version }
 
   s.ios.deployment_target = '10.0'
 
-  s.source_files = 'PurchaseController/Classes/**/*'
+  s.source_files = 'PurchaseController/Classes/**/*', 'PurchaseController/Headers/**/*'
 
   s.frameworks = 'StoreKit'
   s.dependency 'SwiftyStoreKit', '~> 0.14'
+  s.dependency 'GRKOpenSSLFramework'
   s.swift_version = '4.2'
 
 end
