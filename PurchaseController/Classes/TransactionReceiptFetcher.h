@@ -10,6 +10,6 @@
 
 @interface TransactionReceiptFetcher: NSObject
 
-+ (NSData * _Nullable)directTransactionReceiptFor:(SKPaymentTransaction *)transaction;
++ (NSData * _Nullable)directTransactionReceiptFor:(SKPaymentTransaction * _Nonnull)transaction;
 
 @end
