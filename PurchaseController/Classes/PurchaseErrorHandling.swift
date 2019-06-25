@@ -8,6 +8,16 @@
 import StoreKit
 import SwiftyStoreKit
 
+// MARK: - Error Domains
+public extension PurchaseController {
+    enum ErrorDomain: String {
+        case storeKit = "SKErrorDomain"
+        case purchase = "PurchaseErrorDomain"
+        case receipt = "ReceiptErrorDomain"
+        case localReceiptValidation = "LocalReceiptValidationErrorDomain"
+    }
+}
+
 /// PurchaseError types
 ///
 /// - unknown: client is not allowed to issue the request, etc.
@@ -56,6 +66,7 @@ public enum PurchaseError: Int, Error {
     case purchaseSynchronizationError
 }
 
+// MARK: - CustomDebugStringConvertible
 extension PurchaseError: CustomDebugStringConvertible {
     fileprivate var description: String {
         switch self {
@@ -111,7 +122,7 @@ extension PurchaseError: CustomDebugStringConvertible {
     }
     
     public var debugDescription: String {
-        return "\(Constants.domain): \(description)"
+        return "\(PurchaseController.ErrorDomain.purchase.rawValue): \(description)"
     }
     
     init(code: Int) {
@@ -119,21 +130,126 @@ extension PurchaseError: CustomDebugStringConvertible {
     }
 }
 
-// MARK: - Constants
-extension PurchaseError {
-    struct Constants {
-        static let domain = "PurchaseError"
-    }
-}
-
 // MARK: - CustomNSError
 extension PurchaseError: CustomNSError {
     public static var errorDomain: String {
-        return Constants.domain
+        return PurchaseController.ErrorDomain.purchase.rawValue
     }
     
     public var errorCode: Int {
         return rawValue
+    }
+    
+    public var errorUserInfo: [String : Any] {
+        return [NSLocalizedDescriptionKey: description]
+    }
+}
+
+/// Errors that may occur during local receipt validation
+///
+/// - couldNotFindReceipt: IAP receipt data not found at `Bundle.main.appStoreReceiptURL`.
+/// - emptyReceiptContents: Failed to extract the receipt contents from its PKCS #7 container.
+/// - receiptNotSigned: The receipt that was extracted is not signed at all.
+/// - appleRootCertificateNotFound: The application bundle doesn't have a copy of Apple’s root certificate to validate the signature with.
+/// - receiptSignatureInvalid: The signature on the receipt is invalid because it doesn’t match against Apple’s root certificate.
+/// - malformedReceipt: The extracted receipt contents do not match ASN.1 Set structure defined by Apple.
+/// - malformedInAppPurchaseReceipt: The extracted receipt is not an ASN1 Set.
+/// - incorrectHash: The extracted SHA1 hash is not identical to the receipt hash.
+public enum LocalReceiptValidationError: Int, Error {
+    case couldNotFindReceipt
+    case emptyReceiptContents
+    case receiptNotSigned
+    case appleRootCertificateNotFound
+    case receiptSignatureInvalid
+    case malformedReceipt
+    case malformedInAppPurchaseReceipt
+    case incorrectHash
+}
+
+// MARK: - CustomDebugStringConvertible
+extension LocalReceiptValidationError: CustomDebugStringConvertible {
+    fileprivate var description: String {
+        switch self {
+        case .couldNotFindReceipt:
+            return "IAP receipt data not found at `Bundle.main.appStoreReceiptURL`."
+        case .emptyReceiptContents:
+            return "Failed to extract the receipt contents from its PKCS #7 container."
+        case .receiptNotSigned:
+            return "The receipt that was extracted is not signed at all."
+        case .appleRootCertificateNotFound:
+            return "The application bundle doesn't have a copy of Apple’s root certificate to validate the signature with."
+        case .receiptSignatureInvalid:
+            return "The signature on the receipt is invalid because it doesn’t match against Apple’s root certificate."
+        case .malformedReceipt:
+            return "The extracted receipt contents do not match ASN.1 Set structure defined by Apple."
+        case .malformedInAppPurchaseReceipt:
+            return "The extracted receipt is not an ASN1 Set."
+        case .incorrectHash:
+            return "The extracted SHA1 hash is not identical to the receipt hash."
+        }
+    }
+    
+    public var localizedDescription: String {
+        return description
+    }
+    
+    public var debugDescription: String {
+        return "\(PurchaseController.ErrorDomain.localReceiptValidation.rawValue): \(description)"
+    }
+}
+
+// MARK: - CustomNSError
+extension LocalReceiptValidationError: CustomNSError {
+    public static var errorDomain: String {
+        return PurchaseController.ErrorDomain.localReceiptValidation.rawValue
+    }
+    
+    public var errorCode: Int {
+        return rawValue
+    }
+    
+    public var errorUserInfo: [String : Any] {
+        return [NSLocalizedDescriptionKey: description]
+    }
+}
+
+// MARK: - CustomDebugStringConvertible
+extension ReceiptError: CustomDebugStringConvertible {
+
+    fileprivate var description: String {
+        switch self {
+        case .noReceiptData:
+            return "No receipt data."
+        case .noRemoteData:
+            return "No data recieved."
+        case .requestBodyEncodeError:
+            return "Error when encoding HTTP body into JSON."
+        case .networkError:
+            return "Error when proceeding request."
+        case .jsonDecodeError:
+            return "Error when decoding response."
+        case .receiptInvalid:
+            return "Receive invalid - bad status returned."
+        }
+    }
+    
+    public var localizedDescription: String {
+        return description
+    }
+    
+    public var debugDescription: String {
+        return "\(PurchaseController.ErrorDomain.receipt.rawValue): \(description)"
+    }
+}
+
+// MARK: - CustomNSError
+extension ReceiptError: CustomNSError {
+    public static var errorDomain: String {
+        return PurchaseController.ErrorDomain.receipt.rawValue
+    }
+    
+    public var errorCode: Int {
+        return 0
     }
     
     public var errorUserInfo: [String : Any] {
@@ -163,20 +279,6 @@ public extension SKError {
         return PurchaseError(code: code.rawValue)
     }
 }
-
-// MARK: - Supporting types
-
-public enum LocalReceiptValidationError: Error {
-    case couldNotFindReceipt
-    case emptyReceiptContents
-    case receiptNotSigned
-    case appleRootCertificateNotFound
-    case receiptSignatureInvalid
-    case malformedReceipt
-    case malformedInAppPurchaseReceipt
-    case incorrectHash
-}
-
 
 public extension PurchaseError {
     /// PurchaseError convert function

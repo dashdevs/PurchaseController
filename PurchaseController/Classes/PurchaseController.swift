@@ -310,4 +310,3 @@ public final class PurchaseController {
         })
     }
 }
-
