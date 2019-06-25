@@ -108,7 +108,7 @@ public struct PurchaseItem {
     /// - Throws: an PurchaseError.noOriginalTransactionData error when original transaction does not exist
     public func completeOriginalTransaction() throws {
         guard let original = originalTransaction else {
-            throw PurchaseError.noOriginalTransactionData.asError()
+            throw PurchaseError.noOriginalTransactionData.nsError
         }
         SwiftyStoreKit.finishTransaction(original)
     }
