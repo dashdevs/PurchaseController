@@ -175,7 +175,7 @@ public final class PurchaseController {
     ///
     /// Notifies handler with .purchaseSuccess state if items purchased
     ///
-    /// Notifies handler with .error if any error occuredq
+    /// Notifies handler with .error if any error occured.
     ///
     /// - Parameters:
     ///   - identifier: identifier of product to purchase.
