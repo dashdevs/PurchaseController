@@ -175,19 +175,20 @@ public final class PurchaseController {
     ///
     /// Notifies handler with .purchaseSuccess state if items purchased
     ///
-    /// Notifies handler with .error if any error occured
+    /// Notifies handler with .error if any error occuredq
     ///
     /// - Parameters:
     ///   - identifier: identifier of product to purchase.
+    ///   - quantity: number of products to purchase.
     ///   - atomically: defines if the transaction should be completed immediately.
-    public func purchase(with identifier: String, atomically: Bool = true) {
+    public func purchase(with identifier: String, quantity: Int = 1, atomically: Bool = true) {
         self.purchaseActionState = .loading
         guard let localСompared = try? localAvailableProducts(by: { $0.productIdentifier == identifier }),
             let product = localСompared.first else {
                 self.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.noLocalProduct))
                 return 
         }
-        SwiftyStoreKit.purchaseProduct(product, atomically: atomically) { [unowned self] (results) in
+        SwiftyStoreKit.purchaseProduct(product, quantity: quantity, atomically: atomically) { [unowned self] (results) in
             switch results {
             case .success(let purchase):
                 let item = PurchaseItem(purchaseDeatils: purchase)

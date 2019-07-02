@@ -32,7 +32,6 @@ enum TableItemModel: String {
             return "Auto Renew Subscription 🤑"
         case .nonRenewSubscription:
             return "Non Renew Subscription 💵"
-            
         case .restore:
             return "Restore 💲"
         case .retrieve:
@@ -75,7 +74,6 @@ enum TableItemModel: String {
             return #selector(MainViewController.synchronizePurchases)
         case .validateSubscription:
             return #selector(MainViewController.validateSubscription)
-
         }
     }
 }

@@ -55,7 +55,22 @@ extension MainViewController: PurchaseStateHandler {
 extension MainViewController: MainViewControllerPresentable {
     
     @objc func purchaseConsumable() {
-        purchaseController.purchase(with: PurchasebleProductItem.consumable.rawValue)
+        let alert = UIAlertController(title: "", message: "Please enter number of items to purchase", preferredStyle: .alert)
+        alert.addTextField(configurationHandler: { textField in
+            textField.keyboardType = .numberPad
+        })
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: { [weak self] action in
+            guard let strValue = alert.textFields?.first?.text,
+                let quantity = Int(strValue) else {
+                    self?.showQuantityError()
+                    return
+            }
+            self?.purchaseController.purchase(with: PurchasebleProductItem.consumable.rawValue, quantity: quantity)
+        })
+        alert.addAction(okAction)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.preferredAction = okAction
+        present(alert, animated: true, completion: nil)
     }
     
     @objc func purchaseNonConsumable() {
@@ -96,5 +111,13 @@ extension MainViewController: MainViewControllerPresentable {
     
     @objc func validateSubscription() {
         purchaseController.validateSubscription(productID: PurchasebleProductItem.autoRenewSubscription.rawValue, type: .autoRenewable)
+    }
+}
+
+private extension MainViewController {
+    func showQuantityError() {
+        let alertController = UIAlertController(title: "", message: "Please enter a valid product quantity.", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        present(alertController, animated: true, completion: nil)
     }
 }
