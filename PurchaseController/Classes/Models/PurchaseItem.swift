@@ -9,7 +9,7 @@ import StoreKit
 import SwiftyStoreKit
 
 /// Item describes avaible to purchase object
-public struct PurchaseItem {
+@objc public final class PurchaseItem: NSObject {
     /// Purchase identifier - unique id of purchase object from appstore connect
     public let productId: String
     /// Amount of purchased items
@@ -112,6 +112,26 @@ public struct PurchaseItem {
         }
         SwiftyStoreKit.finishTransaction(original)
     }
+    
+    // MARK: - Hashable
+    
+    /// Compares two PurchaseItem using productId, transactionIdentifier and product.productIdentifier
+    ///
+    /// - Parameters:
+    ///   - lhs: left value to compare
+    ///   - rhs: right value to compare
+    /// - Returns: Equatable value
+    public static func == (lhs: PurchaseItem, rhs: PurchaseItem) -> Bool {
+        return lhs.productId == rhs.productId &&
+            lhs.transaction.transactionIdentifier == rhs.transaction.transactionIdentifier &&
+            lhs.product.productIdentifier == rhs.product.productIdentifier
+    }
+    
+//    override func hash(into hasher: inout Hasher) {
+//        hasher.combine(productId)
+//        hasher.combine(product.productIdentifier)
+//        hasher.combine(transaction.transactionIdentifier)
+//    }
 }
 
 extension Collection where Element == Purchase {
@@ -127,25 +147,5 @@ extension Collection where Element == InAppPurchase {
         return self.compactMap { (purchase) -> PurchaseItem? in
             return PurchaseItem.create(with: purchase, persistance: persistance)
         }
-    }
-}
-
-extension PurchaseItem: Hashable {
-    /// Compares two PurchaseItem using productId, transactionIdentifier and product.productIdentifier
-    ///
-    /// - Parameters:
-    ///   - lhs: left value to compare
-    ///   - rhs: right value to compare
-    /// - Returns: Equatable value
-    public static func == (lhs: PurchaseItem, rhs: PurchaseItem) -> Bool {
-        return lhs.productId == rhs.productId &&
-            lhs.transaction.transactionIdentifier == rhs.transaction.transactionIdentifier &&
-            lhs.product.productIdentifier == rhs.product.productIdentifier
-    }
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(productId)
-        hasher.combine(product.productIdentifier)
-        hasher.combine(transaction.transactionIdentifier)
     }
 }

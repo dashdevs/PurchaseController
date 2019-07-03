@@ -57,6 +57,8 @@ public final class PurchaseController {
     /// receipt object. Availadble ONLY after verifyReceipt() call.
     public private(set) var sessionReceipt: Receipt?
     private static let globalPersistor = PurchasePersistorImplementation()
+    private static let globalPaymentQueueController = PCPaymentQueueController()
+
     private var persistor: PurchasePersistor
     private var stateHandler: PurchaseStateHandler?
     private var purchaseActionState: PurchaseActionState {
@@ -187,16 +189,17 @@ public final class PurchaseController {
                 self.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.noLocalProduct))
                 return 
         }
-        SwiftyStoreKit.purchaseProduct(product, atomically: atomically) { [unowned self] (results) in
-            switch results {
-            case .success(let purchase):
-                let item = PurchaseItem(purchaseDeatils: purchase)
-                self.persistor.persistPurchased(products: [item])
-                self.purchaseActionState = .finish(PurchaseActionResult.purchaseSuccess(item))
-            case .error(let error):
-                self.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
-            }
-        }
+        PurchaseController.globalPaymentQueueController.purchase(product: product, atomically: false)
+//        SwiftyStoreKit.purchaseProduct(product, atomically: atomically) { [unowned self] (results) in
+//            switch results {
+//            case .success(let purchase):
+//                let item = PurchaseItem(purchaseDeatils: purchase)
+//                self.persistor.persistPurchased(products: [item])
+//                self.purchaseActionState = .finish(PurchaseActionResult.purchaseSuccess(item))
+//            case .error(let error):
+//                self.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
+//            }
+//        }
     }
     
     /// Function used to verify receipt using validator object.
