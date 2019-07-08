@@ -15,7 +15,6 @@ fileprivate class PaymentModel: Hashable {
     let payment: SKPayment
     let atomic: Bool
     
-    
     init(product: SKProduct, payment: SKPayment, atomic: Bool) {
         self.product = product
         self.payment = payment
@@ -31,15 +30,10 @@ fileprivate class PaymentModel: Hashable {
     }
 }
 
-protocol PaymentQueueControllerDelegate: class {
-    func didPurchase(_ controller: PCPaymentQueueController, item: PurchaseItem)
-    func didFail(_ controller: PCPaymentQueueController, error: Error)
-}
-
-extension PaymentQueueControllerDelegate {
-    deinit {
-        print("foo")
-    }
+@objc protocol PaymentQueueControllerDelegate: class {
+    var onPurchase: ((_ items: [PurchaseItem]) -> Void)? { get set }
+    var onRestore: ((_ items: [PurchaseItem]) -> Void)? { get set }
+    var onError: ((_ error: Error) -> Void)? { get set }
 }
 
 /**
@@ -68,7 +62,7 @@ final class PCPaymentQueueController: NSObject {
     
     private let paymentQueue: SKPaymentQueue
     private var payments = Set<PaymentModel>()
-    private let delegates = WeakArray<PaymentQueueControllerDelegate>()
+    private let delegates = DelegatesContainer<PaymentQueueControllerDelegate>()
     
     init(paymentQueue: SKPaymentQueue = SKPaymentQueue.default()) {
         self.paymentQueue = paymentQueue
@@ -85,6 +79,14 @@ final class PCPaymentQueueController: NSObject {
         payment.quantity = quantity
         paymentQueue.add(payment)
         payments.insert(PaymentModel(product: product, payment: payment, atomic: atomically))
+    }
+    
+    func restore() {
+        paymentQueue.restoreCompletedTransactions()
+    }
+    
+    func addObserver(_ observer: PaymentQueueControllerDelegate) {
+        delegates.add(delegate: observer)
     }
 }
 
@@ -120,7 +122,8 @@ extension PCPaymentQueueController: SKPaymentTransactionObserver {
     }
     
     func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
-        
+        print("paymentQueueRestoreCompletedTransactionsFinished")
+        print(queue.transactions)
     }
     
     func paymentQueue(_ queue: SKPaymentQueue, updatedDownloads downloads: [SKDownload]) {
@@ -134,37 +137,42 @@ extension PCPaymentQueueController: SKPaymentTransactionObserver {
 
 private extension PCPaymentQueueController {
     
-
     private func complete(transaction: SKPaymentTransaction) {
-        print("complete...", transaction)
         guard let paymentModel = payments[transaction.payment.productIdentifier] else {
             // TODO: specific error
             return
         }
         if paymentModel.atomic {
-                SKPaymentQueue.default().finishTransaction(transaction)
+            SKPaymentQueue.default().finishTransaction(transaction)
         }
         payments.remove(paymentModel)
+        let item = PurchaseItem(productId: paymentModel.payment.productIdentifier,
+                                     quantity: paymentModel.payment.quantity,
+                                     product: paymentModel.product,
+                                     transaction: transaction,
+                                     originalTransaction: transaction.original)
+        delegates.invokeDelegates({ $0.onPurchase?([item])})
     }
     
     private func restore(transaction: SKPaymentTransaction) {
-        guard let productIdentifier = transaction.original?.payment.productIdentifier else { return }
-        
-        print("restore... \(productIdentifier)")
-        SKPaymentQueue.default().finishTransaction(transaction)
+        guard let paymentModel = payments[transaction.payment.productIdentifier] else {
+            // TODO: specific error
+            return
+        }
+        payments.remove(paymentModel)
+        let item = PurchaseItem(productId: paymentModel.payment.productIdentifier,
+                                quantity: paymentModel.payment.quantity,
+                                product: paymentModel.product,
+                                transaction: transaction,
+                                originalTransaction: transaction.original)
+        delegates.invokeDelegates({ $0.onRestore?([item])})
     }
     
     private func fail(transaction: SKPaymentTransaction) {
-        print("fail...")
-        if let transactionError = transaction.error as NSError?,
-            let localizedDescription = transaction.error?.localizedDescription,
-            transactionError.code != SKError.paymentCancelled.rawValue {
-            print("Transaction Error: \(localizedDescription)")
-        }
         
         SKPaymentQueue.default().finishTransaction(transaction)
+        delegates.invokeDelegates({ $0.onError?(transaction.error ?? PurchaseError.networkError)})
     }
-    
 }
 
 fileprivate extension Set where Element: PaymentModel {

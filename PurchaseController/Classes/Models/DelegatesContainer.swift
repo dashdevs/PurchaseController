@@ -34,21 +34,3 @@ final class DelegatesContainer<T: AnyObject> {
         return delegates.contains(delegate)
     }
 }
-
-
-
-final class WeakBox<A: AnyObject> {
-    weak var unbox: A?
-    init(_ value: A) {
-        unbox = value
-    }
-}
-
-struct WeakArray<Element: AnyObject> {
-    private var items: [WeakBox<Element>] = []
-    
-    init(_ elements: [Element]) {
-        items = elements.map { WeakBox($0) }
-    }
-}
-
