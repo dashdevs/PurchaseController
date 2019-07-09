@@ -29,7 +29,7 @@ class MainViewController: UITableViewController {
     override func viewDidLoad() {
         self.tableView.dataSource = tableController
         self.tableView.delegate = tableController
-//        purchaseController.completeTransactions()
+        purchaseController.completeTransactions()
     }
 }
 

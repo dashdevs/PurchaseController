@@ -41,6 +41,7 @@ public extension PurchaseController {
 /// - noActiveSubscription: no active subscription after validation or all expired
 /// - restoreFailed: restoreFailed : check retrieved products
 /// - receiptSerializationError: Notifies handler if a receipt can not serialization
+/// - transactionPaymentNotFound: Corresponding payment for the transaction not found.
 public enum PurchaseError: Int, Error {
     case unknown
     case clientInvalid
@@ -64,6 +65,7 @@ public enum PurchaseError: Int, Error {
     case restoreFailed
     case receiptSerializationError
     case purchaseSynchronizationError
+    case transactionPaymentNotFound
 }
 
 // MARK: - CustomDebugStringConvertible
@@ -114,6 +116,8 @@ extension PurchaseError: CustomDebugStringConvertible {
             return "The receipt can not be serialized."
         case .purchaseSynchronizationError:
             return "Local validated receipt not found."
+        case .transactionPaymentNotFound:
+            return "Corresponding payment for the transaction not found."
         }
     }
     

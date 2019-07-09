@@ -95,6 +95,24 @@ import SwiftyStoreKit
                             originalTransaction: inApp.originalPurchaseTransaction)
     }
     
+    /// Function for purchase creation
+    ///
+    /// - Parameters:
+    ///   - transaction: StoreKit restored product transaction
+    ///   - persistance: Object that conforms to persistance protocol
+    /// - Returns: Describes item available to purchase
+    static func create(with transaction: SKPaymentTransaction,
+                       persistance: PurchasePersistor) -> PurchaseItem? {
+        guard let product = persistance.fetchProducts().first(where: { $0.productIdentifier == transaction.payment.productIdentifier}) else {
+            return nil
+        }
+        return PurchaseItem(productId: transaction.payment.productIdentifier,
+                            quantity: transaction.payment.quantity,
+                            product: product,
+                            transaction: transaction,
+                            originalTransaction: transaction.original)
+    }
+    
     /// Function for transaction completion
     /// Transaction will be presented in receipt until finished
     public func completeTransaction() {
@@ -146,6 +164,14 @@ extension Collection where Element == InAppPurchase {
     internal func makeItems(with persistance: PurchasePersistor) -> [PurchaseItem] {
         return self.compactMap { (purchase) -> PurchaseItem? in
             return PurchaseItem.create(with: purchase, persistance: persistance)
+        }
+    }
+}
+
+extension Collection where Element == SKPaymentTransaction {
+    internal func makeItems(with persistance: PurchasePersistor) -> [PurchaseItem] {
+        return self.compactMap { (transaction) -> PurchaseItem? in
+            return PurchaseItem.create(with: transaction, persistance: persistance)
         }
     }
 }

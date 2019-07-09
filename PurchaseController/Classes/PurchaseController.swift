@@ -62,19 +62,17 @@ public final class PurchaseController: PaymentQueueControllerDelegate {
         print(items)
     }
     
-    lazy var onRestore: (([PurchaseItem]) -> Void)? = { [weak self] items in
-        self?.persistor.persistPurchased(products: items)
-        self?.purchaseActionState = .finish(PurchaseActionResult.restoreSuccess)
-        print(items)
+    lazy var onRestore: (([SKPaymentTransaction]) -> Void)? = { [weak self] transactions in
+        guard let sSelf = self else { return }
+        let products = sSelf.persistor.fetchProducts()
+        let restoredItems = transactions.makeItems(with: sSelf.persistor)
+        if restoredItems.isEmpty {
+            sSelf.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.restoreFailed))
+            return
+        }
+        sSelf.persistor.persistPurchased(products: restoredItems)
+        sSelf.purchaseActionState = .finish(PurchaseActionResult.restoreSuccess)
     }
-
-//    self.persistor.persistPurchased(products: items)
-//    if let error = results.restoreFailedPurchases.first?.0 {
-//        self.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
-//        return
-//    }
-//    self.purchaseActionState = .finish(PurchaseActionResult.restoreSuccess)
-
     
     lazy var onError: ((Error) -> Void)? = { [weak self] error in
         self?.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
@@ -188,19 +186,6 @@ public final class PurchaseController: PaymentQueueControllerDelegate {
     public func restore() {
         self.purchaseActionState = .loading
         PurchaseController.globalPaymentQueueController.restore()
-//        SwiftyStoreKit.restorePurchases { [unowned self] (results) in
-//            let items = results.restoredPurchases.makeItems(with: self.persistor)
-//            if items.isEmpty {
-//                self.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.restoreFailed))
-//                return
-//            }
-//            self.persistor.persistPurchased(products: items)
-//            if let error = results.restoreFailedPurchases.first?.0 {
-//                self.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
-//                return
-//            }
-//            self.purchaseActionState = .finish(PurchaseActionResult.restoreSuccess)
-//        }
     }
     
     /// Function used to add product to purchase queue.
