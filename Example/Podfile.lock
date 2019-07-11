@@ -1,6 +1,6 @@
 PODS:
   - GRKOpenSSLFramework (1.0.2.16)
-  - PurchaseController (0.4.4):
+  - PurchaseController (0.4.5):
     - GRKOpenSSLFramework
     - SwiftyStoreKit (~> 0.14)
   - SwiftyStoreKit (0.14.2)
@@ -20,7 +20,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   GRKOpenSSLFramework: 35944e317e6336b2944ad70b059d84db6b2d8532
-  PurchaseController: 5d74b065d15e83a8eda37074fd9ce657f4ee9aa9
+  PurchaseController: 0e0f98b7405644644729a20d40a026a6a66055c3
   SwiftyStoreKit: cc399645796b094022fb650c148a0aed25995873
 
 PODFILE CHECKSUM: adb6f146b43819f04d4a4e65933c6d8e839f83ec

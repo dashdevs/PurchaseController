@@ -9,7 +9,7 @@ import StoreKit
 import SwiftyStoreKit
 
 /// Item describes avaible to purchase object
-public struct PurchaseItem {
+@objc public final class PurchaseItem: NSObject {
     /// Purchase identifier - unique id of purchase object from appstore connect
     public let productId: String
     /// Amount of purchased items
@@ -95,6 +95,24 @@ public struct PurchaseItem {
                             originalTransaction: inApp.originalPurchaseTransaction)
     }
     
+    /// Function for purchase creation
+    ///
+    /// - Parameters:
+    ///   - transaction: StoreKit restored product transaction
+    ///   - persistance: Object that conforms to persistance protocol
+    /// - Returns: Describes item available to purchase
+    static func create(with transaction: SKPaymentTransaction,
+                       persistance: PurchasePersistor) -> PurchaseItem? {
+        guard let product = persistance.fetchProducts().first(where: { $0.productIdentifier == transaction.payment.productIdentifier}) else {
+            return nil
+        }
+        return PurchaseItem(productId: transaction.payment.productIdentifier,
+                            quantity: transaction.payment.quantity,
+                            product: product,
+                            transaction: transaction,
+                            originalTransaction: transaction.original)
+    }
+    
     /// Function for transaction completion
     /// Transaction will be presented in receipt until finished
     public func completeTransaction() {
@@ -112,6 +130,20 @@ public struct PurchaseItem {
         }
         SwiftyStoreKit.finishTransaction(original)
     }
+    
+    // MARK: - Hashable
+    
+    /// Compares two PurchaseItem using productId, transactionIdentifier and product.productIdentifier
+    ///
+    /// - Parameters:
+    ///   - lhs: left value to compare
+    ///   - rhs: right value to compare
+    /// - Returns: Equatable value
+    public static func == (lhs: PurchaseItem, rhs: PurchaseItem) -> Bool {
+        return lhs.productId == rhs.productId &&
+            lhs.transaction.transactionIdentifier == rhs.transaction.transactionIdentifier &&
+            lhs.product.productIdentifier == rhs.product.productIdentifier
+    }    
 }
 
 extension Collection where Element == Purchase {
@@ -130,22 +162,10 @@ extension Collection where Element == InAppPurchase {
     }
 }
 
-extension PurchaseItem: Hashable {
-    /// Compares two PurchaseItem using productId, transactionIdentifier and product.productIdentifier
-    ///
-    /// - Parameters:
-    ///   - lhs: left value to compare
-    ///   - rhs: right value to compare
-    /// - Returns: Equatable value
-    public static func == (lhs: PurchaseItem, rhs: PurchaseItem) -> Bool {
-        return lhs.productId == rhs.productId &&
-            lhs.transaction.transactionIdentifier == rhs.transaction.transactionIdentifier &&
-            lhs.product.productIdentifier == rhs.product.productIdentifier
-    }
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(productId)
-        hasher.combine(product.productIdentifier)
-        hasher.combine(transaction.transactionIdentifier)
+extension Collection where Element == SKPaymentTransaction {
+    internal func makeItems(with persistance: PurchasePersistor) -> [PurchaseItem] {
+        return self.compactMap { (transaction) -> PurchaseItem? in
+            return PurchaseItem.create(with: transaction, persistance: persistance)
+        }
     }
 }

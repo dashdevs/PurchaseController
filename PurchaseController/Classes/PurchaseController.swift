@@ -52,11 +52,38 @@ public protocol PurchaseStateHandler {
 }
 
 @available(iOS 10.0, *)
-public final class PurchaseController {
+public final class PurchaseController: PaymentQueueControllerDelegate {
+    
+    // MARK: - PaymentQueueControllerDelegate
+    
+    lazy var onPurchase: (([PurchaseItem]) -> Void)? = { [weak self] items in
+        self?.persistor.persistPurchased(products: items)
+        self?.purchaseActionState = .finish(PurchaseActionResult.purchaseSuccess(items[0]))
+        print(items)
+    }
+    
+    lazy var onRestore: (([SKPaymentTransaction]) -> Void)? = { [weak self] transactions in
+        guard let sSelf = self else { return }
+        let products = sSelf.persistor.fetchProducts()
+        let restoredItems = transactions.makeItems(with: sSelf.persistor)
+        if restoredItems.isEmpty {
+            sSelf.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.restoreFailed))
+            return
+        }
+        sSelf.persistor.persistPurchased(products: restoredItems)
+        sSelf.purchaseActionState = .finish(PurchaseActionResult.restoreSuccess)
+    }
+    
+    lazy var onError: ((Error) -> Void)? = { [weak self] error in
+        self?.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
+    }
+    
     
     /// receipt object. Availadble ONLY after verifyReceipt() call.
     public private(set) var sessionReceipt: Receipt?
     private static let globalPersistor = PurchasePersistorImplementation()
+    private static let globalPaymentQueueController = PCPaymentQueueController()
+    
     private var persistor: PurchasePersistor
     private var stateHandler: PurchaseStateHandler?
     private var purchaseActionState: PurchaseActionState {
@@ -72,6 +99,9 @@ public final class PurchaseController {
         self.persistor = PurchaseController.globalPersistor
         self.stateHandler = stateHandler
         self.purchaseActionState = .none
+        PurchaseController.globalPaymentQueueController.addObserver(self)
+        SwiftyStoreKit.completeTransactions(completion: { _ in})
+        
     }
     
     /// Initializer with user's persistor
@@ -82,6 +112,8 @@ public final class PurchaseController {
         self.persistor = persistor
         self.stateHandler = stateHandler
         self.purchaseActionState = .none
+        PurchaseController.globalPaymentQueueController.addObserver(self)
+        SwiftyStoreKit.completeTransactions(completion: { _ in})
     }
     
     // MARK: - Public
@@ -153,19 +185,7 @@ public final class PurchaseController {
     /// Notifies handler with .restoreFailed if any error presents
     public func restore() {
         self.purchaseActionState = .loading
-        SwiftyStoreKit.restorePurchases { [unowned self] (results) in
-            let items = results.restoredPurchases.makeItems(with: self.persistor)
-            if items.isEmpty {
-                self.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.restoreFailed))
-                return
-            }
-            self.persistor.persistPurchased(products: items)
-            if let error = results.restoreFailedPurchases.first?.0 {
-                self.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
-                return
-            }
-            self.purchaseActionState = .finish(PurchaseActionResult.restoreSuccess)
-        }
+        PurchaseController.globalPaymentQueueController.restore()
     }
     
     /// Function used to add product to purchase queue.
@@ -187,16 +207,7 @@ public final class PurchaseController {
                 self.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.noLocalProduct))
                 return 
         }
-        SwiftyStoreKit.purchaseProduct(product, atomically: atomically) { [unowned self] (results) in
-            switch results {
-            case .success(let purchase):
-                let item = PurchaseItem(purchaseDeatils: purchase)
-                self.persistor.persistPurchased(products: [item])
-                self.purchaseActionState = .finish(PurchaseActionResult.purchaseSuccess(item))
-            case .error(let error):
-                self.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
-            }
-        }
+        PurchaseController.globalPaymentQueueController.purchase(product: product, atomically: false)
     }
     
     /// Function used to verify receipt using validator object.
