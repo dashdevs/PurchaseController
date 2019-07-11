@@ -143,13 +143,7 @@ import SwiftyStoreKit
         return lhs.productId == rhs.productId &&
             lhs.transaction.transactionIdentifier == rhs.transaction.transactionIdentifier &&
             lhs.product.productIdentifier == rhs.product.productIdentifier
-    }
-    
-//    override func hash(into hasher: inout Hasher) {
-//        hasher.combine(productId)
-//        hasher.combine(product.productIdentifier)
-//        hasher.combine(transaction.transactionIdentifier)
-//    }
+    }    
 }
 
 extension Collection where Element == Purchase {
