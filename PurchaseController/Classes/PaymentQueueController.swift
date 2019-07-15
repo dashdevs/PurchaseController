@@ -105,9 +105,7 @@ final class PCPaymentQueueController: NSObject {
 extension PCPaymentQueueController: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         var purchased = [PurchaseItem]()
-        restoredTransactions.removeAll()
         var errors = [Error]()
-        
         do {
             for transaction in transactions {
                 switch transaction.transactionState {
@@ -118,7 +116,9 @@ extension PCPaymentQueueController: SKPaymentTransactionObserver {
                     errors.append(fail(transaction: transaction))
                 case .restored:
                     let restoredTransaction = restore(transaction: transaction)
-                    restoredTransactions.append(restoredTransaction)
+                    if !restoredTransactions.contains(where: { restoredTransaction.transactionIdentifier == $0.transactionIdentifier}) {
+                        restoredTransactions.append(restoredTransaction)
+                    }
                 case .deferred:
                     break
                 case .purchasing:
