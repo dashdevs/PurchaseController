@@ -52,9 +52,9 @@ public protocol PurchaseStateHandler {
 }
 
 @available(iOS 10.0, *)
-public final class PurchaseController: PaymentQueueControllerDelegate, ProductsInfoObserver {
+public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserver {
     
-    // MARK: - PaymentQueueControllerDelegate
+    // MARK: - PaymentQueueObserver
     
     lazy var onPurchase: (([PurchaseItem]) -> Void)? = { [weak self] items in
         self?.persistor.persistPurchased(products: items)
