@@ -52,7 +52,7 @@ public protocol PurchaseStateHandler {
 }
 
 @available(iOS 10.0, *)
-public final class PurchaseController: PaymentQueueControllerDelegate {
+public final class PurchaseController: PaymentQueueControllerDelegate, ProductsInfoObserver {
     
     // MARK: - PaymentQueueControllerDelegate
     
@@ -78,11 +78,21 @@ public final class PurchaseController: PaymentQueueControllerDelegate {
         self?.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
     }
     
+    // MARK: - ProductsInfoObserver
+    
+    lazy var onRetrieve: ((RetrievedProductsInfo) -> Void)? = { [weak self] (retrievedProductsInfo)  in
+            self?.persistor.persist(products: retrievedProductsInfo.products)
+        let hasInvalidProducts = retrievedProductsInfo.invalidProductIdentifiers.count > 0
+        self?.purchaseActionState = hasInvalidProducts ? .finish(PurchaseActionResult.retrieveSuccessInvalidProducts) : .finish(PurchaseActionResult.retrieveSuccess)
+    }
     
     /// receipt object. Availadble ONLY after verifyReceipt() call.
     public private(set) var sessionReceipt: Receipt?
     private static let globalPersistor = PurchasePersistorImplementation()
     private static let globalPaymentQueueController = PCPaymentQueueController()
+    private lazy var productsInfoController = {
+        return PCProductsInfoController(observer: self)
+    }()
     
     private var persistor: PurchasePersistor
     private var stateHandler: PurchaseStateHandler?
@@ -161,18 +171,7 @@ public final class PurchaseController: PaymentQueueControllerDelegate {
     /// - Parameter products: Set of products identifiers, whose needs to be retrieved
     public func retrieve(products: Set<String>) {
         self.purchaseActionState = .loading
-        SwiftyStoreKit.retrieveProductsInfo(products) { [unowned self] (results) in
-            if let error = results.error {
-                self.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
-                return
-            }
-            self.persistor.persist(products: results.retrievedProducts)
-            if results.invalidProductIDs.count > 0 {
-                self.purchaseActionState = .finish(PurchaseActionResult.retrieveSuccessInvalidProducts)
-                return
-            }
-            self.purchaseActionState = .finish(PurchaseActionResult.retrieveSuccess)
-        }
+        productsInfoController.retrieveProductsInfo(products)
     }
     
     /// Function, used to restore available products from Apple side.
