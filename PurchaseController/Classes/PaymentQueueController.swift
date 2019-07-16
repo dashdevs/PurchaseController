@@ -30,7 +30,11 @@ fileprivate class PaymentModel: Hashable {
     }
 }
 
-@objc protocol PaymentQueueControllerDelegate: class {
+/**
+ Defines required callback properties for objects
+ that need to observe state changes of `PCPaymentQueueController` instance.
+ */
+@objc protocol PaymentQueueObserver: class {
     var onPurchase: ((_ items: [PurchaseItem]) -> Void)? { get set }
     var onRestore: ((_ items: [SKPaymentTransaction]) -> Void)? { get set }
     var onError: ((_ error: Error) -> Void)? { get set }
@@ -71,7 +75,7 @@ final class PCPaymentQueueController: NSObject {
     
     private let paymentQueue: SKPaymentQueue
     private var payments = Set<PaymentModel>()
-    private let delegates = DelegatesContainer<PaymentQueueControllerDelegate>()
+    private let observers = DelegatesContainer<PaymentQueueObserver>()
     
     
     
@@ -96,8 +100,8 @@ final class PCPaymentQueueController: NSObject {
         paymentQueue.restoreCompletedTransactions()
     }
     
-    func addObserver(_ observer: PaymentQueueControllerDelegate) {
-        delegates.add(delegate: observer)
+    func addObserver(_ observer: PaymentQueueObserver) {
+        observers.add(delegate: observer)
     }
 }
 
@@ -126,15 +130,15 @@ extension PCPaymentQueueController: SKPaymentTransactionObserver {
                 }
             }
         } catch {
-            delegates.invokeDelegates({ $0.onError?(error)})
+            observers.invokeDelegates({ $0.onError?(error)})
         }
         
         if purchased.count > 0 {
-            delegates.invokeDelegates({ $0.onPurchase?(purchased)})
+            observers.invokeDelegates({ $0.onPurchase?(purchased)})
         }
         
         if let error = errors.last { // TODO: Consider combining errors, etc.
-            delegates.invokeDelegates({ $0.onError?(error)})
+            observers.invokeDelegates({ $0.onError?(error)})
         }
     }
     
@@ -143,13 +147,13 @@ extension PCPaymentQueueController: SKPaymentTransactionObserver {
     }
     
     func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
-        delegates.invokeDelegates({ $0.onError?(error)})
+        observers.invokeDelegates({ $0.onError?(error)})
         restoredTransactions.removeAll()
     }
     
     func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
         if restoredTransactions.count > 0 {
-            delegates.invokeDelegates({ $0.onRestore?(restoredTransactions)})
+            observers.invokeDelegates({ $0.onRestore?(restoredTransactions)})
         }
         restoredTransactions.removeAll()
     }
