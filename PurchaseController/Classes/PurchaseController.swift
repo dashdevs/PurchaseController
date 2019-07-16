@@ -42,7 +42,7 @@ public enum PurchaseActionResult {
     case purchaseSyncronizationSuccess
 }
 
-public protocol PurchaseStateHandler {
+public protocol PurchaseStateHandler: class {
     /// Protocol method to notify of purchase actions state changing
     ///
     /// - Parameters:
@@ -52,16 +52,15 @@ public protocol PurchaseStateHandler {
 }
 
 @available(iOS 10.0, *)
-public final class PurchaseController: PaymentQueueControllerDelegate {
+public final class PurchaseController: PaymentQueueControllerDelegate, ReceiptFetcherObserver {
     
     // MARK: - PaymentQueueControllerDelegate
     
     lazy var onPurchase: (([PurchaseItem]) -> Void)? = { [weak self] items in
         self?.persistor.persistPurchased(products: items)
         self?.purchaseActionState = .finish(PurchaseActionResult.purchaseSuccess(items[0]))
-        print(items)
     }
-    
+
     lazy var onRestore: (([SKPaymentTransaction]) -> Void)? = { [weak self] transactions in
         guard let sSelf = self else { return }
         let products = sSelf.persistor.fetchProducts()
@@ -73,19 +72,28 @@ public final class PurchaseController: PaymentQueueControllerDelegate {
         sSelf.persistor.persistPurchased(products: restoredItems)
         sSelf.purchaseActionState = .finish(PurchaseActionResult.restoreSuccess)
     }
-    
+
     lazy var onError: ((Error) -> Void)? = { [weak self] error in
         self?.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
     }
+
+    // MARK: - ReceiptFetcherObserver
     
+    lazy var onReceiptFetch: ((Data) -> Void)? = { [weak self] receiptData in
+        self?.purchaseActionState = .finish(.fetchReceiptSuccess(receiptData))
+    }
     
     /// receipt object. Availadble ONLY after verifyReceipt() call.
     public private(set) var sessionReceipt: Receipt?
     private static let globalPersistor = PurchasePersistorImplementation()
     private static let globalPaymentQueueController = PCPaymentQueueController()
     
+    private lazy var receiptFetcher: ReceiptFetcher = {
+       return ReceiptFetcher(observer: self)
+    }()
+
     private var persistor: PurchasePersistor
-    private var stateHandler: PurchaseStateHandler?
+    private weak var stateHandler: PurchaseStateHandler?
     private var purchaseActionState: PurchaseActionState {
         willSet {
             stateHandler?.update(newState: newValue, from: purchaseActionState)
@@ -101,7 +109,6 @@ public final class PurchaseController: PaymentQueueControllerDelegate {
         self.purchaseActionState = .none
         PurchaseController.globalPaymentQueueController.addObserver(self)
         SwiftyStoreKit.completeTransactions(completion: { _ in})
-        
     }
     
     /// Initializer with user's persistor
@@ -242,16 +249,8 @@ public final class PurchaseController: PaymentQueueControllerDelegate {
     /// - Parameter forceReceipt: if true, refreshes the receipt even if local one already exists.
     public func fetchReceipt(forceReceipt: Bool = true) {
         self.purchaseActionState = .loading
-        SwiftyStoreKit.fetchReceipt(forceRefresh: forceReceipt, completion: { result in
-            switch result {
-            case .success(let receiptData):
-                self.purchaseActionState = .finish(.fetchReceiptSuccess(receiptData))
-            case .error(let error):
-                self.purchaseActionState = .finish(.error(error.purchaseError))
-            }
-        })
+        receiptFetcher.fetchReceipt(forceRefresh: forceReceipt)
     }
-    
     
     /// Function used to synchronize decoded receipt purchases with local saved.
     ///
