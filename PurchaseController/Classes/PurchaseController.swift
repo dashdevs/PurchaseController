@@ -81,8 +81,8 @@ public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserve
     // MARK: - ProductsInfoObserver
     
     lazy var onRetrieve: ((RetrievedProductsInfo) -> Void)? = { [weak self] (retrievedProductsInfo)  in
-            self?.persistor.persist(products: retrievedProductsInfo.products)
-        let hasInvalidProducts = retrievedProductsInfo.invalidProductIdentifiers.count > 0
+        self?.persistor.persist(products: retrievedProductsInfo.products)
+        let hasInvalidProducts = !retrievedProductsInfo.invalidProductIdentifiers.isEmpty
         self?.purchaseActionState = hasInvalidProducts ? .finish(PurchaseActionResult.retrieveSuccessInvalidProducts) : .finish(PurchaseActionResult.retrieveSuccess)
     }
     

@@ -30,6 +30,10 @@ fileprivate class PaymentModel: Hashable {
     }
 }
 
+/**
+ Defines required callback properties for objects
+ that need to observe state changes of `PCPaymentQueueController` instance.
+ */
 @objc protocol PaymentQueueObserver: class {
     var onPurchase: ((_ items: [PurchaseItem]) -> Void)? { get set }
     var onRestore: ((_ items: [SKPaymentTransaction]) -> Void)? { get set }
