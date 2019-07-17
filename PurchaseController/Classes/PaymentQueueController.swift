@@ -77,8 +77,6 @@ final class PCPaymentQueueController: NSObject {
     private var payments = Set<PaymentModel>()
     private let observers = DelegatesContainer<PaymentQueueObserver>()
     
-    
-    
     init(paymentQueue: SKPaymentQueue = SKPaymentQueue.default()) {
         self.paymentQueue = paymentQueue
         super.init()
@@ -96,6 +94,14 @@ final class PCPaymentQueueController: NSObject {
         payments.insert(PaymentModel(product: product, payment: payment, atomic: atomically))
     }
     
+    func completeTransaction(for purchasedItem: PurchaseItem) {
+        guard let transaction = purchasedItem.transaction as? SKPaymentTransaction else {
+            print("not a transaction:", purchasedItem.transaction)
+            return
+        }
+        paymentQueue.finishTransaction(transaction)
+    }
+    
     func restore() {
         paymentQueue.restoreCompletedTransactions()
     }
@@ -110,27 +116,24 @@ extension PCPaymentQueueController: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         var purchased = [PurchaseItem]()
         var errors = [Error]()
-        do {
-            for transaction in transactions {
-                switch transaction.transactionState {
-                case .purchased:
-                    let purchasedItem = try complete(transaction: transaction)
+        for transaction in transactions {
+            switch transaction.transactionState {
+            case .purchased:
+                if let purchasedItem = complete(transaction: transaction) {
                     purchased.append(purchasedItem)
-                case .failed:
-                    errors.append(fail(transaction: transaction))
-                case .restored:
-                    let restoredTransaction = restore(transaction: transaction)
-                    if !restoredTransactions.contains(where: { restoredTransaction.transactionIdentifier == $0.transactionIdentifier}) {
-                        restoredTransactions.append(restoredTransaction)
-                    }
-                case .deferred:
-                    break
-                case .purchasing:
-                    break
                 }
+            case .failed:
+                errors.append(fail(transaction: transaction))
+            case .restored:
+                let restoredTransaction = restore(transaction: transaction)
+                if !restoredTransactions.contains(where: { restoredTransaction.transactionIdentifier == $0.transactionIdentifier}) {
+                    restoredTransactions.append(restoredTransaction)
+                }
+            case .deferred:
+                break
+            case .purchasing:
+                break
             }
-        } catch {
-            observers.invokeDelegates({ $0.onError?(error)})
         }
         
         if purchased.count > 0 {
@@ -169,9 +172,12 @@ extension PCPaymentQueueController: SKPaymentTransactionObserver {
 
 private extension PCPaymentQueueController {
     
-    private func complete(transaction: SKPaymentTransaction) throws -> PurchaseItem {
+    private func complete(transaction: SKPaymentTransaction) -> PurchaseItem? {
+        // if there's no payment that corresponds the transaction,
+        // complete this transaction instantly 
         guard let paymentModel = payments[transaction.payment.productIdentifier] else {
-            throw PurchaseError.transactionPaymentNotFound
+            SKPaymentQueue.default().finishTransaction(transaction)
+            return nil
         }
         if paymentModel.atomic {
             SKPaymentQueue.default().finishTransaction(transaction)

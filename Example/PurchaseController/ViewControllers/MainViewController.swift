@@ -43,6 +43,8 @@ extension MainViewController: PurchaseStateHandler {
                 print("--- Error occured: \(error)")
             case .subscriptionValidationSucess(let receipt):
                 print("--- Moved to state: subscriptionValidationSucess with \(receipt)")
+            case .purchaseSuccess(let item):
+                print("--- Moved to state: purchaseSuccess with \(item)")
             default:
                 print("--- Moved to state: \(newState)")
             }
@@ -55,7 +57,7 @@ extension MainViewController: PurchaseStateHandler {
 extension MainViewController: MainViewControllerPresentable {
     
     @objc func purchaseConsumable() {
-        purchaseController.purchase(with: PurchasebleProductItem.consumable.rawValue)
+        purchaseController.purchase(with: PurchasebleProductItem.consumable.rawValue, atomically: false)
     }
     
     @objc func purchaseNonConsumable() {
