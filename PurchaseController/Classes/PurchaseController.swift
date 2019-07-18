@@ -220,7 +220,7 @@ public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserve
     /// Function used to verify receipt using validator object.
     ///
     /// Receipt is stored on appStoreReceiptURL path.
-    /// Validated receipt dict is stored in Storage.sessionReceipt.
+    /// Validated receipt model is stored in Storage.sessionReceipt.
     ///
     /// Notifies handler with .receiptSerializationError if a receipt can not serialization
     ///
@@ -233,7 +233,7 @@ public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserve
         validator.validate { [unowned self] validationResult in
             switch validationResult {
             case let .success(receipt):
-                self.storage.set(receipt: receipt)
+                try? self.storage.set(receipt: receipt)
                 self.purchaseActionState = .finish(PurchaseActionResult.receiptValidationSuccess)
             case let .error(error):
                 self.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
