@@ -196,7 +196,7 @@ struct ReceiptField {
 /// - customerDidNotAgreeToPriceIncrease: Customer did not agree to a recent price increase.
 /// - productWasNotAvailable: Product was not available for purchase at the time of renewal.
 /// - unknownError: Unknown error.
-enum SubscriptionExpirationIntent: String, Codable {
+public enum SubscriptionExpirationIntent: String, Codable {
     case customerCanceledSubscription = "1"
     case billingError = "2"
     case customerDidNotAgreeToPriceIncrease = "3"
@@ -208,7 +208,7 @@ enum SubscriptionExpirationIntent: String, Codable {
 ///
 /// - stillAttempting: App Store is still attempting to renew the subscription.
 /// - stoppedAttempting: App Store has stopped attempting to renew the subscription.
-enum SubscriptionRetryFlag: String, Codable {
+public enum SubscriptionRetryFlag: String, Codable {
     case stillAttempting = "1"
     case stoppedAttempting = "0"
 }
@@ -217,7 +217,7 @@ enum SubscriptionRetryFlag: String, Codable {
 ///
 /// - customerCanceled: Customer canceled their transaction due to an actual or perceived issue within your app.
 /// - anotherReason: Transaction was canceled for another reason, for example, if the customer made the purchase accidentally.
-enum CancellationReason: String, Codable {
+public enum CancellationReason: String, Codable {
     case customerCanceled = "1"
     case anotherReason = "0"
 }
@@ -226,7 +226,7 @@ enum CancellationReason: String, Codable {
 ///
 /// - willRenew: Subscription will renew at the end of the current subscription period.
 /// - autoRenewalTurnedOff: Customer has turned off automatic renewal for their subscription.
-enum SubscriptionAutoRenewStatus: String, Codable {
+public enum SubscriptionAutoRenewStatus: String, Codable {
     case willRenew = "1"
     case autoRenewalTurnedOff = "0"
 }
@@ -235,7 +235,7 @@ enum SubscriptionAutoRenewStatus: String, Codable {
 ///
 /// - agreed: Customer has agreed to the price increase. Subscription will renew at the higher price.
 /// - notTakenAction: Customer has not taken action regarding the increased price. Subscription expires if the customer takes no action before the renewal.
-enum SubscriptionPriceConsentStatus: String, Codable {
+public enum SubscriptionPriceConsentStatus: String, Codable {
     case agreed = "1"
     case notTakenAction = "0"
 }

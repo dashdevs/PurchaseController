@@ -9,7 +9,7 @@ import Foundation
 import SwiftyStoreKit
 
 /// Representation of inapp purchase
-struct InAppPurchase: ReadableDebugStringProtocol {
+public struct InAppPurchase: ReadableDebugStringProtocol {
     
     // MARK: - Properties
     
@@ -98,7 +98,7 @@ struct InAppPurchase: ReadableDebugStringProtocol {
     
     // MARK: - Lifecycle
     
-    init?(quantity: Int?,
+    public init?(quantity: Int?,
           productIdentifier: String?,
           transactionIdentifier: String?,
           originalTransactionIdentifier: String?,
@@ -181,7 +181,7 @@ extension InAppPurchase: Codable {
         case subscriptionPriceConsentStatus = "price_consent_status"
     }
 
-    init(from decoder: Decoder) throws {
+   public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
         quantity = Int(try values.decode(String.self, forKey: .quantity)) ?? 0

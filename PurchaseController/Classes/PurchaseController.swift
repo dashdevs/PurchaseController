@@ -31,7 +31,7 @@ public enum PurchaseActionState {
 /// - receiptValidationSuccess: Notifies handler if receipt validation was successfull
 public enum PurchaseActionResult {
     case error(Error)
-    case subscriptionValidationSucess(ReceiptItem)
+    case subscriptionValidationSucess([InAppPurchase])
     case retrieveSuccess
     case retrieveSuccessInvalidProducts
     case purchaseSuccess(PurchaseItem)
@@ -111,12 +111,19 @@ public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserve
         }
     }
     
+    public let productIds: Set<String>
+    public let subscriptionProductIds: Set<String>
+
     /// Initializer with default non-secure persistor
     ///
     /// - Parameter stateHandler: Any object for state handling, should implement PurchaseStateHandler protocol
-    public init(stateHandler: PurchaseStateHandler?)  {
+    /// - Parameter productIds: Set of identificators to retrieve
+    /// - Parameter subscriptionProductIds: Set of identificators to validate subscriptions
+    public init(stateHandler: PurchaseStateHandler?, productIds: Set<String> = [], subscriptionProductIds: Set<String> = [])  {
         self.storage = PurchaseController.globalStorage
         self.stateHandler = stateHandler
+        self.productIds = productIds
+        self.subscriptionProductIds = subscriptionProductIds
         self.purchaseActionState = .none
         PurchaseController.globalPaymentQueueController.addObserver(self)
         SwiftyStoreKit.completeTransactions(completion: { _ in})
@@ -126,9 +133,12 @@ public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserve
     ///
     /// - Parameter stateHandler: Any object for state handling, should implement PurchaseStateHandler protocol
     /// - Parameter persistor: Any object for persisting transactions and products, should implement PurchasePersistor protocol
-    public init(stateHandler: PurchaseStateHandler?, persistor: PurchasePersistor)  {
+    /// - Parameter subscriptionProductIds: Set of identificators to validate subscriptions
+    public init(stateHandler: PurchaseStateHandler?, persistor: PurchasePersistor, productIds: Set<String> = [], subscriptionProductIds: Set<String> = [])  {
         self.storage = Storage(persistor: persistor)
         self.stateHandler = stateHandler
+        self.productIds = productIds
+        self.subscriptionProductIds = subscriptionProductIds
         self.purchaseActionState = .none
         PurchaseController.globalPaymentQueueController.addObserver(self)
         SwiftyStoreKit.completeTransactions(completion: { _ in})
@@ -176,10 +186,9 @@ public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserve
     ///
     /// Notifies handler with .error state if any error retrieved
     ///
-    /// - Parameter products: Set of products identifiers, whose needs to be retrieved
-    public func retrieve(products: Set<String>) {
+    public func retrieve() {
         self.purchaseActionState = .loading
-        productsInfoController.retrieveProductsInfo(products)
+        productsInfoController.retrieveProductsInfo(productIds)
     }
     
     /// Function, used to restore available products from Apple side.
@@ -275,36 +284,23 @@ public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserve
     
     /// Function used to validate subscription using validator object.
     ///
-    /// Notifies handler with .noActiveSubscription state if no active subscription exists for given id (did not purchased or expired)
+    /// Notifies handler with .noActiveSubscription state if no subscription exists for given ids
     ///
     /// Notifies handler with .subscriptionValidationSucess state if presents active subscription for given id
     ///
     /// - Parameters:
-    ///   - productID: product id of subscription plan
-    ///   - type: SubscriptionType (autoRenewable or nonRenewing)
-    public func validateSubscription(productID: String, type: SubscriptionType) {
+    ///   - filter: filter closure, used for predict subscription objects
+    public func validateSubscription(filter: SubscriptionFilter?) {
         self.purchaseActionState = .loading
-        guard let receipt = self.storage.sessionReceipt,
-            let receiptJson = try? receipt.asJsonObject(),
-            let receiptInfo = receiptJson as? ReceiptInfo else {
-                self.purchaseActionState = .finish(PurchaseActionResult.error(ReceiptError.noReceiptData))
-                return
-        }
-        let purchaseResult = SwiftyStoreKit.verifySubscription(ofType: type,
-                                                               productId: productID,
-                                                               inReceipt: receiptInfo)
-        switch purchaseResult {
-        case .purchased(_, let items):
-            let sorted = items.sorted(by: { (lo, ro) -> Bool in
-                return lo.purchaseDate.timeIntervalSince1970 > ro.purchaseDate.timeIntervalSince1970
-            })
-            guard let latestActualSubscription = sorted.first else {
-                self.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.noActiveSubscription))
-                return
+        let controller = SubscriptionValidationController(with: self.storage, subscription: productIds)
+        do {
+            let filtered = try controller.validate(by: filter)
+            if filtered.isEmpty {
+                 self.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.noActiveSubscription))
             }
-            self.purchaseActionState = .finish(PurchaseActionResult.subscriptionValidationSucess(latestActualSubscription))
-        case .notPurchased, .expired(_, _):
-            self.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.noActiveSubscription))
+            self.purchaseActionState = .finish(PurchaseActionResult.subscriptionValidationSucess(filtered))
+        } catch let error {
+             self.purchaseActionState = .finish(PurchaseActionResult.error(error))
         }
     }
     
