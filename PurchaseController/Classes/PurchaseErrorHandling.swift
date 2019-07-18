@@ -42,6 +42,7 @@ public extension PurchaseController {
 /// - restoreFailed: restoreFailed : check retrieved products
 /// - receiptSerializationError: Notifies handler if a receipt can not serialization
 /// - transactionPaymentNotFound: Corresponding payment for the transaction not found.
+/// - unauthorizedReceiptSet: Notifies if Storage.sessionReceipt was set from an unauthorized place
 public enum PurchaseError: Int, Error {
     case unknown
     case clientInvalid
@@ -66,6 +67,7 @@ public enum PurchaseError: Int, Error {
     case receiptSerializationError
     case purchaseSynchronizationError
     case transactionPaymentNotFound
+    case unauthorizedReceiptSet
 }
 
 // MARK: - CustomDebugStringConvertible
@@ -118,6 +120,8 @@ extension PurchaseError: CustomDebugStringConvertible {
             return "Local validated receipt not found."
         case .transactionPaymentNotFound:
             return "Corresponding payment for the transaction not found."
+        case .unauthorizedReceiptSet:
+            return "Trying to set Storage.sessionReceipt from an unauthorized place. This operation can only be performed from PurchaseController instance."
         }
     }
     
