@@ -119,7 +119,6 @@ public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserve
         self.stateHandler = stateHandler
         self.purchaseActionState = .none
         PurchaseController.globalPaymentQueueController.addObserver(self)
-        SwiftyStoreKit.completeTransactions(completion: { _ in})
     }
     
     /// Initializer with user's persistor
@@ -131,7 +130,6 @@ public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserve
         self.stateHandler = stateHandler
         self.purchaseActionState = .none
         PurchaseController.globalPaymentQueueController.addObserver(self)
-        SwiftyStoreKit.completeTransactions(completion: { _ in})
     }
     
     // MARK: - Public
@@ -308,12 +306,23 @@ public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserve
         }
     }
     
-    /// Function used to complete previous transactions
-    ///
-    /// Notifies handler with .completionSuccess state when complete
+    /**
+     Function used to complete a transaction for particular `PurcahseItem`.
+     
+     Notifies handler with .completionSuccess state when complete.
+     
+     - Parameter purchaseItem: A purchased item that needs its corresponding transaction to be finished.
+     */
+    public func completeTransaction(for purchaseItem: PurchaseItem) {
+        PurchaseController.globalPaymentQueueController.completeTransaction(for: purchaseItem)
+    }
+    
+    /**
+     Function used to complete all previous unfinished transactions.
+     
+     Notifies handler with .completionSuccess state when complete.
+     */
     public func completeTransactions() {
-        SwiftyStoreKit.completeTransactions(completion: { [unowned self] (_) in
-            self.purchaseActionState = .finish(PurchaseActionResult.completionSuccess)
-        })
+        PurchaseController.globalPaymentQueueController.completeTransactions()
     }
 }

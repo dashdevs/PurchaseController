@@ -41,26 +41,25 @@ fileprivate class PaymentModel: Hashable {
 }
 
 /**
- * - important: Some notes about how requests are processed by SKPaymentQueue:
- *
- * - SKPaymentQueue is used to queue payments or restore purchases requests.
- * - Payments are processed serially and in-order and require user interaction.
- * - Restore purchases requests don't require user interaction and can jump ahead of the queue.
- * - SKPaymentQueue rejects multiple restore purchases calls.
- * - Having one payment queue observer for each request causes extra processing
- * - Failed transactions only ever belong to queued payment requests.
- * - restoreCompletedTransactionsFailedWithError is always called when a restore purchases request fails.
- * - paymentQueueRestoreCompletedTransactionsFinished is always called following 0 or more update transactions when a restore purchases request succeeds.
- * - A complete transactions handler is require to catch any transactions that are updated when the app is not running.
- * - Registering a complete transactions handler when the app launches ensures that any pending transactions can be cleared.
- * - If a complete transactions handler is missing, pending transactions can be mis-attributed to any new incoming payments or restore purchases.
- *
- * The order in which transaction updates are processed is:
- * 1. payments (transactionState: .purchased and .failed for matching product identifiers)
- * 2. restore purchases (transactionState: .restored, or restoreCompletedTransactionsFailedWithError, or paymentQueueRestoreCompletedTransactionsFinished)
- * 3. complete transactions (transactionState: .purchased, .failed, .restored, .deferred)
- * - Note:
- * Any transactions where state == .purchasing are ignored.
+ - important: Some notes about how requests are processed by SKPaymentQueue:
+ - SKPaymentQueue is used to queue payments or restore purchases requests.
+ - Payments are processed serially and in-order and require user interaction.
+ - Restore purchases requests don't require user interaction and can jump ahead of the queue.
+ - SKPaymentQueue rejects multiple restore purchases calls.
+ - Having one payment queue observer for each request causes extra processing
+ - Failed transactions only ever belong to queued payment requests.
+ - restoreCompletedTransactionsFailedWithError is always called when a restore purchases request fails.
+ - paymentQueueRestoreCompletedTransactionsFinished is always called following 0 or more update transactions when a restore purchases request succeeds.
+ - A complete transactions handler is require to catch any transactions that are updated when the app is not running.
+ - Registering a complete transactions handler when the app launches ensures that any pending transactions can be cleared.
+ - If a complete transactions handler is missing, pending transactions can be mis-attributed to any new incoming payments or restore purchases.
+ 
+ The order in which transaction updates are processed is:
+ 1. payments (transactionState: .purchased and .failed for matching product identifiers)
+ 2. restore purchases (transactionState: .restored, or restoreCompletedTransactionsFailedWithError, or paymentQueueRestoreCompletedTransactionsFinished)
+ 3. complete transactions (transactionState: .purchased, .failed, .restored, .deferred)
+ - Note:
+ Any transactions where state == .purchasing are ignored.
  */
 final class PCPaymentQueueController: NSObject {
     
@@ -76,8 +75,6 @@ final class PCPaymentQueueController: NSObject {
     private let paymentQueue: SKPaymentQueue
     private var payments = Set<PaymentModel>()
     private let observers = DelegatesContainer<PaymentQueueObserver>()
-    
-    
     
     init(paymentQueue: SKPaymentQueue = SKPaymentQueue.default()) {
         self.paymentQueue = paymentQueue
@@ -96,6 +93,19 @@ final class PCPaymentQueueController: NSObject {
         payments.insert(PaymentModel(product: product, payment: payment, atomic: atomically))
     }
     
+    func completeTransaction(for purchasedItem: PurchaseItem) {
+        guard let transaction = purchasedItem.transaction as? SKPaymentTransaction else {
+            print("not a transaction:", purchasedItem.transaction)
+            return
+        }
+        paymentQueue.finishTransaction(transaction)
+    }
+    
+    func completeTransactions() {
+        let transactions = paymentQueue.transactions
+        transactions.forEach({ paymentQueue.finishTransaction($0) })
+    }
+    
     func restore() {
         paymentQueue.restoreCompletedTransactions()
     }
@@ -110,27 +120,24 @@ extension PCPaymentQueueController: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         var purchased = [PurchaseItem]()
         var errors = [Error]()
-        do {
-            for transaction in transactions {
-                switch transaction.transactionState {
-                case .purchased:
-                    let purchasedItem = try complete(transaction: transaction)
+        for transaction in transactions {
+            switch transaction.transactionState {
+            case .purchased:
+                if let purchasedItem = handlePurchased(transaction: transaction) {
                     purchased.append(purchasedItem)
-                case .failed:
-                    errors.append(fail(transaction: transaction))
-                case .restored:
-                    let restoredTransaction = restore(transaction: transaction)
-                    if !restoredTransactions.contains(where: { restoredTransaction.transactionIdentifier == $0.transactionIdentifier}) {
-                        restoredTransactions.append(restoredTransaction)
-                    }
-                case .deferred:
-                    break
-                case .purchasing:
-                    break
                 }
+            case .failed:
+                errors.append(handleFailed(transaction: transaction))
+            case .restored:
+                let restoredTransaction = handleRestored(transaction: transaction)
+                if !restoredTransactions.contains(where: { restoredTransaction.transactionIdentifier == $0.transactionIdentifier}) {
+                    restoredTransactions.append(restoredTransaction)
+                }
+            case .deferred:
+                break
+            case .purchasing:
+                break
             }
-        } catch {
-            observers.invokeDelegates({ $0.onError?(error)})
         }
         
         if purchased.count > 0 {
@@ -169,12 +176,15 @@ extension PCPaymentQueueController: SKPaymentTransactionObserver {
 
 private extension PCPaymentQueueController {
     
-    private func complete(transaction: SKPaymentTransaction) throws -> PurchaseItem {
+    private func handlePurchased(transaction: SKPaymentTransaction) -> PurchaseItem? {
+        // if there's no payment that corresponds the transaction,
+        // complete this transaction instantly 
         guard let paymentModel = payments[transaction.payment.productIdentifier] else {
-            throw PurchaseError.transactionPaymentNotFound
+            paymentQueue.finishTransaction(transaction)
+            return nil
         }
         if paymentModel.atomic {
-            SKPaymentQueue.default().finishTransaction(transaction)
+            paymentQueue.finishTransaction(transaction)
         }
         payments.remove(paymentModel)
         let item = PurchaseItem(productId: paymentModel.payment.productIdentifier,
@@ -185,13 +195,13 @@ private extension PCPaymentQueueController {
         return item
     }
     
-    private func restore(transaction: SKPaymentTransaction) -> SKPaymentTransaction {
+    private func handleRestored(transaction: SKPaymentTransaction) -> SKPaymentTransaction {
         paymentQueue.finishTransaction(transaction)
         return transaction
     }
     
-    private func fail(transaction: SKPaymentTransaction) -> Error {
-        SKPaymentQueue.default().finishTransaction(transaction)
+    private func handleFailed(transaction: SKPaymentTransaction) -> Error {
+        paymentQueue.finishTransaction(transaction)
         return transaction.error ?? PurchaseError.unknown
     }
 }
