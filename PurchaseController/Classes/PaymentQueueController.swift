@@ -101,6 +101,11 @@ final class PCPaymentQueueController: NSObject {
         paymentQueue.finishTransaction(transaction)
     }
     
+    func completeTransactions() {
+        let transactions = paymentQueue.transactions
+        transactions.forEach({ paymentQueue.finishTransaction($0) })
+    }
+    
     func restore() {
         paymentQueue.restoreCompletedTransactions()
     }

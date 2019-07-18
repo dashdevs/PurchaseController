@@ -324,7 +324,6 @@ public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserve
      Notifies handler with .completionSuccess state when complete.
      */
     public func completeTransactions() {
-        let transactions = SKPaymentQueue.default().transactions
-        transactions.forEach({ SKPaymentQueue.default().finishTransaction($0) })
+        PurchaseController.globalPaymentQueueController.completeTransactions()
     }
 }
