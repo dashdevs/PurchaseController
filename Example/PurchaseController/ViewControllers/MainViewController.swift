@@ -24,7 +24,7 @@ import PurchaseController
 
 class MainViewController: UITableViewController {
     lazy var tableController = { return MainTableController(presentableDelegate: self) }()
-    lazy var purchaseController = { return PurchaseController(stateHandler: self) }()
+    lazy var purchaseController = { return PurchaseController(stateHandler: self, productIds: PurchasebleProductItem.allAsRaw()) }()
     
     override func viewDidLoad() {
         self.tableView.dataSource = tableController
@@ -77,7 +77,7 @@ extension MainViewController: MainViewControllerPresentable {
     }
     
     @objc func retrieve() {
-        purchaseController.retrieve(products: PurchasebleProductItem.allAsRaw())
+        purchaseController.retrieve()
     }
     
     @objc func refreshReceipt() {
@@ -97,6 +97,6 @@ extension MainViewController: MainViewControllerPresentable {
     }
     
     @objc func validateSubscription() {
-        purchaseController.validateSubscription(productID: PurchasebleProductItem.autoRenewSubscription.rawValue, type: .autoRenewable)
+        purchaseController.validateSubscription(filter: nil)
     }
 }

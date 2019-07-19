@@ -7,7 +7,7 @@
 
 import Foundation
 
-internal protocol ReadableDebugStringProtocol: CustomDebugStringConvertible {}
+public protocol ReadableDebugStringProtocol: CustomDebugStringConvertible {}
 
 extension ReadableDebugStringProtocol {
     public var debugDescription: String {
