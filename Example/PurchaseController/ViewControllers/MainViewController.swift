@@ -19,7 +19,6 @@ import PurchaseController
     @objc func validateReceiptLocally()
     @objc func validateReceiptRemotely()
     @objc func validateSubscription()
-    @objc func synchronizePurchases()
 }
 
 class MainViewController: UITableViewController {
@@ -90,10 +89,6 @@ extension MainViewController: MainViewControllerPresentable {
     
     @objc func validateReceiptRemotely() {
         purchaseController.validateReceipt(using: AppleReceiptValidatorImplementation(sharedSecret: nil, isSandbox: true))
-    }
-    
-    @objc func synchronizePurchases() {
-        purchaseController.synchronizeLocalPurchasesFromReceipt()
     }
     
     @objc func validateSubscription() {

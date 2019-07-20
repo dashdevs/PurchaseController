@@ -34,7 +34,7 @@ public enum PurchaseActionResult {
     case subscriptionValidationSucess([InAppPurchase])
     case retrieveSuccess
     case retrieveSuccessInvalidProducts
-    case purchaseSuccess(PurchaseItem)
+    case purchaseSuccess([InAppPurchase])
     case restoreSuccess
     case completionSuccess
     case receiptValidationSuccess
@@ -57,9 +57,14 @@ public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserve
     
     // MARK: - PaymentQueueObserver
     
-    lazy var onPurchase: (([PurchaseItem]) -> Void)? = { [weak self] items in
-        self?.storage.persistPurchased(products: items)
-        self?.purchaseActionState = .finish(PurchaseActionResult.purchaseSuccess(items[0]))
+    lazy var onPurchase: (([String]) -> Void)? = { [weak self] items in
+       guard let purchasedItems = self?.storage.fetchPurchasedProducts().filter({ purchase -> Bool in
+           return items.contains(purchase.transactionId)
+        }) else {
+            self?.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.unknown))
+            return
+        }
+        self?.purchaseActionState = .finish(PurchaseActionResult.purchaseSuccess(purchasedItems))
     }
     
     lazy var onRestore: (([SKPaymentTransaction]) -> Void)? = { [weak self] transactions in
@@ -94,7 +99,7 @@ public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserve
     
     /// receipt object. Availadble ONLY after verifyReceipt() call.
     private static let globalStorage = Storage(persistor: PurchasePersistorImplementation())
-    private static let globalPaymentQueueController = PCPaymentQueueController()
+    private static let globalPaymentQueueController = PCPaymentQueueController(storage: globalStorage)
     private lazy var productsInfoController = {
         return PCProductsInfoController(observer: self)
     }()
@@ -135,6 +140,7 @@ public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserve
     /// - Parameter subscriptionProductIds: Set of identificators to validate subscriptions
     public init(stateHandler: PurchaseStateHandler?, persistor: PurchasePersistor, productIds: Set<String> = [], subscriptionProductIds: Set<String> = [])  {
         self.storage = Storage(persistor: persistor)
+        PurchaseController.globalPaymentQueueController.storage = self.storage
         self.stateHandler = stateHandler
         self.productIds = productIds
         self.subscriptionProductIds = subscriptionProductIds
@@ -146,16 +152,16 @@ public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserve
     
     /// Function used to access all local purchased products.
     ///
-    /// - Returns: array of PurchaseItem.
-    public func localPurschasedProducts() -> [PurchaseItem] {
+    /// - Returns: array of InAppPurchase.
+    public func localPurschasedProducts() -> [InAppPurchase] {
         return storage.fetchPurchasedProducts()
     }
     
     /// Filter function, used to access to local purchased products
     ///
-    /// - Parameter filter: filter closure used for comparing PurchaseItem objects
-    /// - Returns: array of PurchaseItem after filter applying
-    public func localPurschasedProducts(by filter: (PurchaseItem) throws -> Bool) throws -> [PurchaseItem] {
+    /// - Parameter filter: filter closure used for comparing InAppPurchase objects
+    /// - Returns: array of InAppPurchase after filter applying
+    public func localPurschasedProducts(by filter: (InAppPurchase) throws -> Bool) throws -> [InAppPurchase] {
         return try storage.fetchPurchasedProducts().filter(filter)
     }
     
@@ -259,27 +265,6 @@ public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserve
         receiptFetcher.fetchReceipt(forceRefresh: forceReceipt)
     }
     
-    /// Function used to synchronize decoded receipt purchases with local saved.
-    ///
-    /// Notifies handler with .purchaseSyncronizationSuccess if purchases synchronized
-    ///
-    /// Notifies handler with .purchaseSynchronizationError if no purchases in receipt or receipt do not decoded
-    public func synchronizeLocalPurchasesFromReceipt() {
-        self.purchaseActionState = .loading
-        guard let purchases = self.storage.sessionReceipt?.inApp else {
-            self.purchaseActionState = .finish(.error(PurchaseError.purchaseSynchronizationError))
-            return
-        }
-        
-        let missingPurchases = purchases.filter { (inAppPurchase) -> Bool in
-            return !self.storage.fetchPurchasedProducts().contains(where: { (purchase) -> Bool in
-                return purchase.transaction.transactionIdentifier == inAppPurchase.transactionId
-            })
-            }.makeItems(with: storage)
-        self.storage.persistPurchased(products: missingPurchases)
-        self.purchaseActionState = .finish(PurchaseActionResult.purchaseSyncronizationSuccess)
-    }
-    
     /// Function used to validate subscription using validator object.
     ///
     /// Notifies handler with .noActiveSubscription state if no subscription exists for given ids
@@ -309,7 +294,7 @@ public final class PurchaseController: PaymentQueueObserver, ProductsInfoObserve
      
      - Parameter purchaseItem: A purchased item that needs its corresponding transaction to be finished.
      */
-    public func completeTransaction(for purchaseItem: PurchaseItem) {
+    public func completeTransaction(for purchaseItem: InAppPurchase) {
         PurchaseController.globalPaymentQueueController.completeTransaction(for: purchaseItem)
     }
     

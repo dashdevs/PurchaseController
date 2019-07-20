@@ -26,15 +26,15 @@ public protocol PurchasePersistor {
     /// Function that stores PurchaseItem to persistor (should be used for purchased objects)
     ///
     /// - Parameter products: Array of retrieved PurchaseItem
-    func persistPurchased(products: [PurchaseItem])
+    func persistPurchased(products: [InAppPurchase])
     /// Function that extracts PurchaseItem from persistor (should be used for purchased objects)
     ///
     /// - Parameter products: Array of retrieved PurchaseItem to extract
-    func extractPurchased(products: [PurchaseItem])
+    func extractPurchased(products: [InAppPurchase])
     /// Function that fetches PurchaseItem from persistor (should be used for purchased objects)
     ///
     /// - Returns: array of PurchaseItem, stored in persistor
-    func fetchPurchasedProducts() -> [PurchaseItem]
+    func fetchPurchasedProducts() -> [InAppPurchase]
 }
 
 final class PurchasePersistorImplementation: PurchasePersistor {
@@ -43,7 +43,7 @@ final class PurchasePersistorImplementation: PurchasePersistor {
     
     // MARK: - Private
     
-    private var purchasedProducts: [PurchaseItem] = []
+    private var purchasedProducts: [InAppPurchase] = []
     private var localProducts = ProductsDictionary()
     
     // MARK: - Public
@@ -60,15 +60,15 @@ final class PurchasePersistorImplementation: PurchasePersistor {
         return Array(localProducts.values)
     }
     
-    public func persistPurchased(products: [PurchaseItem]) {
+    public func persistPurchased(products: [InAppPurchase]) {
         purchasedProducts.append(contentsOf: products)
     }
     
-    public func extractPurchased(products: [PurchaseItem]) {
-        purchasedProducts = Array(Set<PurchaseItem>(purchasedProducts).subtracting(products))
+    public func extractPurchased(products: [InAppPurchase]) {
+        purchasedProducts = Array(Set<InAppPurchase>(purchasedProducts).subtracting(products))
     }
     
-    public func fetchPurchasedProducts() -> [PurchaseItem] {
+    public func fetchPurchasedProducts() -> [InAppPurchase] {
         return purchasedProducts
     }
 }

@@ -94,3 +94,17 @@ extension DateFormatter {
         return dateFormatter
     }()
 }
+
+extension TimeInterval {
+    /// Use to convert TimeInterval to seconds
+    private struct Constants {
+        static let thousand: Double = 1000
+    }
+    
+    init?(millisecondsString: String) {
+        guard let milliseconds = TimeInterval(millisecondsString) else {
+            return nil
+        }
+        self = milliseconds / Constants.thousand
+    }
+}
