@@ -2,7 +2,7 @@
 //  ProductsInfoController.swift
 //  PurchaseController
 //
-//  Created by Igor Kulik on 7/15/19.
+//  Copyright © 2019 dashdevs.com. All rights reserved.
 //
 
 import Foundation
@@ -15,7 +15,7 @@ protocol ProductsInfoObserver: class {
     var onError: ((_ error: Error) -> Void)? { get set }
 }
 
-final class PCProductsInfoController: NSObject {
+final class ProductsInfoController: NSObject {
     
     // MARK: - Properties
 
@@ -45,7 +45,7 @@ final class PCProductsInfoController: NSObject {
 }
 
 // MARK: - SKProductsRequestDelegate
-extension PCProductsInfoController: SKProductsRequestDelegate {
+extension ProductsInfoController: SKProductsRequestDelegate {
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         productsRequest = nil
         observer?.onRetrieve?((Set(response.products), response.invalidProductIdentifiers))

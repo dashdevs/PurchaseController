@@ -6,7 +6,6 @@
 //
 
 import StoreKit
-import SwiftyStoreKit
 
 // MARK: - Error Domains
 public extension PurchaseController {

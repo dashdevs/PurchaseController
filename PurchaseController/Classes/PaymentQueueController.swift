@@ -2,7 +2,7 @@
 //  PaymentQueueController.swift
 //  PurchaseController
 //
-//  Created by Igor Kulik on 7/3/19.
+//  Copyright © 2019 dashdevs.com. All rights reserved.
 //
 
 import Foundation
@@ -32,12 +32,13 @@ public class PaymentModel: Hashable {
 
 /**
  Defines required callback properties for objects
- that need to observe state changes of `PCPaymentQueueController` instance.
+ that need to observe state changes of `PaymentQueueController` instance.
  */
 @objc protocol PaymentQueueObserver: class {
     var onPurchase: ((_ itemTransactionIds: [String]) -> Void)? { get set }
     var onRestore: ((_ items: [SKPaymentTransaction]) -> Void)? { get set }
     var onError: ((_ error: Error) -> Void)? { get set }
+    var onRestoreRequested: (() -> Void)? { get set }
 }
 
 /**
@@ -61,7 +62,7 @@ public class PaymentModel: Hashable {
  - Note:
  Any transactions where state == .purchasing are ignored.
  */
-final class PCPaymentQueueController: NSObject {
+final class PaymentQueueController: NSObject {
     
     /**
      - note: We need to keep restored items as class property, because
@@ -110,6 +111,7 @@ final class PCPaymentQueueController: NSObject {
     
     func restore() {
         paymentQueue.restoreCompletedTransactions()
+        observers.invokeDelegates({$0.onRestoreRequested?()})
     }
     
     func addObserver(_ observer: PaymentQueueObserver) {
@@ -118,7 +120,7 @@ final class PCPaymentQueueController: NSObject {
 }
 
 // MARK: - SKPaymentTransactionObserver
-extension PCPaymentQueueController: SKPaymentTransactionObserver {
+extension PaymentQueueController: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         var purchased = [InAppPurchase]()
         var errors = [Error]()
@@ -177,7 +179,7 @@ extension PCPaymentQueueController: SKPaymentTransactionObserver {
     }
 }
 
-private extension PCPaymentQueueController {
+private extension PaymentQueueController {
     
     private func handlePurchased(transaction: SKPaymentTransaction) -> InAppPurchase? {
         // if there's no payment that corresponds the transaction,

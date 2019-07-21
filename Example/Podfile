@@ -1,7 +1,6 @@
 use_frameworks!
 
 target 'PurchaseController_Example' do
-  pod 'SwiftyStoreKit', '~> 0.14'
   pod 'PurchaseController', :path => '../'
 
   target 'PurchaseController_Tests' do

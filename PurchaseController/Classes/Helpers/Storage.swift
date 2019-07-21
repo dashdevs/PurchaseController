@@ -5,7 +5,7 @@
 //  Copyright (c) 2019 dashdevs.com. All rights reserved.
 //
 
-import Foundation
+import StoreKit
 
 /** Class to store all data, that should be accessible from one point */
 class Storage {

@@ -6,7 +6,6 @@
 //
 
 import StoreKit
-import SwiftyStoreKit
 
 public protocol PurchasePersistor {
     

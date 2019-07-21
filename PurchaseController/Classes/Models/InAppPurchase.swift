@@ -5,11 +5,10 @@
 //  Copyright © 2019 dashdevs.com. All rights reserved.
 //
 
-import Foundation
-import SwiftyStoreKit
+import StoreKit
 
 /// Representation of inapp purchase
-public struct InAppPurchase: ReadableDebugStringProtocol {
+public struct InAppPurchase: ReadableDebugStringProtocol, DataFormatsEncodable {
     
     // MARK: - Properties
     

@@ -2,7 +2,7 @@
 //  DataFormatsEncodable.swift
 //  PurchaseController
 //
-//  Created by Igor Kulik on 6/24/19.
+//  Copyright © 2019 dashdevs.com. All rights reserved.
 //
 
 import Foundation

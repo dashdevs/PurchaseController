@@ -4,7 +4,6 @@
 //  Copyright © 2019 dashdevs.com. All rights reserved.
 
 import Foundation
-import SwiftyStoreKit
 
 /// Implementation of appStore receipt validator.
 ///
@@ -93,50 +92,36 @@ public struct AppleReceiptValidatorImplementation: ReceiptValidatorProtocol {
                 completion(.error(error: ReceiptError.noRemoteData))
                 return
             }
-            guard let receiptInfo = try? JSONSerialization.jsonObject(with: safeData, options: .mutableLeaves) as? ReceiptInfo ?? [:] else {
+            guard let representation = try? safeData.createReceiptResponse(),
+                let receiptInfo = representation else {
                 completion(.error(error: ReceiptError.noReceiptData))
                 return
             }
             
-            if let status = receiptInfo["status"] as? Int {
-                /*
-                 * http://stackoverflow.com/questions/16187231/how-do-i-know-if-an-in-app-purchase-receipt-comes-from-the-sandbox
-                 * Always verify your receipt first with the production URL; proceed to verify
-                 * with the sandbox URL if you receive a 21007 status code. Following this
-                 * approach ensures that you do not have to switch between URLs while your
-                 * application is being tested or reviewed in the sandbox or is live in the
-                 * App Store.
-                 
-                 * Note: The 21007 status code indicates that this receipt is a sandbox receipt,
-                 * but it was sent to the production service for verification.
-                 */
-                let receiptStatus = ReceiptStatus(rawValue: status) ?? ReceiptStatus.unknown
-                if case .testReceipt = receiptStatus {
-                    let sandboxValidator = AppleReceiptValidatorImplementation(sharedSecret: self.sharedSecret, isSandbox: true)
-                    sandboxValidator.validate(receiptData: receiptData, completion: completion)
-                } else {
-                    if receiptStatus == .valid {
-                        self.decode(receiptInfo: receiptInfo, completion: completion)
-                    } else {
-                        completion(.error(error: ReceiptError.receiptInvalid(receipt: receiptInfo, status: receiptStatus)))
-                    }
-                }
+            let status = receiptInfo.status
+            /*
+             * http://stackoverflow.com/questions/16187231/how-do-i-know-if-an-in-app-purchase-receipt-comes-from-the-sandbox
+             * Always verify your receipt first with the production URL; proceed to verify
+             * with the sandbox URL if you receive a 21007 status code. Following this
+             * approach ensures that you do not have to switch between URLs while your
+             * application is being tested or reviewed in the sandbox or is live in the
+             * App Store.
+             
+             * Note: The 21007 status code indicates that this receipt is a sandbox receipt,
+             * but it was sent to the production service for verification.
+             */
+            let receiptStatus = ReceiptStatus(rawValue: status) ?? ReceiptStatus.unknown
+            if case .testReceipt = receiptStatus {
+                let sandboxValidator = AppleReceiptValidatorImplementation(sharedSecret: self.sharedSecret, isSandbox: true)
+                sandboxValidator.validate(receiptData: receiptData, completion: completion)
             } else {
-                completion(.error(error: ReceiptError.receiptInvalid(receipt: receiptInfo, status: ReceiptStatus.none)))
+                if receiptStatus == .valid, let finalReceipt = receiptInfo.receipt {
+                     completion(.success(receipt: finalReceipt))
+                } else {
+                    completion(.error(error: ReceiptError.receiptInvalid(receipt: receiptInfo, status: receiptStatus)))
+                }
             }
         }
         task.resume()
-    }
-    
-    
-    private func decode(receiptInfo: ReceiptInfo, completion: @escaping (ReceiptValidationResult) -> Void) {
-        let validation = receiptInfo.createReceiptValidation()
-        if let receipt = validation.response?.receipt {
-            completion(.success(receipt: receipt))
-        } else if let error = validation.error {
-            completion(.error(error: error))
-        } else {
-            completion(.error(error: PurchaseError.receiptSerializationError.nsError))
-        }
     }
 }
