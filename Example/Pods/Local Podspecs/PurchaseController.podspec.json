@@ -1,6 +1,6 @@
 {
   "name": "PurchaseController",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "summary": "A helpful and convenient In App purchases framework",
   "homepage": "http://dashdevs.com",
   "license": {
@@ -12,7 +12,7 @@
   },
   "source": {
     "git": "https://github.com/dashdevs/PurchaseController.git",
-    "tag": "0.4.4"
+    "tag": "0.4.5"
   },
   "platforms": {
     "ios": "10.0"
@@ -23,9 +23,6 @@
   ],
   "frameworks": "StoreKit",
   "dependencies": {
-    "SwiftyStoreKit": [
-      "~> 0.14"
-    ],
     "GRKOpenSSLFramework": [
 
     ]

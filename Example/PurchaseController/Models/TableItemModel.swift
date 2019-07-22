@@ -19,7 +19,6 @@ enum TableItemModel: String {
     case refreshReceipt
     case validateReceiptLocally
     case validateReceiptRemotely
-    case synchronizePurchases
     case validateSubscription
     
     var title: String {
@@ -43,8 +42,6 @@ enum TableItemModel: String {
             return "Validate receipt locally 💴"
         case .validateReceiptRemotely:
             return "Validate receipt remotely 💴"
-        case .synchronizePurchases:
-            return "Synchronize purchases ↕"
         case .validateSubscription:
             return "Validate subscription 💴"
         }
@@ -71,8 +68,6 @@ enum TableItemModel: String {
             return #selector(MainViewController.validateReceiptLocally)
         case .validateReceiptRemotely:
             return #selector(MainViewController.validateReceiptRemotely)
-        case .synchronizePurchases:
-            return #selector(MainViewController.synchronizePurchases)
         case .validateSubscription:
             return #selector(MainViewController.validateSubscription)
 

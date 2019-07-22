@@ -5,100 +5,111 @@
 //  Copyright © 2019 dashdevs.com. All rights reserved.
 //
 
-import Foundation
-import SwiftyStoreKit
+import StoreKit
 
 /// Representation of inapp purchase
-struct InAppPurchase: ReadableDebugStringProtocol {
+public struct InAppPurchase: ReadableDebugStringProtocol, DataFormatsEncodable {
     
     // MARK: - Properties
     
     /// The number of items purchased.
-    let quantity: Int
+    public let quantity: Int
     /// The product identifier of the item that was purchased.
-    let productId: String
+    public let productId: String
     /// The transaction identifier of the item that was purchased.
-    let transactionId: String
+    public let transactionId: String
     /// For a transaction that restores a previous transaction, the transaction identifier of the original transaction. Otherwise, identical to the transaction identifier.
-    let originalTransactionId: String?
+    public let originalTransactionId: String?
 
     /// The date and time that the item was purchased.
-    let purchaseDate: Date?
-    let purchaseDateMs: TimeInterval?
-    let purchaseDatePst: Date?
+    public let purchaseDate: Date?
+    public let purchaseDateMs: TimeInterval?
+    public let purchaseDatePst: Date?
 
     /// For a transaction that restores a previous transaction, the date of the original transaction.
-    let originalPurchaseDate: Date?
-    let originalPurchaseDateMs: TimeInterval?
-    let originalPurchaseDatePst: Date?
+    public let originalPurchaseDate: Date?
+    public let originalPurchaseDateMs: TimeInterval?
+    public let originalPurchaseDatePst: Date?
     
     /// The date that the app receipt expires.
-    let expiresDate: Date?
-    let expiresDateMs: TimeInterval?
-    let expiresDatePst: Date?
+    public let expiresDate: Date?
+    public let expiresDateMs: TimeInterval?
+    public let expiresDatePst: Date?
 
     /// For an expired subscription, the reason for the subscription expiration.
-    let subscriptionExpirationIntent: SubscriptionExpirationIntent?
+    public let subscriptionExpirationIntent: SubscriptionExpirationIntent?
     
     /// For an expired subscription, whether or not Apple is still attempting to automatically renew the subscription.
-    let subscriptionRetryFlag: SubscriptionRetryFlag?
+    public let subscriptionRetryFlag: SubscriptionRetryFlag?
 
     /// For a transaction that was canceled by Apple customer support, the time and date of the cancellation. For an auto-renewable subscription plan that was upgraded, the time and date of the upgrade transaction.
-    let cancellationDate: Date?
+    public let cancellationDate: Date?
 
     /// For a transaction that was canceled by Apple customer support, the time and date of the cancellation. For an auto-renewable subscription plan that was upgraded, the time and date of the upgrade transaction.
-    let cancellationReason: CancellationReason?
+    public let cancellationReason: CancellationReason?
     
     /// A string that the App Store uses to uniquely identify the application that created the transaction.
-    let appItemId: String?
+    public let appItemId: String?
     
     /// This key is not present for receipts created in the test environment. Use this value to identify the version of the app that the customer bought.
-    let externalVersionIdentifier: String?
+    public let externalVersionIdentifier: String?
     
     /// For a subscription, whether or not it is in the free trial period.
-    let isTrialPeriod: Bool?
+    public let isTrialPeriod: Bool?
     /// For an auto-renewable subscription, whether or not it is in the introductory price period.
-    let isInIntroOfferPeriod: Bool?
+    public let isInIntroOfferPeriod: Bool?
 
     /// The primary key for identifying subscription purchases.
-    let webOrderLineItemId: String?
+    public let webOrderLineItemId: String?
     
     /// The current renewal status for the auto-renewable subscription.
-    let subscriptionAutoRenewStatus: SubscriptionAutoRenewStatus?
+    public let subscriptionAutoRenewStatus: SubscriptionAutoRenewStatus?
     
     /// The current renewal preference for the auto-renewable subscription.
-    let subscriptionAutoRenewPreference: String?
+    public let subscriptionAutoRenewPreference: String?
     
     /// The current price consent status for a subscription price increase.
-    let subscriptionPriceConsentStatus: SubscriptionPriceConsentStatus?
-
-    /// Payment transaction object
-    public var purchaseTransaction: PaymentTransaction {
-        let date: Date? = {
-            guard let timeInterval = purchaseDateMs else { return purchaseDate}
-            return Date(timeIntervalSince1970: timeInterval)
-        }()
-        return ReceiptTransaction(transactionDate: date,
-                                  transactionState: .purchased,
-                                  transactionIdentifier: transactionId,
-                                  downloads: [])
-    }
-    
-    /// Original payment transaction object
-    public var originalPurchaseTransaction: PaymentTransaction {
-        let date: Date? = {
-            guard let timeInterval = originalPurchaseDateMs else { return originalPurchaseDate}
-            return Date(timeIntervalSince1970: timeInterval)
-        }()
-        return ReceiptTransaction(transactionDate: date,
-                                  transactionState: .purchased,
-                                  transactionIdentifier: originalTransactionId,
-                                  downloads: [])
-    }
+    public let subscriptionPriceConsentStatus: SubscriptionPriceConsentStatus?
     
     // MARK: - Lifecycle
     
-    init?(quantity: Int?,
+    public init?(paymentModel: PaymentModel,
+                 transaction: SKPaymentTransaction,
+                 originalTransaction: SKPaymentTransaction?) {
+        guard let transactionId = transaction.transactionIdentifier else { return nil }
+        self.quantity = paymentModel.payment.quantity
+        self.productId = paymentModel.product.productIdentifier
+        self.transactionId = transactionId
+        self.originalTransactionId = originalTransaction?.transactionIdentifier
+        
+        self.purchaseDate = transaction.transactionDate
+        self.purchaseDatePst = transaction.transactionDate
+        self.purchaseDateMs = transaction.transactionDate?.timeIntervalSince1970
+        
+        self.originalPurchaseDate = originalTransaction?.transactionDate
+        self.originalPurchaseDatePst = originalTransaction?.transactionDate
+        self.originalPurchaseDateMs = originalTransaction?.transactionDate?.timeIntervalSince1970
+        
+        self.expiresDate = nil
+        self.expiresDatePst = nil
+        self.expiresDateMs = nil
+        
+        self.isInIntroOfferPeriod = false
+        self.cancellationDate = nil
+        self.webOrderLineItemId = nil
+        
+        self.subscriptionExpirationIntent = nil
+        self.subscriptionRetryFlag = nil
+        self.cancellationReason = nil
+        self.appItemId = nil
+        self.externalVersionIdentifier = nil
+        self.isTrialPeriod = nil
+        self.subscriptionAutoRenewStatus = nil
+        self.subscriptionAutoRenewPreference = nil
+        self.subscriptionPriceConsentStatus = nil
+    }
+    
+    public init?(quantity: Int?,
           productIdentifier: String?,
           transactionIdentifier: String?,
           originalTransactionIdentifier: String?,
@@ -181,7 +192,7 @@ extension InAppPurchase: Codable {
         case subscriptionPriceConsentStatus = "price_consent_status"
     }
 
-    init(from decoder: Decoder) throws {
+   public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
         quantity = Int(try values.decode(String.self, forKey: .quantity)) ?? 0
@@ -237,16 +248,41 @@ extension InAppPurchase: Codable {
     }
 }
 
-extension TimeInterval {
-    /// Use to convert TimeInterval to seconds
-    private struct Constants {
-        static let thousand: Double = 1000
-    }
-    
-    init?(millisecondsString: String) {
-        guard let milliseconds = TimeInterval(millisecondsString) else {
+// MARK: - Public Static
+
+public extension InAppPurchase {
+    /// Function for purchase creation
+    ///
+    /// - Parameters:
+    ///   - transaction: StoreKit product transaction
+    ///   - persistance: Object that conforms to persistance protocol
+    /// - Returns: Describes item available to read
+    static func create(with transaction: SKPaymentTransaction,
+                       persistance: PurchasePersistor) -> InAppPurchase? {
+        guard let product = persistance.fetchProducts().first(where: { $0.productIdentifier == transaction.payment.productIdentifier}) else {
             return nil
         }
-        self = milliseconds / Constants.thousand
+        return InAppPurchase(quantity: transaction.payment.quantity,
+                             productIdentifier: product.productIdentifier,
+                             transactionIdentifier: transaction.transactionIdentifier,
+                             originalTransactionIdentifier: transaction.original?.transactionIdentifier,
+                             purchaseDate: transaction.transactionDate,
+                             originalPurchaseDate: transaction.original?.transactionDate,
+                             subscriptionExpirationDate: nil,
+                             subscriptionIntroductoryPricePeriod: nil,
+                             cancellationDate: nil,
+                             webOrderLineItemId: nil)
+        
+    }
+
+}
+
+extension InAppPurchase: Hashable {}
+
+extension Collection where Element == SKPaymentTransaction {
+    internal func makeItems(with persistance: PurchasePersistor) -> [InAppPurchase] {
+        return self.compactMap { transaction -> InAppPurchase? in
+            return InAppPurchase.create(with: transaction, persistance: persistance)
+        }
     }
 }

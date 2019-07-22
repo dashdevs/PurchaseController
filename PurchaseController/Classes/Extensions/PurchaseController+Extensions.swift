@@ -6,22 +6,6 @@
 //
 
 import Foundation
-import SwiftyStoreKit
-
-extension ReceiptInfo {
-    /// Function used to create readable representation of receipt
-    ///
-    /// - Returns: readable representation of receipt or error
-    public func createReceiptValidation() -> (response: ReceiptValidationResponse?, error: Error?) {
-        do {
-            let data = try JSONSerialization.data(withJSONObject: self)
-            let response = try data.createReceiptResponse()
-            return (response, nil)
-        } catch {
-            return (nil, error)
-        }
-    }
-}
 
 extension Data {
     /// Function used to create readable representation of receipt
@@ -77,7 +61,7 @@ extension JSONEncoder {
 }
 
 extension DateFormatter {
-    /// Date formatter code from [objc.io tutorial](https://www.objc.io/issues/17-security/receipt-validation/#parsing-the-receipt)
+    /** Date formatter code from [objc.io tutorial](https://www.objc.io/issues/17-security/receipt-validation/#parsing-the-receipt)*/
     static let RFC3339: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
@@ -93,4 +77,18 @@ extension DateFormatter {
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         return dateFormatter
     }()
+}
+
+extension TimeInterval {
+    /** Use to convert TimeInterval to seconds*/
+    private struct Constants {
+        static let thousand: Double = 1000
+    }
+    
+    init?(millisecondsString: String) {
+        guard let milliseconds = TimeInterval(millisecondsString) else {
+            return nil
+        }
+        self = milliseconds / Constants.thousand
+    }
 }
