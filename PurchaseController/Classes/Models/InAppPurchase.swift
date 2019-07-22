@@ -5,11 +5,10 @@
 //  Copyright © 2019 dashdevs.com. All rights reserved.
 //
 
-import Foundation
-import SwiftyStoreKit
+import StoreKit
 
 /// Representation of inapp purchase
-public struct InAppPurchase: ReadableDebugStringProtocol {
+public struct InAppPurchase: ReadableDebugStringProtocol, DataFormatsEncodable {
     
     // MARK: - Properties
     
@@ -71,32 +70,44 @@ public struct InAppPurchase: ReadableDebugStringProtocol {
     
     /// The current price consent status for a subscription price increase.
     public let subscriptionPriceConsentStatus: SubscriptionPriceConsentStatus?
-
-    /// Payment transaction object
-    public var purchaseTransaction: PaymentTransaction {
-        let date: Date? = {
-            guard let timeInterval = purchaseDateMs else { return purchaseDate}
-            return Date(timeIntervalSince1970: timeInterval)
-        }()
-        return ReceiptTransaction(transactionDate: date,
-                                  transactionState: .purchased,
-                                  transactionIdentifier: transactionId,
-                                  downloads: [])
-    }
-    
-    /// Original payment transaction object
-    public var originalPurchaseTransaction: PaymentTransaction {
-        let date: Date? = {
-            guard let timeInterval = originalPurchaseDateMs else { return originalPurchaseDate}
-            return Date(timeIntervalSince1970: timeInterval)
-        }()
-        return ReceiptTransaction(transactionDate: date,
-                                  transactionState: .purchased,
-                                  transactionIdentifier: originalTransactionId,
-                                  downloads: [])
-    }
     
     // MARK: - Lifecycle
+    
+    public init?(paymentModel: PaymentModel,
+                 transaction: SKPaymentTransaction,
+                 originalTransaction: SKPaymentTransaction?) {
+        guard let transactionId = transaction.transactionIdentifier else { return nil }
+        self.quantity = paymentModel.payment.quantity
+        self.productId = paymentModel.product.productIdentifier
+        self.transactionId = transactionId
+        self.originalTransactionId = originalTransaction?.transactionIdentifier
+        
+        self.purchaseDate = transaction.transactionDate
+        self.purchaseDatePst = transaction.transactionDate
+        self.purchaseDateMs = transaction.transactionDate?.timeIntervalSince1970
+        
+        self.originalPurchaseDate = originalTransaction?.transactionDate
+        self.originalPurchaseDatePst = originalTransaction?.transactionDate
+        self.originalPurchaseDateMs = originalTransaction?.transactionDate?.timeIntervalSince1970
+        
+        self.expiresDate = nil
+        self.expiresDatePst = nil
+        self.expiresDateMs = nil
+        
+        self.isInIntroOfferPeriod = false
+        self.cancellationDate = nil
+        self.webOrderLineItemId = nil
+        
+        self.subscriptionExpirationIntent = nil
+        self.subscriptionRetryFlag = nil
+        self.cancellationReason = nil
+        self.appItemId = nil
+        self.externalVersionIdentifier = nil
+        self.isTrialPeriod = nil
+        self.subscriptionAutoRenewStatus = nil
+        self.subscriptionAutoRenewPreference = nil
+        self.subscriptionPriceConsentStatus = nil
+    }
     
     public init?(quantity: Int?,
           productIdentifier: String?,
@@ -237,16 +248,41 @@ extension InAppPurchase: Codable {
     }
 }
 
-extension TimeInterval {
-    /// Use to convert TimeInterval to seconds
-    private struct Constants {
-        static let thousand: Double = 1000
-    }
-    
-    init?(millisecondsString: String) {
-        guard let milliseconds = TimeInterval(millisecondsString) else {
+// MARK: - Public Static
+
+public extension InAppPurchase {
+    /// Function for purchase creation
+    ///
+    /// - Parameters:
+    ///   - transaction: StoreKit product transaction
+    ///   - persistance: Object that conforms to persistance protocol
+    /// - Returns: Describes item available to read
+    static func create(with transaction: SKPaymentTransaction,
+                       persistance: PurchasePersistor) -> InAppPurchase? {
+        guard let product = persistance.fetchProducts().first(where: { $0.productIdentifier == transaction.payment.productIdentifier}) else {
             return nil
         }
-        self = milliseconds / Constants.thousand
+        return InAppPurchase(quantity: transaction.payment.quantity,
+                             productIdentifier: product.productIdentifier,
+                             transactionIdentifier: transaction.transactionIdentifier,
+                             originalTransactionIdentifier: transaction.original?.transactionIdentifier,
+                             purchaseDate: transaction.transactionDate,
+                             originalPurchaseDate: transaction.original?.transactionDate,
+                             subscriptionExpirationDate: nil,
+                             subscriptionIntroductoryPricePeriod: nil,
+                             cancellationDate: nil,
+                             webOrderLineItemId: nil)
+        
+    }
+
+}
+
+extension InAppPurchase: Hashable {}
+
+extension Collection where Element == SKPaymentTransaction {
+    internal func makeItems(with persistance: PurchasePersistor) -> [InAppPurchase] {
+        return self.compactMap { transaction -> InAppPurchase? in
+            return InAppPurchase.create(with: transaction, persistance: persistance)
+        }
     }
 }

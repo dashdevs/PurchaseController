@@ -2,7 +2,7 @@
 //  DelegatesContainer.swift
 //  PurchaseController
 //
-//  Created by Igor Kulik on 7/3/19.
+//  Copyright © 2019 dashdevs.com. All rights reserved.
 //
 
 import Foundation

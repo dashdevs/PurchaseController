@@ -2,7 +2,7 @@
 //  ReceiptFields.swift
 //  PurchaseController
 //
-//  Created by Igor Kulik on 6/21/19.
+//  Copyright © 2019 dashdevs.com. All rights reserved.
 //
 
 import Foundation

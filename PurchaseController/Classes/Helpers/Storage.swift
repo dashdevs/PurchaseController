@@ -5,13 +5,27 @@
 //  Copyright (c) 2019 dashdevs.com. All rights reserved.
 //
 
-import Foundation
+import StoreKit
 
 /** Class to store all data, that should be accessible from one point */
 class Storage {
     
     private var persistor: PurchasePersistor
-    public private(set) var sessionReceipt: Receipt?
+    public private(set) var sessionReceipt: Receipt? {
+        didSet {
+            let stored = persistor.fetchPurchasedProducts()
+            if let sunchronizedPurchases = sessionReceipt?.inApp?.map({ purchase -> InAppPurchase in
+                if let storedItem = stored.first(where: {$0.transactionId == purchase.transactionId }),
+                    storedItem != purchase {
+                    return storedItem
+                }
+                return purchase
+            }) {
+                self.persistor.extractPurchased(products: stored)
+                self.persistor.persistPurchased(products: sunchronizedPurchases)
+            }
+        }
+    }
     
     /** Defult init with persistor object
      *
@@ -55,15 +69,15 @@ extension Storage: PurchasePersistor {
         return self.persistor.fetchProducts()
     }
     
-    public func persistPurchased(products: [PurchaseItem]) {
+    public func persistPurchased(products: [InAppPurchase]) {
         self.persistor.persistPurchased(products: products)
     }
     
-    public func extractPurchased(products: [PurchaseItem]) {
+    public func extractPurchased(products: [InAppPurchase]) {
         self.persistor.extractPurchased(products: products)
     }
     
-    public func fetchPurchasedProducts() -> [PurchaseItem] {
+    public func fetchPurchasedProducts() -> [InAppPurchase] {
         return self.persistor.fetchPurchasedProducts()
     }
 }

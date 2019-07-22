@@ -2,12 +2,11 @@
 //  ReceiptFetcher.swift
 //  PurchaseController
 //
-//  Created by Igor Kulik on 7/16/19.
+//  Copyright © 2019 dashdevs.com. All rights reserved.
 //
 
 import Foundation
 import StoreKit
-import SwiftyStoreKit
 
 /**
  Defines required callback properties for objects

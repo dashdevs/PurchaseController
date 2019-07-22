@@ -23,9 +23,6 @@
   ],
   "frameworks": "StoreKit",
   "dependencies": {
-    "SwiftyStoreKit": [
-      "~> 0.14"
-    ],
     "GRKOpenSSLFramework": [
 
     ]

@@ -28,6 +28,13 @@ final class SubscriptionValidationController: NSObject {
 // MARK: - Public
 
 extension SubscriptionValidationController {
+    
+    /** Method used to validate available subs by filter
+     *
+     * - Parameter filter: closure used to determine what object should be included in result
+     * - Returns: Array of `InAppPurchase` describing filtered subscriptions
+     * - Throws: general filter(using: ) throw
+     */
     func validate(by filter: SubscriptionFilter?) throws -> [InAppPurchase] {
         guard let subscriptions = accessibleSubscriptions else { return [] }
         guard let filter = filter else { return subscriptions }

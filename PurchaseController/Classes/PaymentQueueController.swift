@@ -2,7 +2,7 @@
 //  PaymentQueueController.swift
 //  PurchaseController
 //
-//  Created by Igor Kulik on 7/3/19.
+//  Copyright © 2019 dashdevs.com. All rights reserved.
 //
 
 import Foundation
@@ -10,7 +10,7 @@ import StoreKit
 
 
 /// To be changed if needed
-fileprivate class PaymentModel: Hashable {
+public class PaymentModel: Hashable {
     let product: SKProduct
     let payment: SKPayment
     let atomic: Bool
@@ -25,19 +25,20 @@ fileprivate class PaymentModel: Hashable {
         hasher.combine(product.productIdentifier)
     }
     
-    static func == (lhs: PaymentModel, rhs: PaymentModel) -> Bool {
+    public static func == (lhs: PaymentModel, rhs: PaymentModel) -> Bool {
         return lhs.product.productIdentifier == rhs.product.productIdentifier
     }
 }
 
 /**
  Defines required callback properties for objects
- that need to observe state changes of `PCPaymentQueueController` instance.
+ that need to observe state changes of `PaymentQueueController` instance.
  */
 @objc protocol PaymentQueueObserver: class {
-    var onPurchase: ((_ items: [PurchaseItem]) -> Void)? { get set }
+    var onPurchase: ((_ itemTransactionIds: [String]) -> Void)? { get set }
     var onRestore: ((_ items: [SKPaymentTransaction]) -> Void)? { get set }
     var onError: ((_ error: Error) -> Void)? { get set }
+    var onRestoreRequested: (() -> Void)? { get set }
 }
 
 /**
@@ -61,7 +62,7 @@ fileprivate class PaymentModel: Hashable {
  - Note:
  Any transactions where state == .purchasing are ignored.
  */
-final class PCPaymentQueueController: NSObject {
+final class PaymentQueueController: NSObject {
     
     /**
      - note: We need to keep restored items as class property, because
@@ -75,9 +76,11 @@ final class PCPaymentQueueController: NSObject {
     private let paymentQueue: SKPaymentQueue
     private var payments = Set<PaymentModel>()
     private let observers = DelegatesContainer<PaymentQueueObserver>()
+    public var storage: Storage
     
-    init(paymentQueue: SKPaymentQueue = SKPaymentQueue.default()) {
+    init(paymentQueue: SKPaymentQueue = SKPaymentQueue.default(), storage: Storage) {
         self.paymentQueue = paymentQueue
+        self.storage = storage
         super.init()
         paymentQueue.add(self)
     }
@@ -93,9 +96,9 @@ final class PCPaymentQueueController: NSObject {
         payments.insert(PaymentModel(product: product, payment: payment, atomic: atomically))
     }
     
-    func completeTransaction(for purchasedItem: PurchaseItem) {
-        guard let transaction = purchasedItem.transaction as? SKPaymentTransaction else {
-            print("not a transaction:", purchasedItem.transaction)
+    func completeTransaction(for purchasedItem: InAppPurchase) {
+        guard let transaction = paymentQueue.transactions.first(where: { $0.transactionIdentifier == purchasedItem.transactionId}) else {
+            print("no transactions with id:", purchasedItem.transactionId)
             return
         }
         paymentQueue.finishTransaction(transaction)
@@ -108,6 +111,7 @@ final class PCPaymentQueueController: NSObject {
     
     func restore() {
         paymentQueue.restoreCompletedTransactions()
+        observers.invokeDelegates({$0.onRestoreRequested?()})
     }
     
     func addObserver(_ observer: PaymentQueueObserver) {
@@ -116,9 +120,9 @@ final class PCPaymentQueueController: NSObject {
 }
 
 // MARK: - SKPaymentTransactionObserver
-extension PCPaymentQueueController: SKPaymentTransactionObserver {
+extension PaymentQueueController: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        var purchased = [PurchaseItem]()
+        var purchased = [InAppPurchase]()
         var errors = [Error]()
         for transaction in transactions {
             switch transaction.transactionState {
@@ -141,7 +145,8 @@ extension PCPaymentQueueController: SKPaymentTransactionObserver {
         }
         
         if purchased.count > 0 {
-            observers.invokeDelegates({ $0.onPurchase?(purchased)})
+            storage.persistPurchased(products: purchased)
+            observers.invokeDelegates({ $0.onPurchase?(purchased.map({$0.transactionId}))})
         }
         
         if let error = errors.last { // TODO: Consider combining errors, etc.
@@ -174,9 +179,9 @@ extension PCPaymentQueueController: SKPaymentTransactionObserver {
     }
 }
 
-private extension PCPaymentQueueController {
+private extension PaymentQueueController {
     
-    private func handlePurchased(transaction: SKPaymentTransaction) -> PurchaseItem? {
+    private func handlePurchased(transaction: SKPaymentTransaction) -> InAppPurchase? {
         // if there's no payment that corresponds the transaction,
         // complete this transaction instantly 
         guard let paymentModel = payments[transaction.payment.productIdentifier] else {
@@ -187,11 +192,9 @@ private extension PCPaymentQueueController {
             paymentQueue.finishTransaction(transaction)
         }
         payments.remove(paymentModel)
-        let item = PurchaseItem(productId: paymentModel.payment.productIdentifier,
-                                quantity: paymentModel.payment.quantity,
-                                product: paymentModel.product,
-                                transaction: transaction,
-                                originalTransaction: transaction.original)
+        let item = InAppPurchase(paymentModel: paymentModel,
+                                 transaction: transaction,
+                                 originalTransaction: transaction.original)
         return item
     }
     

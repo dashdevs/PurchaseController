@@ -6,7 +6,6 @@
 //
 
 import StoreKit
-import SwiftyStoreKit
 
 // MARK: - Error Domains
 public extension PurchaseController {
@@ -43,6 +42,7 @@ public extension PurchaseController {
 /// - receiptSerializationError: Notifies handler if a receipt can not serialization
 /// - transactionPaymentNotFound: Corresponding payment for the transaction not found.
 /// - unauthorizedReceiptSet: Notifies if Storage.sessionReceipt was set from an unauthorized place
+/// - unknownSharedSecret: Notifies if no sharedSecret provided
 public enum PurchaseError: Int, Error {
     case unknown
     case clientInvalid
@@ -68,6 +68,7 @@ public enum PurchaseError: Int, Error {
     case purchaseSynchronizationError
     case transactionPaymentNotFound
     case unauthorizedReceiptSet
+    case unknownSharedSecret
 }
 
 // MARK: - CustomDebugStringConvertible
@@ -122,6 +123,8 @@ extension PurchaseError: CustomDebugStringConvertible {
             return "Corresponding payment for the transaction not found."
         case .unauthorizedReceiptSet:
             return "Trying to set Storage.sessionReceipt from an unauthorized place. This operation can only be performed from PurchaseController instance."
+        case .unknownSharedSecret:
+            return "No sharedSecret provided"
         }
     }
     
