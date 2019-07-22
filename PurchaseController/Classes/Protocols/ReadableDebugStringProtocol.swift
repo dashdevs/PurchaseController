@@ -2,12 +2,12 @@
 //  ReadableDebugStringProtocol.swift
 //  Pods
 //
-//  Created by Igor Kulik on 6/21/19.
+//  Copyright © 2019 dashdevs.com. All rights reserved.
 //
 
 import Foundation
 
-internal protocol ReadableDebugStringProtocol: CustomDebugStringConvertible {}
+public protocol ReadableDebugStringProtocol: CustomDebugStringConvertible {}
 
 extension ReadableDebugStringProtocol {
     public var debugDescription: String {

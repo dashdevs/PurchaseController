@@ -19,12 +19,11 @@ import PurchaseController
     @objc func validateReceiptLocally()
     @objc func validateReceiptRemotely()
     @objc func validateSubscription()
-    @objc func synchronizePurchases()
 }
 
 class MainViewController: UITableViewController {
     lazy var tableController = { return MainTableController(presentableDelegate: self) }()
-    lazy var purchaseController = { return PurchaseController(stateHandler: self) }()
+    lazy var purchaseController = { return PurchaseController(stateHandler: self, productIds: PurchasebleProductItem.allAsRaw()) }()
     
     override func viewDidLoad() {
         self.tableView.dataSource = tableController
@@ -43,6 +42,8 @@ extension MainViewController: PurchaseStateHandler {
                 print("--- Error occured: \(error)")
             case .subscriptionValidationSucess(let receipt):
                 print("--- Moved to state: subscriptionValidationSucess with \(receipt)")
+            case .purchaseSuccess(let item):
+                print("--- Moved to state: purchaseSuccess with \(item)")
             default:
                 print("--- Moved to state: \(newState)")
             }
@@ -55,7 +56,7 @@ extension MainViewController: PurchaseStateHandler {
 extension MainViewController: MainViewControllerPresentable {
     
     @objc func purchaseConsumable() {
-        purchaseController.purchase(with: PurchasebleProductItem.consumable.rawValue)
+        purchaseController.purchase(with: PurchasebleProductItem.consumable.rawValue, atomically: false)
     }
     
     @objc func purchaseNonConsumable() {
@@ -75,7 +76,7 @@ extension MainViewController: MainViewControllerPresentable {
     }
     
     @objc func retrieve() {
-        purchaseController.retrieve(products: PurchasebleProductItem.allAsRaw())
+        purchaseController.retrieve()
     }
     
     @objc func refreshReceipt() {
@@ -87,14 +88,11 @@ extension MainViewController: MainViewControllerPresentable {
     }
     
     @objc func validateReceiptRemotely() {
-        purchaseController.validateReceipt(using: AppleReceiptValidatorImplementation(sharedSecret: nil, isSandbox: true))
-    }
-    
-    @objc func synchronizePurchases() {
-        purchaseController.synchronizeLocalPurchasesFromReceipt()
+        purchaseController.validateReceipt(using: AppleReceiptValidatorImplementation(sharedSecret: "88038f49a0b74978b2716a9ef7f66470",
+                                                                                      isSandbox: true))
     }
     
     @objc func validateSubscription() {
-        purchaseController.validateSubscription(productID: PurchasebleProductItem.autoRenewSubscription.rawValue, type: .autoRenewable)
+        purchaseController.validateSubscription(filter: nil)
     }
 }

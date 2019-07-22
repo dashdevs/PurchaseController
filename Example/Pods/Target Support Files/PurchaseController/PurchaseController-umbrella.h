@@ -10,7 +10,6 @@
 #endif
 #endif
 
-#import "TransactionReceiptFetcher.h"
 #import "PurchaseController-Bridging-Header.h"
 
 FOUNDATION_EXPORT double PurchaseControllerVersionNumber;
