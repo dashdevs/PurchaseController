@@ -33,6 +33,10 @@ final class ReceiptFetcher: NSObject {
         self.observer = observer
     }
 
+    func removeObserver() {
+        self.observer = nil
+    }
+    
     deinit {
         refreshRequest?.cancel()
         refreshRequest = nil

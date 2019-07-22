@@ -29,6 +29,10 @@ final class ProductsInfoController: NSObject {
         super.init()
     }
 
+    func removeObserver() {
+        self.observer = nil
+    }
+    
     deinit {
         productsRequest?.cancel()
         productsRequest = nil

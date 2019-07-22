@@ -19,11 +19,12 @@ import PurchaseController
     @objc func validateReceiptLocally()
     @objc func validateReceiptRemotely()
     @objc func validateSubscription()
+    @objc func showNewVC()
 }
 
 class MainViewController: UITableViewController {
     lazy var tableController = { return MainTableController(presentableDelegate: self) }()
-    lazy var purchaseController = { return PurchaseController(stateHandler: self, productIds: PurchasebleProductItem.allAsRaw()) }()
+    lazy var purchaseController = { return PurchaseController(stateHandler: self, productIds: PurchasebleProductItem.allAsRaw())}()
     
     override func viewDidLoad() {
         self.tableView.dataSource = tableController
@@ -40,7 +41,7 @@ extension MainViewController: PurchaseStateHandler {
             switch (result) {
             case .error(let error):
                 print("--- Error occured: \(error)")
-            case .subscriptionValidationSucess(let receipt):
+            case .subscriptionValidationSuccess(let receipt):
                 print("--- Moved to state: subscriptionValidationSucess with \(receipt)")
             case .purchaseSuccess(let item):
                 print("--- Moved to state: purchaseSuccess with \(item)")
@@ -94,5 +95,10 @@ extension MainViewController: MainViewControllerPresentable {
     
     @objc func validateSubscription() {
         purchaseController.validateSubscription(filter: nil)
+    }
+    
+    @objc func showNewVC() {
+        let newVc = self.storyboard?.instantiateViewController(withIdentifier: "Main")
+        self.navigationController?.pushViewController(newVc!, animated: true)
     }
 }

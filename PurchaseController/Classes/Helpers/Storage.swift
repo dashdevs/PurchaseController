@@ -46,7 +46,7 @@ extension Storage {
      *   - file: default full path of the file from which method was accessed
      */
     func set(receipt: Receipt, file: String = #file) throws {
-        if file.contains(String(describing: PurchaseController.self)) {
+        if file.contains(String(describing: PurchaseControllerImpl.self)) {
             self.sessionReceipt = receipt
         } else {
             throw PurchaseError.unauthorizedReceiptSet

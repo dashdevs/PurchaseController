@@ -9,7 +9,7 @@ import UIKit
 
 class MainTableController: NSObject, UITableViewDataSource, UITableViewDelegate {
     
-    let sections: [SectionTableItemModel] = [.action, .purchases]
+    let sections: [SectionTableItemModel] = [.action, .purchases, .navigation]
     
     weak var delegate: MainViewControllerPresentable?
     
