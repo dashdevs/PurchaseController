@@ -73,7 +73,7 @@ public struct AppleReceiptValidatorImplementation: ReceiptValidatorProtocol {
         let receipt = receiptData.base64EncodedString(options: [])
         let requestContents: NSMutableDictionary = [ "receipt-data": receipt ]
         guard let password = sharedSecret else {
-            completion(.error(error: PurchaseError.unknownSharedSecret))
+            completion(.error(error: ReceiptError.secretNotMatching))
             return
         }
         requestContents.setValue(password, forKey: "password")
@@ -110,15 +110,15 @@ public struct AppleReceiptValidatorImplementation: ReceiptValidatorProtocol {
              * Note: The 21007 status code indicates that this receipt is a sandbox receipt,
              * but it was sent to the production service for verification.
              */
-            let receiptStatus = ReceiptStatus(rawValue: status) ?? ReceiptStatus.unknown
-            if case .testReceipt = receiptStatus {
+            let receiptError = ReceiptError(with: status)
+            if receiptError == .testReceipt {
                 let sandboxValidator = AppleReceiptValidatorImplementation(sharedSecret: self.sharedSecret, isSandbox: true)
                 sandboxValidator.validate(receiptData: receiptData, completion: completion)
             } else {
-                if receiptStatus == .valid, let finalReceipt = receiptInfo.receipt {
+                if let finalReceipt = receiptInfo.receipt {
                      completion(.success(receipt: finalReceipt))
                 } else {
-                    completion(.error(error: ReceiptError.receiptInvalid(receipt: receiptInfo, status: receiptStatus)))
+                    completion(.error(error: receiptError ?? .unknown))
                 }
             }
         }

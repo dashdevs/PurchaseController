@@ -90,7 +90,7 @@ public struct LocalReceiptValidatorImplementation {
         let receiptHashData = receipt.sha1Hash
         
         guard let deviceIdentifierData = self.deviceIdentifierData() else {
-            throw LocalReceiptValidationError.malformedReceipt
+            throw ReceiptError.malformedReceipt
         }
         
         // Compute the hash for your app & device
@@ -108,7 +108,7 @@ public struct LocalReceiptValidatorImplementation {
         let computedHashData = NSData(bytes: &computedHash, length: 20)
         
         // Compare the computed hash with the receipt's hash
-        guard computedHashData.isEqual(to: receiptHashData as Data) else { throw LocalReceiptValidationError.incorrectHash }
+        guard computedHashData.isEqual(to: receiptHashData as Data) else { throw ReceiptError.incorrectHash }
     }
 }
 
@@ -123,7 +123,7 @@ fileprivate struct ReceiptLoader {
             }
         }
         
-        throw LocalReceiptValidationError.couldNotFindReceipt
+        throw ReceiptError.noReceiptData
     }
     
     func receiptFound() -> Bool {
@@ -144,12 +144,12 @@ fileprivate struct ReceiptExtractor {
         BIO_write(receiptBIO, (receiptData as NSData).bytes, Int32(receiptData.count))
         
         guard let receiptPKCS7Container = d2i_PKCS7_bio(receiptBIO, nil) else {
-            throw LocalReceiptValidationError.emptyReceiptContents
+            throw ReceiptError.emptyReceiptContents
         }
         let dSign = receiptPKCS7Container.pointee.d.sign
         let pkcs7DataTypeCode = OBJ_obj2nid(dSign?.pointee.contents.pointee.type)
         guard pkcs7DataTypeCode == NID_pkcs7_data else {
-            throw LocalReceiptValidationError.emptyReceiptContents
+            throw ReceiptError.emptyReceiptContents
         }
         
         return receiptPKCS7Container
@@ -161,7 +161,7 @@ fileprivate struct ReceiptSignatureValidator {
         let pkcs7SignedTypeCode = OBJ_obj2nid(PKCS7Container.pointee.type)
         
         guard pkcs7SignedTypeCode == NID_pkcs7_signed else {
-            throw LocalReceiptValidationError.receiptNotSigned
+            throw ReceiptError.receiptNotSigned
         }
     }
     
@@ -176,7 +176,7 @@ fileprivate struct ReceiptSignatureValidator {
             let appleRootCertificateURL = Bundle.main.url(forResource: "AppleIncRootCertificate", withExtension: "cer"),
             let appleRootCertificateData = try? Data(contentsOf: appleRootCertificateURL)
             else {
-                throw LocalReceiptValidationError.appleRootCertificateNotFound
+                throw ReceiptError.appleRootCertificateNotFound
         }
         
         let appleRootCertificateBIO = BIO_new(BIO_s_mem())
@@ -195,7 +195,7 @@ fileprivate struct ReceiptSignatureValidator {
         let result = PKCS7_verify(PKCS7Container, nil, x509CertificateStore, nil, nil, 0)
         
         if result != 1 {
-            throw LocalReceiptValidationError.receiptSignatureInvalid
+            throw ReceiptError.receiptSignatureInvalid
         }
     }
 }
@@ -213,7 +213,7 @@ fileprivate struct ReceiptParser {
         var expirationDate: Date?
         
         guard let contents = PKCS7Container.pointee.d.sign.pointee.contents, let octets = contents.pointee.d.data else {
-            throw LocalReceiptValidationError.malformedReceipt
+            throw ReceiptError.malformedReceipt
         }
         
         var currentASN1PayloadLocation = UnsafePointer(octets.pointee.data)
@@ -227,7 +227,7 @@ fileprivate struct ReceiptParser {
         
         // Payload must be an ASN1 Set
         guard type == V_ASN1_SET else {
-            throw LocalReceiptValidationError.malformedReceipt
+            throw ReceiptError.malformedReceipt
         }
         
         // Decode Payload
@@ -239,17 +239,17 @@ fileprivate struct ReceiptParser {
             
             // ASN1 Object type must be an ASN1 Sequence
             guard type == V_ASN1_SEQUENCE else {
-                throw LocalReceiptValidationError.malformedReceipt
+                throw ReceiptError.malformedReceipt
             }
             
             // Attribute type of ASN1 Sequence must be an Integer
             guard let attributeType = DecodeASN1Integer(startOfInt: &currentASN1PayloadLocation, length: currentASN1PayloadLocation!.distance(to: endOfPayload)) else {
-                throw LocalReceiptValidationError.malformedReceipt
+                throw ReceiptError.malformedReceipt
             }
             
             // Attribute version of ASN1 Sequence must be an Integer
             guard DecodeASN1Integer(startOfInt: &currentASN1PayloadLocation, length: currentASN1PayloadLocation!.distance(to: endOfPayload)) != nil else {
-                throw LocalReceiptValidationError.malformedReceipt
+                throw ReceiptError.malformedReceipt
             }
             
             // Get ASN1 Sequence value
@@ -257,7 +257,7 @@ fileprivate struct ReceiptParser {
             
             // ASN1 Sequence value must be an ASN1 Octet String
             guard type == V_ASN1_OCTET_STRING else {
-                throw LocalReceiptValidationError.malformedReceipt
+                throw ReceiptError.malformedReceipt
             }
             
             // Decode attributes
@@ -298,7 +298,7 @@ fileprivate struct ReceiptParser {
         guard let bundleId = bundleIdData,
             let opaqueValue = opaqueValueData,
             let sha1Hash = sha1HashData else {
-                throw LocalReceiptValidationError.incorrectHash
+                throw ReceiptError.incorrectHash
         }
         let validationData = ReceiptValidationData(bundleIdData: bundleId, opaqueValue: opaqueValue, sha1Hash: sha1Hash)
 
@@ -308,7 +308,7 @@ fileprivate struct ReceiptParser {
                                     inAppPurchaseReceipts: inAppPurchaseReceipts,
                                     receiptCreationDate: receiptCreationDate,
                                     expirationDate: expirationDate) else {
-            throw LocalReceiptValidationError.malformedReceipt
+            throw ReceiptError.malformedReceipt
         }
         
         
@@ -336,7 +336,7 @@ fileprivate struct ReceiptParser {
         
         // Payload must be an ASN1 Set
         guard type == V_ASN1_SET else {
-            throw LocalReceiptValidationError.malformedInAppPurchaseReceipt
+            throw ReceiptError.malformedInAppPurchaseReceipt
         }
         
         // Decode Payload
@@ -348,17 +348,17 @@ fileprivate struct ReceiptParser {
             
             // ASN1 Object type must be an ASN1 Sequence
             guard type == V_ASN1_SEQUENCE else {
-                throw LocalReceiptValidationError.malformedInAppPurchaseReceipt
+                throw ReceiptError.malformedInAppPurchaseReceipt
             }
             
             // Attribute type of ASN1 Sequence must be an Integer
             guard let attributeType = DecodeASN1Integer(startOfInt: &currentInAppPurchaseASN1PayloadLocation, length: currentInAppPurchaseASN1PayloadLocation!.distance(to: endOfPayload)) else {
-                throw LocalReceiptValidationError.malformedInAppPurchaseReceipt
+                throw ReceiptError.malformedInAppPurchaseReceipt
             }
             
             // Attribute version of ASN1 Sequence must be an Integer
             guard DecodeASN1Integer(startOfInt: &currentInAppPurchaseASN1PayloadLocation, length: currentInAppPurchaseASN1PayloadLocation!.distance(to: endOfPayload)) != nil else {
-                throw LocalReceiptValidationError.malformedInAppPurchaseReceipt
+                throw ReceiptError.malformedInAppPurchaseReceipt
             }
             
             // Get ASN1 Sequence value
@@ -366,7 +366,7 @@ fileprivate struct ReceiptParser {
             
             // ASN1 Sequence value must be an ASN1 Octet String
             guard type == V_ASN1_OCTET_STRING else {
-                throw LocalReceiptValidationError.malformedInAppPurchaseReceipt
+                throw ReceiptError.malformedInAppPurchaseReceipt
             }
             
             // Decode attributes
@@ -419,7 +419,7 @@ fileprivate struct ReceiptParser {
                                             subscriptionIntroductoryPricePeriod: subscriptionIntroductoryPricePeriod,
                                             cancellationDate: cancellationDate,
                                             webOrderLineItemId: webOrderLineItemId) else {
-                                                throw LocalReceiptValidationError.malformedInAppPurchaseReceipt
+                                                throw ReceiptError.malformedInAppPurchaseReceipt
         }
         return purchase
     }
