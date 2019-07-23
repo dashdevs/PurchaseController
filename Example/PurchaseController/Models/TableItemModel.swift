@@ -70,7 +70,6 @@ enum TableItemModel: String {
             return #selector(MainViewController.validateReceiptRemotely)
         case .validateSubscription:
             return #selector(MainViewController.validateSubscription)
-
         }
     }
 }

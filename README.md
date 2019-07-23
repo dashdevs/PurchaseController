@@ -14,6 +14,7 @@ it, simply add the following line to your Podfile:
 ```ruby
 pod 'PurchaseController'
 ```
+Add Apple RC by placing it in root folder. it can be downloaded  through [apple certificate authority](https://www.apple.com/certificateauthority/).
 
 ## Author
 

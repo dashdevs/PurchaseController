@@ -8,12 +8,11 @@
 import StoreKit
 
 // MARK: - Error Domains
-public extension PurchaseController {
+extension PurchaseControllerImpl {
     enum ErrorDomain: String {
         case storeKit = "SKErrorDomain"
         case purchase = "PurchaseErrorDomain"
         case receipt = "ReceiptErrorDomain"
-        case localReceiptValidation = "LocalReceiptValidationErrorDomain"
     }
 }
 
@@ -129,7 +128,7 @@ extension PurchaseError: CustomDebugStringConvertible {
     }
     
     public var debugDescription: String {
-        return "\(PurchaseController.ErrorDomain.purchase.rawValue): \(description)"
+        return "\(PurchaseControllerImpl.ErrorDomain.purchase.rawValue): \(description)"
     }
     
     init(code: Int) {
@@ -141,7 +140,7 @@ extension PurchaseError: CustomDebugStringConvertible {
 
 extension PurchaseError: CustomNSError {
     public static var errorDomain: String {
-        return PurchaseController.ErrorDomain.purchase.rawValue
+        return PurchaseControllerImpl.ErrorDomain.purchase.rawValue
     }
     
     public var errorCode: Int {
@@ -303,14 +302,14 @@ extension ReceiptError: CustomDebugStringConvertible {
     }
     
     public var debugDescription: String {
-        return "\(PurchaseController.ErrorDomain.localReceiptValidation.rawValue): \(description)"
+        return "\(PurchaseControllerImpl.ErrorDomain.receipt.rawValue): \(description)"
     }
 }
 
 // MARK: - CustomNSError
 extension ReceiptError: CustomNSError {
     public static var errorDomain: String {
-        return PurchaseController.ErrorDomain.localReceiptValidation.rawValue
+        return PurchaseControllerImpl.ErrorDomain.receipt.rawValue
     }
     
     public var errorCode: Int {

@@ -5,7 +5,7 @@
 //  Copyright © 2019 dashdevs.com. All rights reserved.
 //
 
-import Foundation
+import StoreKit
 
 extension Data {
     /// Function used to create readable representation of receipt
@@ -90,5 +90,28 @@ extension TimeInterval {
             return nil
         }
         self = milliseconds / Constants.thousand
+    }
+}
+
+@available(iOS 11.2, *)
+extension SKProductSubscriptionPeriod {
+    var timeInterval: TimeInterval {
+       return TimeInterval(self.numberOfUnits) * self.unit.timeInterval
+    }
+}
+
+@available(iOS 11.2, *)
+extension SKProduct.PeriodUnit {
+    var timeInterval: TimeInterval {
+        switch self {
+        case .day:
+           return 86400.0
+        case .year:
+           return 31536000.0
+        case .month:
+          return 2592000.0
+        case .week:
+           return 604800.0
+        }
     }
 }

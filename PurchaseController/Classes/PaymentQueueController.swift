@@ -75,7 +75,7 @@ final class PaymentQueueController: NSObject {
     
     private let paymentQueue: SKPaymentQueue
     private var payments = Set<PaymentModel>()
-    private let observers = DelegatesContainer<PaymentQueueObserver>()
+    public let observers = DelegatesContainer<PaymentQueueObserver>()
     public var storage: Storage
     
     init(paymentQueue: SKPaymentQueue = SKPaymentQueue.default(), storage: Storage) {
@@ -117,6 +117,10 @@ final class PaymentQueueController: NSObject {
     func addObserver(_ observer: PaymentQueueObserver) {
         observers.add(delegate: observer)
     }
+    
+    func removeObserver(_ observer: PaymentQueueObserver) {
+        observers.remove(delegate: observer)
+    }
 }
 
 // MARK: - SKPaymentTransactionObserver
@@ -149,7 +153,7 @@ extension PaymentQueueController: SKPaymentTransactionObserver {
             observers.invokeDelegates({ $0.onPurchase?(purchased.map({$0.transactionId}))})
         }
         
-        if let error = errors.last { // TODO: Consider combining errors, etc.
+        if let error = errors.last {
             observers.invokeDelegates({ $0.onError?(error)})
         }
     }
@@ -183,7 +187,7 @@ private extension PaymentQueueController {
     
     private func handlePurchased(transaction: SKPaymentTransaction) -> InAppPurchase? {
         // if there's no payment that corresponds the transaction,
-        // complete this transaction instantly 
+        // complete this transaction instantly
         guard let paymentModel = payments[transaction.payment.productIdentifier] else {
             paymentQueue.finishTransaction(transaction)
             return nil
