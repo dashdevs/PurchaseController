@@ -19,7 +19,6 @@ import PurchaseController
     @objc func validateReceiptLocally()
     @objc func validateReceiptRemotely()
     @objc func validateSubscription()
-    @objc func showNewVC()
 }
 
 class MainViewController: UITableViewController {
@@ -94,11 +93,6 @@ extension MainViewController: MainViewControllerPresentable {
     }
     
     @objc func validateSubscription() {
-        purchaseController.validateSubscription(filter: nil)
-    }
-    
-    @objc func showNewVC() {
-        let newVc = self.storyboard?.instantiateViewController(withIdentifier: "Main")
-        self.navigationController?.pushViewController(newVc!, animated: true)
+        purchaseController.validateSubscription { ($0.expiresDate ?? Date()) > Date() }
     }
 }

@@ -11,7 +11,6 @@ enum SectionTableItemModel: String {
     
     case purchases = "Purchases"
     case action = "Actions"
-    case navigation = "Navigation"
     
     private var purchaseSection: [TableItemModel] { return [.consumable, .nonConsumable, .autoRenewSubscription, .nonRenewSubscription] }
     private var actionSection: [TableItemModel] { return [.retrieve, .restore, .validateReceiptLocally, .validateReceiptRemotely, .refreshReceipt, .validateSubscription] }
@@ -22,8 +21,6 @@ enum SectionTableItemModel: String {
             return actionSection
         case .purchases:
             return purchaseSection
-        case .navigation:
-            return [.newVC]
         }
     }
 }

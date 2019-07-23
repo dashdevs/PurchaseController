@@ -21,8 +21,6 @@ enum TableItemModel: String {
     case validateReceiptRemotely
     case validateSubscription
     
-    case newVC
-    
     var title: String {
         switch self {
         case .consumable:
@@ -46,8 +44,6 @@ enum TableItemModel: String {
             return "Validate receipt remotely 💴"
         case .validateSubscription:
             return "Validate subscription 💴"
-        case .newVC:
-            return "Show meeee"
         }
     }
     
@@ -74,8 +70,6 @@ enum TableItemModel: String {
             return #selector(MainViewController.validateReceiptRemotely)
         case .validateSubscription:
             return #selector(MainViewController.validateSubscription)
-        case .newVC:
-             return #selector(MainViewController.showNewVC)
         }
     }
 }

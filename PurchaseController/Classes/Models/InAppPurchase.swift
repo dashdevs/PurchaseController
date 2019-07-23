@@ -92,10 +92,10 @@ public struct InAppPurchase: ReadableDebugStringProtocol, DataFormatsEncodable {
         
         if #available(iOS 11.2, *),
             let period = paymentModel.product.subscriptionPeriod,
-            let purchaseDate = purchaseDate  {
-            self.expiresDate = Date(timeIntervalSince1970: purchaseDate.timeIntervalSince1970 + period.timeInterval)
+            let purchaseDateMs = purchaseDateMs  {
+            self.expiresDate = Date(timeIntervalSince1970: purchaseDateMs + period.timeInterval)
             self.expiresDatePst = nil
-            self.expiresDateMs = purchaseDate.timeIntervalSince1970 + period.timeInterval
+            self.expiresDateMs = purchaseDateMs + period.timeInterval
         } else {
             self.expiresDate = nil
             self.expiresDatePst = nil
