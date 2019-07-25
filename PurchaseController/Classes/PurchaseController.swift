@@ -115,8 +115,20 @@ public class PurchaseController {
         self.implementation.removeBroadcasters()
     }
     
-    public static func printCurrentObservers() {
-        print(PurchaseController.globalPaymentQueueController.observers.delegates)
+    /** Function, used to set product identificators
+    *
+    * - Parameter productIds: set of product identificators
+    */
+    public func set(productIds: Set<String>) {
+        implementation.productIds = productIds
+    }
+    
+    /** Function, used to set subscription product identificators
+     *
+     * - Parameter productIds: set of subscription product identificators
+     */
+    public func set(subscription productIds: Set<String>) {
+        implementation.subscriptionProductIds = productIds
     }
 }
 

@@ -29,8 +29,8 @@ final class PurchaseControllerImpl: PaymentQueueObserver, ProductsInfoObserver, 
         }
     }
     
-    public let productIds: Set<String>
-    public let subscriptionProductIds: Set<String>
+    public var productIds: Set<String>
+    public var subscriptionProductIds: Set<String>
     
     // MARK: - PaymentQueueObserver
     
