@@ -16,7 +16,7 @@ class Storage {
             let stored = persistor.fetchPurchasedProducts()
             if let sunchronizedPurchases = sessionReceipt?.inApp?.map({ purchase -> InAppPurchase in
                 if let storedItem = stored.first(where: {$0.transactionId == purchase.transactionId }),
-                    storedItem != purchase {
+                    storedItem == purchase {
                     return storedItem
                 }
                 return purchase
