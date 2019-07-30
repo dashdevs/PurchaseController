@@ -121,6 +121,11 @@ final class PaymentQueueController: NSObject {
     func removeObserver(_ observer: PaymentQueueObserver) {
         observers.remove(delegate: observer)
     }
+    
+    class func transaction(of payment: InAppPurchase) -> SKPaymentTransaction? {
+        let queue = SKPaymentQueue.default()
+        return queue.transactions.first(where: { $0.transactionIdentifier == payment.transactionId})
+    }
 }
 
 // MARK: - SKPaymentTransactionObserver
