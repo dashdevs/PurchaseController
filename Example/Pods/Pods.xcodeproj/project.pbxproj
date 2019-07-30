@@ -19,38 +19,40 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		04159DBEA8708C428F44A13C0F1EDAD5 /* DataFormatsEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFF698B17DBA2DE876C34400DB35279 /* DataFormatsEncodable.swift */; };
 		042375FC2A4ECDF7D28F77B49D5929C0 /* Pods-PurchaseController_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 65386D896C3ECB21DB2487CF7A890107 /* Pods-PurchaseController_Example-dummy.m */; };
-		0A8A83C62C58CF7C6ADA7BDDFBEC7491 /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E964BA644C847D488102B6329DBC02 /* Receipt.swift */; };
+		0A273D784B659D441AA5E3F0B991062A /* SubscriptionValidationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19034CAE9D3F74E59EF2CA863DD635A5 /* SubscriptionValidationController.swift */; };
+		18AB9602D9FC94707F2A91DF07F331DE /* ReceiptValidationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156AD0340233172E34E5F0EA12CF9C0F /* ReceiptValidationResponse.swift */; };
+		1D6581C9EC5BE9E38384D357D1FA378C /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 694C663B489BCB961CC13761E754B51B /* PurchaseController.swift */; };
+		1EF4C4712A9811F42E5DA7E21A4982BD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD54FC6341FAC83608AC7BA152A24981 /* Foundation.framework */; };
+		23790A2DBA56803576867B0BDBEFF62C /* PurchaseControllerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E841CBA7E99D5A15626E56A5390EB1 /* PurchaseControllerImpl.swift */; };
 		288E899B8ED7DBF1414DE70A8E2FCDED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD54FC6341FAC83608AC7BA152A24981 /* Foundation.framework */; };
-		2D4700E0B30218E423B8B584C5AB98C5 /* PurchaseController-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D8462E92EAD8C41B607509601415BBE6 /* PurchaseController-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		354EE61729732DB162475C3CEF184076 /* LocalReceiptValidatorImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2644EC613C49EE874765FE187B2D68C4 /* LocalReceiptValidatorImplementation.swift */; };
-		374142A89D7BCA96F3D7602A7384E179 /* SubscriptionValidationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63B4C86F9D0E26B45684A40D3600944A /* SubscriptionValidationController.swift */; };
-		3B5CC7A6E5FAE94E10592E8FC089D546 /* DelegatesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CB24B9175AB68178BF559FAC86A11F /* DelegatesContainer.swift */; };
-		3EE143BE3AA1B4B70599C0AAAC363C05 /* AppleReceiptValidatorImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7FADCA5E9F99E31EB9C35733D3F4EB /* AppleReceiptValidatorImplementation.swift */; };
-		3F617850CDF8CB83A956B192962D6700 /* PurchasePersistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4647FD477EE41954184F8E146CB7217 /* PurchasePersistance.swift */; };
-		401262BD8D444B0DBAFE608FB8F219CE /* PurchaseController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A0D90CCBF4CC96041CF479BB2F9EA /* PurchaseController-dummy.m */; };
-		5877A46229B16A8652B16115CB2E6DB1 /* ReceiptFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6AEDC37091B066724AA5336512C0310 /* ReceiptFields.swift */; };
-		5A907E1CDAA878E201916C405E9B2B18 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D0C6FAC8480249820E4CAD2CD74AC5B /* StoreKit.framework */; };
-		65559283E829DC64037436660EB8209C /* PurchaseControllerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6B357B475AF39B3E83E60FBB38C0F19 /* PurchaseControllerImpl.swift */; };
+		28FFA6C635474415213746ACAD1EF8BD /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 314878C53AD1ADBA6AFD32EC22B5B09C /* Receipt.swift */; };
+		29B7DAF4CA89EA7974172B0FE88F3728 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D0C6FAC8480249820E4CAD2CD74AC5B /* StoreKit.framework */; };
+		3D629F723227F369FB6EC4A8A1718C3A /* ReceiptFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7127D2CB65F416995C9FE5A8D04A6631 /* ReceiptFetcher.swift */; };
+		3E66D6F92B481E661CA05FD0B68F46A2 /* DirectReceiptFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 49D44A0742CB4C18E4D16BA957E24F92 /* DirectReceiptFetcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4BCD2728AFD8B2757B5A574A1AB00244 /* PurchaseController-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D8462E92EAD8C41B607509601415BBE6 /* PurchaseController-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5570E527226AF755F2E30BD18DF589BA /* DelegatesContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2155F625886F905C2C1577836E04C440 /* DelegatesContainer.swift */; };
+		611366719ED574E0A0FB05393EA5D16D /* PurchaseController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5316D89DC6153CB150934600E4E4185E /* PurchaseController+Extensions.swift */; };
+		62E8D463DE902E6536B4994D0F47F0F7 /* ReceiptValidatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5E3B78671E0A31A3C16776CC13375B /* ReceiptValidatorProtocol.swift */; };
 		660F8FAB574C2A7BFE1CC81AE30E4145 /* Pods-PurchaseController_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 22BB1552CB5EA84AE3B31284097CFEA7 /* Pods-PurchaseController_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		674479B6D980C810D2DE360C64B16AB7 /* ReceiptFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27879B87BD369A622330B20BF4BFA49 /* ReceiptFetcher.swift */; };
-		8261553C5778784110C11CA9B4971BEF /* ReceiptValidatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2B0ABEB3F4B21B8C4BAF9036EDDE40 /* ReceiptValidatorProtocol.swift */; };
-		864C20CF984D1AC6936CE17BE3C70677 /* PurchaseController-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = F78E0AA7315270C24C2A07E066529A5F /* PurchaseController-Bridging-Header.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		94591434D48FC183EAAF356573D9F6F6 /* PurchaseController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85582C5D595671974A8C055321E70086 /* PurchaseController+Extensions.swift */; };
-		A293F2AC6D516E25C3BB058CA433F7FF /* PendingRenewalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FA1C1E911EAB6063AB91FCCC64B050 /* PendingRenewalInfo.swift */; };
+		70FF1CA47533FDBE578235B3CB5A2108 /* ProductsInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4B2A4F7197D659C1CF62845D3B5938 /* ProductsInfoController.swift */; };
+		757E01C55EEFBFFD169555CD604DBB88 /* ReceiptFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9718600A36B2C613293798799E8D17E /* ReceiptFields.swift */; };
+		80BFEC1AD9E8811B4C2AC03AB4827596 /* PurchasePersistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2872CEBCC3BD00F8A4220D1A122E9E /* PurchasePersistance.swift */; };
+		8158F9DD38D262587F5A478DD7A6B89A /* PaymentQueueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B7D2156CD44B37A8B461BE0E022A42 /* PaymentQueueController.swift */; };
+		82130AAB93F37A75FE0164320472F285 /* PurchaseErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30601D37AEB5F8C84A99D0F30B6885B /* PurchaseErrorHandling.swift */; };
+		98B85ECF6F69A5D381F7031BCEB73668 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C94CC0C2581BB973940A25FFE27CCB4 /* Storage.swift */; };
+		9E9AC429D6417A80D6238ACE5D8C4D40 /* PurchaseController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9A0D90CCBF4CC96041CF479BB2F9EA /* PurchaseController-dummy.m */; };
 		A53BA6FFCCCABFF2CADA958A8416BB99 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD54FC6341FAC83608AC7BA152A24981 /* Foundation.framework */; };
-		AE0B1D97DA776A707F22B0DE2CA1EC4F /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64164D50A6574E4F45C9715E0AD2E3E1 /* PurchaseController.swift */; };
+		B6F806AA7D0AF7A0418D83F5BEC2F709 /* PurchaseController-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = F78E0AA7315270C24C2A07E066529A5F /* PurchaseController-Bridging-Header.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B991140662FC3D0FEBBB9D0D473C8E05 /* DataFormatsEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B14E80870CD839C2F615C5B8D45ADFC0 /* DataFormatsEncodable.swift */; };
 		BB00F8F5F716D965647BBCC53084361E /* Pods-PurchaseController_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F5BF2648626FF775B3AB33D880FDBD5C /* Pods-PurchaseController_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CA7156C1C289DCA9A1017FD81521FE8D /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB3F1DE90DA46CECB5292E8329118E4 /* Storage.swift */; };
-		CB993913984D29AE292C644DDFB6D5C1 /* ReadableDebugStringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A7118EBAA9524E2F69EDBACA2A8AF9 /* ReadableDebugStringProtocol.swift */; };
-		D078D88F175EF297398DDDF38F5B4E13 /* ReceiptValidationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8EE73739C22B597E2995D5F443AEA72 /* ReceiptValidationResponse.swift */; };
+		C1FE048C8204A68F5EFE72279AAEF652 /* PendingRenewalInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90E4DD6E7A9F3371CB8A0AA4D3FF1FF /* PendingRenewalInfo.swift */; };
+		CABD71D7C3A78535826B2FDC2ABFB01B /* ReadableDebugStringProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11388833C70C9FAD2F5F96BFD998FAEA /* ReadableDebugStringProtocol.swift */; };
+		CE6B6C4E2968A6E5EDCE4E42640C659F /* InAppPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A9DC5FD9E853E584B95AE51EBC011B5 /* InAppPurchase.swift */; };
+		D2CEBB8A03C195CD48D1CBBAAA5C115D /* DirectReceiptFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 536FBF54EF60FC2935A79D394BA0C49E /* DirectReceiptFetcher.m */; };
+		DA41E3832B4F3E359291E295019DB4FE /* LocalReceiptValidatorImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EB7E1D072DD75D47B33C9BD26982C /* LocalReceiptValidatorImplementation.swift */; };
 		DFB50EF07347168580D105DEE1B4FA2B /* Pods-PurchaseController_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D76C81EE4DA5FAF3EFCD38783050AE1E /* Pods-PurchaseController_Tests-dummy.m */; };
-		E2371FC7266755508009A5E23EA4FD6A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD54FC6341FAC83608AC7BA152A24981 /* Foundation.framework */; };
-		ED0D0273BE633799A4F841973F84BD60 /* PaymentQueueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C951469DB7B936653753BD6F36D5F5 /* PaymentQueueController.swift */; };
-		EF0AD76BF7513041845CAE1E9915ACD2 /* PurchaseErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = A73822BA5F55C00247F40C0F561D2FDB /* PurchaseErrorHandling.swift */; };
-		F52373998A6D1AEE7356D4E33120E416 /* ProductsInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EF23D3967B6C0DEA599D5E738B6C49 /* ProductsInfoController.swift */; };
-		FE1DEBB84C60833E99A96801D9A10D8B /* InAppPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7440FA74DE881FC820DAAFEA6F7E6F6E /* InAppPurchase.swift */; };
+		EF13C21DED4CEDB0536A3177897F77F4 /* AppleReceiptValidatorImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C619A0DE76B2210680ED072561449959 /* AppleReceiptValidatorImplementation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,7 +77,7 @@
 			remoteGlobalIDString = 3388B8BFD8E6D843A864A0BAA57FF047;
 			remoteInfo = PurchaseController;
 		};
-		A3053EA2D541D0B6437967356A551CE0 /* PBXContainerItemProxy */ = {
+		FB8C4AF29A530574A6DF9AE81FD75F01 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -87,77 +89,79 @@
 /* Begin PBXFileReference section */
 		040250F93E115499F13D00412B221F71 /* PurchaseController.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = PurchaseController.modulemap; sourceTree = "<group>"; };
 		0FD046F6601994DF00DCFFA1F645B421 /* Pods-PurchaseController_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PurchaseController_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		11388833C70C9FAD2F5F96BFD998FAEA /* ReadableDebugStringProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadableDebugStringProtocol.swift; sourceTree = "<group>"; };
+		156AD0340233172E34E5F0EA12CF9C0F /* ReceiptValidationResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptValidationResponse.swift; sourceTree = "<group>"; };
 		162FB5C57DCA086E0E9A3D409DD872D1 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		19034CAE9D3F74E59EF2CA863DD635A5 /* SubscriptionValidationController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SubscriptionValidationController.swift; sourceTree = "<group>"; };
 		1C67C63159905DB85E3ABEE896A0AB8F /* openssl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = openssl.framework; path = "OpenSSL-iOS/bin/openssl.framework"; sourceTree = "<group>"; };
-		1F2B0ABEB3F4B21B8C4BAF9036EDDE40 /* ReceiptValidatorProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptValidatorProtocol.swift; sourceTree = "<group>"; };
+		2155F625886F905C2C1577836E04C440 /* DelegatesContainer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DelegatesContainer.swift; sourceTree = "<group>"; };
 		22BB1552CB5EA84AE3B31284097CFEA7 /* Pods-PurchaseController_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PurchaseController_Tests-umbrella.h"; sourceTree = "<group>"; };
-		25CB24B9175AB68178BF559FAC86A11F /* DelegatesContainer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DelegatesContainer.swift; sourceTree = "<group>"; };
-		2644EC613C49EE874765FE187B2D68C4 /* LocalReceiptValidatorImplementation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocalReceiptValidatorImplementation.swift; sourceTree = "<group>"; };
 		2971DB0B10F7EA944227965BBA0E063E /* Pods_PurchaseController_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_PurchaseController_Tests.framework; path = "Pods-PurchaseController_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		29E841CBA7E99D5A15626E56A5390EB1 /* PurchaseControllerImpl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PurchaseControllerImpl.swift; sourceTree = "<group>"; };
 		2C8FD0D4053B12EABBB9C7924FBA670A /* Pods-PurchaseController_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PurchaseController_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		38C951469DB7B936653753BD6F36D5F5 /* PaymentQueueController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaymentQueueController.swift; sourceTree = "<group>"; };
-		45FA1C1E911EAB6063AB91FCCC64B050 /* PendingRenewalInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PendingRenewalInfo.swift; sourceTree = "<group>"; };
-		46E964BA644C847D488102B6329DBC02 /* Receipt.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Receipt.swift; sourceTree = "<group>"; };
+		314878C53AD1ADBA6AFD32EC22B5B09C /* Receipt.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Receipt.swift; sourceTree = "<group>"; };
+		3C94CC0C2581BB973940A25FFE27CCB4 /* Storage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		49D44A0742CB4C18E4D16BA957E24F92 /* DirectReceiptFetcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DirectReceiptFetcher.h; sourceTree = "<group>"; };
 		4A2D44D6620AAF2E248497717CABF6A4 /* Pods-PurchaseController_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PurchaseController_Example-Info.plist"; sourceTree = "<group>"; };
 		4D0C6FAC8480249820E4CAD2CD74AC5B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		4EA4B143839C9F4116FEBD0B02C23D4B /* Pods-PurchaseController_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PurchaseController_Example.release.xcconfig"; sourceTree = "<group>"; };
-		5AB3F1DE90DA46CECB5292E8329118E4 /* Storage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		5316D89DC6153CB150934600E4E4185E /* PurchaseController+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "PurchaseController+Extensions.swift"; sourceTree = "<group>"; };
+		536FBF54EF60FC2935A79D394BA0C49E /* DirectReceiptFetcher.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DirectReceiptFetcher.m; sourceTree = "<group>"; };
 		612852DD7735858D473C963F37F08609 /* PurchaseController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PurchaseController.framework; path = PurchaseController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		63B4C86F9D0E26B45684A40D3600944A /* SubscriptionValidationController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SubscriptionValidationController.swift; sourceTree = "<group>"; };
-		64164D50A6574E4F45C9715E0AD2E3E1 /* PurchaseController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
 		65386D896C3ECB21DB2487CF7A890107 /* Pods-PurchaseController_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PurchaseController_Example-dummy.m"; sourceTree = "<group>"; };
+		694C663B489BCB961CC13761E754B51B /* PurchaseController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
 		6A07EFA75F3542F79ECB9741F13B2063 /* Pods_PurchaseController_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_PurchaseController_Example.framework; path = "Pods-PurchaseController_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BB68CA82B0308FC67F63CA41B111849 /* Pods-PurchaseController_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PurchaseController_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		6F1540A23446367EB43CEEFA32F165ED /* GRKOpenSSLFramework.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GRKOpenSSLFramework.xcconfig; sourceTree = "<group>"; };
-		7440FA74DE881FC820DAAFEA6F7E6F6E /* InAppPurchase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InAppPurchase.swift; sourceTree = "<group>"; };
+		7127D2CB65F416995C9FE5A8D04A6631 /* ReceiptFetcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptFetcher.swift; sourceTree = "<group>"; };
+		7A9DC5FD9E853E584B95AE51EBC011B5 /* InAppPurchase.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InAppPurchase.swift; sourceTree = "<group>"; };
 		7ABA3DA48CB61C2E9457631909CB8E1A /* PurchaseController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PurchaseController-prefix.pch"; sourceTree = "<group>"; };
+		7F5E3B78671E0A31A3C16776CC13375B /* ReceiptValidatorProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptValidatorProtocol.swift; sourceTree = "<group>"; };
 		81B8D5A5CE64AB0A3F534E94F6FE3911 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
-		85582C5D595671974A8C055321E70086 /* PurchaseController+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "PurchaseController+Extensions.swift"; sourceTree = "<group>"; };
+		820EB7E1D072DD75D47B33C9BD26982C /* LocalReceiptValidatorImplementation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LocalReceiptValidatorImplementation.swift; sourceTree = "<group>"; };
 		8B5DACBEA1876001F389351CA18848F9 /* Pods-PurchaseController_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-PurchaseController_Example.modulemap"; sourceTree = "<group>"; };
 		8C9A0D90CCBF4CC96041CF479BB2F9EA /* PurchaseController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PurchaseController-dummy.m"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E7DC09565832264E1D3BA13F2FB37E1 /* Pods-PurchaseController_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PurchaseController_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		A6B357B475AF39B3E83E60FBB38C0F19 /* PurchaseControllerImpl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PurchaseControllerImpl.swift; sourceTree = "<group>"; };
-		A73822BA5F55C00247F40C0F561D2FDB /* PurchaseErrorHandling.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PurchaseErrorHandling.swift; sourceTree = "<group>"; };
-		A8EE73739C22B597E2995D5F443AEA72 /* ReceiptValidationResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptValidationResponse.swift; sourceTree = "<group>"; };
 		ACA9C5BD955C53BA4D813F41BBB03C32 /* PurchaseController.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = PurchaseController.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		AD54FC6341FAC83608AC7BA152A24981 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		B05CE49BD66A3946234F7F3239CE400F /* Pods-PurchaseController_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PurchaseController_Example-frameworks.sh"; sourceTree = "<group>"; };
+		B14E80870CD839C2F615C5B8D45ADFC0 /* DataFormatsEncodable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DataFormatsEncodable.swift; sourceTree = "<group>"; };
+		B30601D37AEB5F8C84A99D0F30B6885B /* PurchaseErrorHandling.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PurchaseErrorHandling.swift; sourceTree = "<group>"; };
 		B383D8EC105A317984B82D43859E5F30 /* Pods-PurchaseController_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-PurchaseController_Tests.modulemap"; sourceTree = "<group>"; };
+		B9718600A36B2C613293798799E8D17E /* ReceiptFields.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptFields.swift; sourceTree = "<group>"; };
 		BAED30096FC4C8AE66BFC021396DEE6D /* PurchaseController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PurchaseController.xcconfig; sourceTree = "<group>"; };
-		C0EF23D3967B6C0DEA599D5E738B6C49 /* ProductsInfoController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProductsInfoController.swift; sourceTree = "<group>"; };
+		C619A0DE76B2210680ED072561449959 /* AppleReceiptValidatorImplementation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppleReceiptValidatorImplementation.swift; sourceTree = "<group>"; };
 		CBDA9D0752A0929D614CF5067EB2B702 /* Pods-PurchaseController_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PurchaseController_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		D0FE9B8DE66AAB2702106C32ECA5AB1C /* Pods-PurchaseController_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PurchaseController_Tests-Info.plist"; sourceTree = "<group>"; };
-		D27879B87BD369A622330B20BF4BFA49 /* ReceiptFetcher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptFetcher.swift; sourceTree = "<group>"; };
 		D2FB34C9DA28EF02D52F25E634292C85 /* Pods-PurchaseController_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PurchaseController_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		D53392285556A5173AD70832282E1DE4 /* Pods-PurchaseController_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PurchaseController_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D76C81EE4DA5FAF3EFCD38783050AE1E /* Pods-PurchaseController_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PurchaseController_Tests-dummy.m"; sourceTree = "<group>"; };
 		D8462E92EAD8C41B607509601415BBE6 /* PurchaseController-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PurchaseController-umbrella.h"; sourceTree = "<group>"; };
-		D8A7118EBAA9524E2F69EDBACA2A8AF9 /* ReadableDebugStringProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReadableDebugStringProtocol.swift; sourceTree = "<group>"; };
-		DB7FADCA5E9F99E31EB9C35733D3F4EB /* AppleReceiptValidatorImplementation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppleReceiptValidatorImplementation.swift; sourceTree = "<group>"; };
-		ECFF698B17DBA2DE876C34400DB35279 /* DataFormatsEncodable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DataFormatsEncodable.swift; sourceTree = "<group>"; };
+		E90E4DD6E7A9F3371CB8A0AA4D3FF1FF /* PendingRenewalInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PendingRenewalInfo.swift; sourceTree = "<group>"; };
 		F3DDBE4DF7F01827FB2ABE825F0B9565 /* PurchaseController-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "PurchaseController-Info.plist"; sourceTree = "<group>"; };
-		F4647FD477EE41954184F8E146CB7217 /* PurchasePersistance.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PurchasePersistance.swift; sourceTree = "<group>"; };
 		F5BF2648626FF775B3AB33D880FDBD5C /* Pods-PurchaseController_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PurchaseController_Example-umbrella.h"; sourceTree = "<group>"; };
-		F6AEDC37091B066724AA5336512C0310 /* ReceiptFields.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ReceiptFields.swift; sourceTree = "<group>"; };
 		F78E0AA7315270C24C2A07E066529A5F /* PurchaseController-Bridging-Header.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PurchaseController-Bridging-Header.h"; sourceTree = "<group>"; };
+		F9B7D2156CD44B37A8B461BE0E022A42 /* PaymentQueueController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PaymentQueueController.swift; sourceTree = "<group>"; };
+		FA2872CEBCC3BD00F8A4220D1A122E9E /* PurchasePersistance.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PurchasePersistance.swift; sourceTree = "<group>"; };
+		FA4B2A4F7197D659C1CF62845D3B5938 /* ProductsInfoController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProductsInfoController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		74E7972AC19407536C13AB1E6828F07C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E2371FC7266755508009A5E23EA4FD6A /* Foundation.framework in Frameworks */,
-				5A907E1CDAA878E201916C405E9B2B18 /* StoreKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A843CB089FCA04D41CA20421C6BF9646 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				A53BA6FFCCCABFF2CADA958A8416BB99 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B13AFCAF7492499F7910CF04E6D71AA5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1EF4C4712A9811F42E5DA7E21A4982BD /* Foundation.framework in Frameworks */,
+				29B7DAF4CA89EA7974172B0FE88F3728 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,26 +176,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0469E08786A5F945B499AE9830D44E98 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				85582C5D595671974A8C055321E70086 /* PurchaseController+Extensions.swift */,
-			);
-			name = Extensions;
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		0EB43B54FCBA489AE7F4FC8C384EC74D /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				ECFF698B17DBA2DE876C34400DB35279 /* DataFormatsEncodable.swift */,
-				D8A7118EBAA9524E2F69EDBACA2A8AF9 /* ReadableDebugStringProtocol.swift */,
-				1F2B0ABEB3F4B21B8C4BAF9036EDDE40 /* ReceiptValidatorProtocol.swift */,
-			);
-			name = Protocols;
-			path = Protocols;
-			sourceTree = "<group>";
-		};
 		1628BF05B4CAFDCC3549A101F5A10A17 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,6 +235,19 @@
 			path = "Target Support Files/Pods-PurchaseController_Example";
 			sourceTree = "<group>";
 		};
+		3D946C5ED6D0B40B1050BF8F331F190D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7A9DC5FD9E853E584B95AE51EBC011B5 /* InAppPurchase.swift */,
+				E90E4DD6E7A9F3371CB8A0AA4D3FF1FF /* PendingRenewalInfo.swift */,
+				314878C53AD1ADBA6AFD32EC22B5B09C /* Receipt.swift */,
+				B9718600A36B2C613293798799E8D17E /* ReceiptFields.swift */,
+				156AD0340233172E34E5F0EA12CF9C0F /* ReceiptValidationResponse.swift */,
+			);
+			name = Models;
+			path = Models;
+			sourceTree = "<group>";
+		};
 		4AA69E1BC49203D49AB06154110785E6 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -270,6 +267,24 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		614CD72D622E604DBB75800218626A2C /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F9B7D2156CD44B37A8B461BE0E022A42 /* PaymentQueueController.swift */,
+				FA4B2A4F7197D659C1CF62845D3B5938 /* ProductsInfoController.swift */,
+				694C663B489BCB961CC13761E754B51B /* PurchaseController.swift */,
+				7127D2CB65F416995C9FE5A8D04A6631 /* ReceiptFetcher.swift */,
+				19034CAE9D3F74E59EF2CA863DD635A5 /* SubscriptionValidationController.swift */,
+				C0FE94DDD83AB211C6E76FEA7A6E20CA /* Extensions */,
+				7DD0E983EB6794609A2237368E979C93 /* Helpers */,
+				3D946C5ED6D0B40B1050BF8F331F190D /* Models */,
+				B2301648C2FB221F3957334764E02743 /* Protocols */,
+				B2B5E1C4AF03BF509986E256B3BED65D /* ReceiptValidation */,
+			);
+			name = Classes;
+			path = PurchaseController/Classes;
+			sourceTree = "<group>";
+		};
 		6CBD0B488799CE3D811662FDC55DAD22 /* GRKOpenSSLFramework */ = {
 			isa = PBXGroup;
 			children = (
@@ -280,11 +295,37 @@
 			path = GRKOpenSSLFramework;
 			sourceTree = "<group>";
 		};
-		7A739A4CEC3E4F0B601FF81EC225103A /* ReceiptValidation */ = {
+		7DD0E983EB6794609A2237368E979C93 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				DB7FADCA5E9F99E31EB9C35733D3F4EB /* AppleReceiptValidatorImplementation.swift */,
-				2644EC613C49EE874765FE187B2D68C4 /* LocalReceiptValidatorImplementation.swift */,
+				2155F625886F905C2C1577836E04C440 /* DelegatesContainer.swift */,
+				49D44A0742CB4C18E4D16BA957E24F92 /* DirectReceiptFetcher.h */,
+				536FBF54EF60FC2935A79D394BA0C49E /* DirectReceiptFetcher.m */,
+				29E841CBA7E99D5A15626E56A5390EB1 /* PurchaseControllerImpl.swift */,
+				B30601D37AEB5F8C84A99D0F30B6885B /* PurchaseErrorHandling.swift */,
+				FA2872CEBCC3BD00F8A4220D1A122E9E /* PurchasePersistance.swift */,
+				3C94CC0C2581BB973940A25FFE27CCB4 /* Storage.swift */,
+			);
+			name = Helpers;
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		B2301648C2FB221F3957334764E02743 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				B14E80870CD839C2F615C5B8D45ADFC0 /* DataFormatsEncodable.swift */,
+				11388833C70C9FAD2F5F96BFD998FAEA /* ReadableDebugStringProtocol.swift */,
+				7F5E3B78671E0A31A3C16776CC13375B /* ReceiptValidatorProtocol.swift */,
+			);
+			name = Protocols;
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		B2B5E1C4AF03BF509986E256B3BED65D /* ReceiptValidation */ = {
+			isa = PBXGroup;
+			children = (
+				C619A0DE76B2210680ED072561449959 /* AppleReceiptValidatorImplementation.swift */,
+				820EB7E1D072DD75D47B33C9BD26982C /* LocalReceiptValidatorImplementation.swift */,
 			);
 			name = ReceiptValidation;
 			path = ReceiptValidation;
@@ -298,10 +339,19 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		C0FE94DDD83AB211C6E76FEA7A6E20CA /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5316D89DC6153CB150934600E4E4185E /* PurchaseController+Extensions.swift */,
+			);
+			name = Extensions;
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		C928CDD23BEABECAC03FF6A7F72F0627 /* PurchaseController */ = {
 			isa = PBXGroup;
 			children = (
-				D4C009FC8BD140B49AC4A3948FFE0BC7 /* Classes */,
+				614CD72D622E604DBB75800218626A2C /* Classes */,
 				DB262C4019E5CCF90732ADE7A5B2C392 /* Headers */,
 				D7B2EA2E8E99138C86FF1C769CFC68D6 /* Pod */,
 				F8FE28D1C4A2D430CDC94E215E76BF95 /* Support Files */,
@@ -328,37 +378,6 @@
 				54160C331C277E2172CE011C29FB4529 /* Products */,
 				3117CD4DFBC210B0A0DDC02625BDBA50 /* Targets Support Files */,
 			);
-			sourceTree = "<group>";
-		};
-		D04E38C072A5A7B51F1B7334D8F1114C /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				25CB24B9175AB68178BF559FAC86A11F /* DelegatesContainer.swift */,
-				A6B357B475AF39B3E83E60FBB38C0F19 /* PurchaseControllerImpl.swift */,
-				A73822BA5F55C00247F40C0F561D2FDB /* PurchaseErrorHandling.swift */,
-				F4647FD477EE41954184F8E146CB7217 /* PurchasePersistance.swift */,
-				5AB3F1DE90DA46CECB5292E8329118E4 /* Storage.swift */,
-			);
-			name = Helpers;
-			path = Helpers;
-			sourceTree = "<group>";
-		};
-		D4C009FC8BD140B49AC4A3948FFE0BC7 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				38C951469DB7B936653753BD6F36D5F5 /* PaymentQueueController.swift */,
-				C0EF23D3967B6C0DEA599D5E738B6C49 /* ProductsInfoController.swift */,
-				64164D50A6574E4F45C9715E0AD2E3E1 /* PurchaseController.swift */,
-				D27879B87BD369A622330B20BF4BFA49 /* ReceiptFetcher.swift */,
-				63B4C86F9D0E26B45684A40D3600944A /* SubscriptionValidationController.swift */,
-				0469E08786A5F945B499AE9830D44E98 /* Extensions */,
-				D04E38C072A5A7B51F1B7334D8F1114C /* Helpers */,
-				E186D376A68B0796E70D04A3C116A846 /* Models */,
-				0EB43B54FCBA489AE7F4FC8C384EC74D /* Protocols */,
-				7A739A4CEC3E4F0B601FF81EC225103A /* ReceiptValidation */,
-			);
-			name = Classes;
-			path = PurchaseController/Classes;
 			sourceTree = "<group>";
 		};
 		D676732B0738A0311501F57DBFBFE26F /* Frameworks */ = {
@@ -388,19 +407,6 @@
 			path = PurchaseController/Headers;
 			sourceTree = "<group>";
 		};
-		E186D376A68B0796E70D04A3C116A846 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				7440FA74DE881FC820DAAFEA6F7E6F6E /* InAppPurchase.swift */,
-				45FA1C1E911EAB6063AB91FCCC64B050 /* PendingRenewalInfo.swift */,
-				46E964BA644C847D488102B6329DBC02 /* Receipt.swift */,
-				F6AEDC37091B066724AA5336512C0310 /* ReceiptFields.swift */,
-				A8EE73739C22B597E2995D5F443AEA72 /* ReceiptValidationResponse.swift */,
-			);
-			name = Models;
-			path = Models;
-			sourceTree = "<group>";
-		};
 		F8FE28D1C4A2D430CDC94E215E76BF95 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -426,6 +432,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		606D4BDAF2D0E3F76C4BEB1EFE52454B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E66D6F92B481E661CA05FD0B68F46A2 /* DirectReceiptFetcher.h in Headers */,
+				B6F806AA7D0AF7A0418D83F5BEC2F709 /* PurchaseController-Bridging-Header.h in Headers */,
+				4BCD2728AFD8B2757B5A574A1AB00244 /* PurchaseController-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D7D01B2347B1E0FA3979EA7DBCFC3775 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -434,31 +450,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E6AE5C87D3EED4060C357AA46C374F38 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				864C20CF984D1AC6936CE17BE3C70677 /* PurchaseController-Bridging-Header.h in Headers */,
-				2D4700E0B30218E423B8B584C5AB98C5 /* PurchaseController-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		3388B8BFD8E6D843A864A0BAA57FF047 /* PurchaseController */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3267EEBB3890895BB8E5EA01AA58B99C /* Build configuration list for PBXNativeTarget "PurchaseController" */;
+			buildConfigurationList = 2FE862AF5B058A8E2F4092E2211D943E /* Build configuration list for PBXNativeTarget "PurchaseController" */;
 			buildPhases = (
-				E6AE5C87D3EED4060C357AA46C374F38 /* Headers */,
-				E776EB9C4E2B3D240F2F26EEB6B265FF /* Sources */,
-				74E7972AC19407536C13AB1E6828F07C /* Frameworks */,
-				32FD4D8AA48375AF3A1F187DA8BF1126 /* Resources */,
+				606D4BDAF2D0E3F76C4BEB1EFE52454B /* Headers */,
+				5B5EBDAF6109F607FFC12677D5A55AFE /* Sources */,
+				B13AFCAF7492499F7910CF04E6D71AA5 /* Frameworks */,
+				8D59F6281A0E8166BAE1FD4A12BB985A /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				02D10EEED70DA6C312CAE4B18CD7CF24 /* PBXTargetDependency */,
+				20F89ED963041BE04A702E312F69FEB1 /* PBXTargetDependency */,
 			);
 			name = PurchaseController;
 			productName = PurchaseController;
@@ -534,7 +541,7 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		32FD4D8AA48375AF3A1F187DA8BF1126 /* Resources */ = {
+		8D59F6281A0E8166BAE1FD4A12BB985A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -566,6 +573,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5B5EBDAF6109F607FFC12677D5A55AFE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF13C21DED4CEDB0536A3177897F77F4 /* AppleReceiptValidatorImplementation.swift in Sources */,
+				B991140662FC3D0FEBBB9D0D473C8E05 /* DataFormatsEncodable.swift in Sources */,
+				5570E527226AF755F2E30BD18DF589BA /* DelegatesContainer.swift in Sources */,
+				D2CEBB8A03C195CD48D1CBBAAA5C115D /* DirectReceiptFetcher.m in Sources */,
+				CE6B6C4E2968A6E5EDCE4E42640C659F /* InAppPurchase.swift in Sources */,
+				DA41E3832B4F3E359291E295019DB4FE /* LocalReceiptValidatorImplementation.swift in Sources */,
+				8158F9DD38D262587F5A478DD7A6B89A /* PaymentQueueController.swift in Sources */,
+				C1FE048C8204A68F5EFE72279AAEF652 /* PendingRenewalInfo.swift in Sources */,
+				70FF1CA47533FDBE578235B3CB5A2108 /* ProductsInfoController.swift in Sources */,
+				611366719ED574E0A0FB05393EA5D16D /* PurchaseController+Extensions.swift in Sources */,
+				9E9AC429D6417A80D6238ACE5D8C4D40 /* PurchaseController-dummy.m in Sources */,
+				1D6581C9EC5BE9E38384D357D1FA378C /* PurchaseController.swift in Sources */,
+				23790A2DBA56803576867B0BDBEFF62C /* PurchaseControllerImpl.swift in Sources */,
+				82130AAB93F37A75FE0164320472F285 /* PurchaseErrorHandling.swift in Sources */,
+				80BFEC1AD9E8811B4C2AC03AB4827596 /* PurchasePersistance.swift in Sources */,
+				CABD71D7C3A78535826B2FDC2ABFB01B /* ReadableDebugStringProtocol.swift in Sources */,
+				28FFA6C635474415213746ACAD1EF8BD /* Receipt.swift in Sources */,
+				3D629F723227F369FB6EC4A8A1718C3A /* ReceiptFetcher.swift in Sources */,
+				757E01C55EEFBFFD169555CD604DBB88 /* ReceiptFields.swift in Sources */,
+				18AB9602D9FC94707F2A91DF07F331DE /* ReceiptValidationResponse.swift in Sources */,
+				62E8D463DE902E6536B4994D0F47F0F7 /* ReceiptValidatorProtocol.swift in Sources */,
+				98B85ECF6F69A5D381F7031BCEB73668 /* Storage.swift in Sources */,
+				0A273D784B659D441AA5E3F0B991062A /* SubscriptionValidationController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E386E5BD5CCC34DF8DC7D67B31FB240B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -574,43 +611,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E776EB9C4E2B3D240F2F26EEB6B265FF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3EE143BE3AA1B4B70599C0AAAC363C05 /* AppleReceiptValidatorImplementation.swift in Sources */,
-				04159DBEA8708C428F44A13C0F1EDAD5 /* DataFormatsEncodable.swift in Sources */,
-				3B5CC7A6E5FAE94E10592E8FC089D546 /* DelegatesContainer.swift in Sources */,
-				FE1DEBB84C60833E99A96801D9A10D8B /* InAppPurchase.swift in Sources */,
-				354EE61729732DB162475C3CEF184076 /* LocalReceiptValidatorImplementation.swift in Sources */,
-				ED0D0273BE633799A4F841973F84BD60 /* PaymentQueueController.swift in Sources */,
-				A293F2AC6D516E25C3BB058CA433F7FF /* PendingRenewalInfo.swift in Sources */,
-				F52373998A6D1AEE7356D4E33120E416 /* ProductsInfoController.swift in Sources */,
-				94591434D48FC183EAAF356573D9F6F6 /* PurchaseController+Extensions.swift in Sources */,
-				401262BD8D444B0DBAFE608FB8F219CE /* PurchaseController-dummy.m in Sources */,
-				AE0B1D97DA776A707F22B0DE2CA1EC4F /* PurchaseController.swift in Sources */,
-				65559283E829DC64037436660EB8209C /* PurchaseControllerImpl.swift in Sources */,
-				EF0AD76BF7513041845CAE1E9915ACD2 /* PurchaseErrorHandling.swift in Sources */,
-				3F617850CDF8CB83A956B192962D6700 /* PurchasePersistance.swift in Sources */,
-				CB993913984D29AE292C644DDFB6D5C1 /* ReadableDebugStringProtocol.swift in Sources */,
-				0A8A83C62C58CF7C6ADA7BDDFBEC7491 /* Receipt.swift in Sources */,
-				674479B6D980C810D2DE360C64B16AB7 /* ReceiptFetcher.swift in Sources */,
-				5877A46229B16A8652B16115CB2E6DB1 /* ReceiptFields.swift in Sources */,
-				D078D88F175EF297398DDDF38F5B4E13 /* ReceiptValidationResponse.swift in Sources */,
-				8261553C5778784110C11CA9B4971BEF /* ReceiptValidatorProtocol.swift in Sources */,
-				CA7156C1C289DCA9A1017FD81521FE8D /* Storage.swift in Sources */,
-				374142A89D7BCA96F3D7602A7384E179 /* SubscriptionValidationController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		02D10EEED70DA6C312CAE4B18CD7CF24 /* PBXTargetDependency */ = {
+		20F89ED963041BE04A702E312F69FEB1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = GRKOpenSSLFramework;
 			target = 06D25A4FF2ED1E3CE5A9A0822BE1F300 /* GRKOpenSSLFramework */;
-			targetProxy = A3053EA2D541D0B6437967356A551CE0 /* PBXContainerItemProxy */;
+			targetProxy = FB8C4AF29A530574A6DF9AE81FD75F01 /* PBXContainerItemProxy */;
 		};
 		3B6F26D62786D1810BB62D32FE700E3B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -815,6 +823,39 @@
 			};
 			name = Release;
 		};
+		A6BDF0B30FC5192ABB31380D622DE9FF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BAED30096FC4C8AE66BFC021396DEE6D /* PurchaseController.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/PurchaseController/PurchaseController-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/PurchaseController/PurchaseController-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/PurchaseController/PurchaseController.modulemap";
+				PRODUCT_MODULE_NAME = PurchaseController;
+				PRODUCT_NAME = PurchaseController;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		AB1C8CDA3711FAEA2AD4683B438B6F88 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6F1540A23446367EB43CEEFA32F165ED /* GRKOpenSSLFramework.xcconfig */;
@@ -888,7 +929,7 @@
 			};
 			name = Release;
 		};
-		D25DA053CCD43080A38F8A69D4D626AD /* Debug */ = {
+		ECD75ED751FD14A6ACF92FB69D44CEEB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BAED30096FC4C8AE66BFC021396DEE6D /* PurchaseController.xcconfig */;
 			buildSettings = {
@@ -954,47 +995,14 @@
 			};
 			name = Debug;
 		};
-		FCC067A72D93CD6D4711ED89DD4E3463 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = BAED30096FC4C8AE66BFC021396DEE6D /* PurchaseController.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/PurchaseController/PurchaseController-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/PurchaseController/PurchaseController-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/PurchaseController/PurchaseController.modulemap";
-				PRODUCT_MODULE_NAME = PurchaseController;
-				PRODUCT_NAME = PurchaseController;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3267EEBB3890895BB8E5EA01AA58B99C /* Build configuration list for PBXNativeTarget "PurchaseController" */ = {
+		2FE862AF5B058A8E2F4092E2211D943E /* Build configuration list for PBXNativeTarget "PurchaseController" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D25DA053CCD43080A38F8A69D4D626AD /* Debug */,
-				FCC067A72D93CD6D4711ED89DD4E3463 /* Release */,
+				ECD75ED751FD14A6ACF92FB69D44CEEB /* Debug */,
+				A6BDF0B30FC5192ABB31380D622DE9FF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

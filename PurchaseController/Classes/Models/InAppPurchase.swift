@@ -283,7 +283,24 @@ public extension InAppPurchase {
                              webOrderLineItemId: nil)
         
     }
-
+    
+    /// Function for retrieving transactionReceipt
+    ///
+    /// - NOTE: deprecated, preffer not to use it
+    /// - Returns: transactionReceipt data
+    func directReceipt() -> Data? {
+        guard let transaction = PaymentQueueController.transaction(of: self) else { return nil }
+        return DirectReceiptFetcher.directReceipt(of: transaction)
+    }
+    
+    /// Function for retrieving transactionReceipt as .utf8 string
+    ///
+    /// - NOTE: deprecated, preffer not to use it
+    /// - Returns: transactionReceipt as string
+    func directReceiptString() -> String? {
+        guard let data = self.directReceipt() else { return nil }
+        return String(data: data, encoding: .utf8)
+    }
 }
 
 extension InAppPurchase: Hashable {}
