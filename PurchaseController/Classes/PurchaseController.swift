@@ -40,7 +40,7 @@ public enum PurchaseActionResult {
     case error(Error)
     case subscriptionValidationSuccess([InAppPurchase])
     case retrieveSuccess
-    case retrieveSuccessInvalidProducts
+    case retrieveSuccessInvalidProducts([String])
     case purchaseSuccess([InAppPurchase])
     case restoreSuccess
     case restoreRequested
