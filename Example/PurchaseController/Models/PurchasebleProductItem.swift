@@ -12,6 +12,7 @@ enum PurchasebleProductItem: String, CaseIterable {
     case nonConsumable = "dashdevs.PurchaseController.NonConsumable"
     case autoRenewSubscription = "dashdevs.PurchaseController.Autorenew"
     case nonRenewSubscription = "dashdevs.PurchaseController.NonRenewSubscription"
+    case invalid  = "dashdevs.Invalid"
     
     static func allAsRaw() -> Set<String> {
         let values = PurchasebleProductItem.allCases.map { $0.rawValue }

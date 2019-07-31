@@ -75,7 +75,7 @@ final class PurchaseControllerImpl: PaymentQueueObserver, ProductsInfoObserver, 
         self?.storage.persist(products: retrievedProductsInfo.products)
         let hasInvalidProducts = !retrievedProductsInfo.invalidProductIdentifiers.isEmpty
         self?.purchaseActionState = hasInvalidProducts ?
-            .finish(PurchaseActionResult.retrieveSuccessInvalidProducts) :
+            .finish(PurchaseActionResult.retrieveSuccessInvalidProducts(retrievedProductsInfo.invalidProductIdentifiers)) :
             .finish(PurchaseActionResult.retrieveSuccess)
     }
     

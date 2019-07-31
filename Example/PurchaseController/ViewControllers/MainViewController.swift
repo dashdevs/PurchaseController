@@ -38,6 +38,8 @@ extension MainViewController: PurchaseStateHandler {
             
         case ( .loading, .finish(let result)):
             switch (result) {
+            case .retrieveSuccessInvalidProducts(let invalid):
+                 print("--- Moved to state: retrieveSuccessInvalidProducts with \(invalid)")
             case .error(let error):
                 print("--- Error occured: \(error)")
             case .subscriptionValidationSuccess(let receipt):
