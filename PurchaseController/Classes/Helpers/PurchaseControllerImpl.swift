@@ -136,7 +136,7 @@ extension PurchaseControllerImpl: PurchaseControllerInterface {
                 self.purchaseActionState = .finish(PurchaseActionResult.error(PurchaseError.noLocalProduct))
                 return
         }
-        paymentQueueController?.purchase(product: product, atomically: false)
+        paymentQueueController?.purchase(product: product, atomically: atomically)
     }
     
     public func validateReceipt(using validator: ReceiptValidatorProtocol) {
