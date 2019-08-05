@@ -1,6 +1,6 @@
 PODS:
   - GRKOpenSSLFramework (1.0.2.16)
-  - PurchaseController (1.0.3):
+  - PurchaseController (1.0.5):
     - GRKOpenSSLFramework
 
 DEPENDENCIES:
@@ -16,7 +16,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   GRKOpenSSLFramework: 35944e317e6336b2944ad70b059d84db6b2d8532
-  PurchaseController: 3dc7cd825fd71e30a5d6cf2ea6b36d3dcd2df6d9
+  PurchaseController: 2fd8ddfba8d13ff6513765b0d3a977e49a1577d4
 
 PODFILE CHECKSUM: 44cd69fe93e4f6ece8651a2136da8ef9b44b6581
 
