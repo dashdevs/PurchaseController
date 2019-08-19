@@ -191,7 +191,7 @@ extension PurchaseController: PurchaseControllerInterface {
      * Notifies handler with .restoreFailed if any error presents
      */
     public func restore() {
-        implementation.retrieve()
+        implementation.restore()
     }
     
     /** Function used to add product to purchase queue.
