@@ -1,6 +1,5 @@
 ## Need to include in future releases (Top-down priority)
 
-* Add method that returns correct url for redirecting to Appstore subscription management UI
 * Add documentation for each method, model and enum
 * Add secure persistor (using Keychain)
 * Add unit tests
