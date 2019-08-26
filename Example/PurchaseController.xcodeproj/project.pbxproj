@@ -14,6 +14,11 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		782F16CC2313EEE100303AE9 /* 76ee1bdde6c3ad494d5304ab63a7f125.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 782F16C72313EEE000303AE9 /* 76ee1bdde6c3ad494d5304ab63a7f125.jpg */; };
+		782F16CD2313EEE100303AE9 /* 87bcb5bc45aecf1c0c0a2ec56bf677d511c0c629v2_hq.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 782F16C82313EEE100303AE9 /* 87bcb5bc45aecf1c0c0a2ec56bf677d511c0c629v2_hq.jpg */; };
+		782F16CE2313EEE100303AE9 /* 16001c75f8dc6ec906bd323f381183e8.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 782F16C92313EEE100303AE9 /* 16001c75f8dc6ec906bd323f381183e8.jpg */; };
+		782F16CF2313EEE100303AE9 /* 208.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 782F16CA2313EEE100303AE9 /* 208.jpg */; };
+		782F16D02313EEE100303AE9 /* photo_2019-08-21_19-59-00.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 782F16CB2313EEE100303AE9 /* photo_2019-08-21_19-59-00.jpg */; };
 		7832345E22BB66DF009BB27C /* AppleIncRootCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 7832345D22BB66DF009BB27C /* AppleIncRootCertificate.cer */; };
 		B699613062E88820CE292CA2 /* Pods_PurchaseController_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1751CD71229BEC8C86E45CBB /* Pods_PurchaseController_Example.framework */; };
 		E8FDD065221ED2AA004D10AD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8FDD059221ED2A9004D10AD /* MainViewController.swift */; };
@@ -48,6 +53,13 @@
 		607FACE51AFB9204008FA782 /* PurchaseController_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PurchaseController_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		782F16C12313EEB600303AE9 /* cats */ = {isa = PBXFileReference; explicitFileType = folder; includeInIndex = 0; path = cats; sourceTree = BUILT_PRODUCTS_DIR; };
+		782F16C32313EEB600303AE9 /* ContentInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ContentInfo.plist; sourceTree = "<group>"; };
+		782F16C72313EEE000303AE9 /* 76ee1bdde6c3ad494d5304ab63a7f125.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 76ee1bdde6c3ad494d5304ab63a7f125.jpg; sourceTree = "<group>"; };
+		782F16C82313EEE100303AE9 /* 87bcb5bc45aecf1c0c0a2ec56bf677d511c0c629v2_hq.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 87bcb5bc45aecf1c0c0a2ec56bf677d511c0c629v2_hq.jpg; sourceTree = "<group>"; };
+		782F16C92313EEE100303AE9 /* 16001c75f8dc6ec906bd323f381183e8.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 16001c75f8dc6ec906bd323f381183e8.jpg; sourceTree = "<group>"; };
+		782F16CA2313EEE100303AE9 /* 208.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 208.jpg; sourceTree = "<group>"; };
+		782F16CB2313EEE100303AE9 /* photo_2019-08-21_19-59-00.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "photo_2019-08-21_19-59-00.jpg"; sourceTree = "<group>"; };
 		7832345D22BB66DF009BB27C /* AppleIncRootCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = AppleIncRootCertificate.cer; sourceTree = "<group>"; };
 		86AA62E680AA09945D5716B4 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		98A4F3AF0C3AB0A23F21AC0D /* Pods-PurchaseController_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PurchaseController_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PurchaseController_Tests/Pods-PurchaseController_Tests.release.xcconfig"; sourceTree = "<group>"; };
@@ -111,6 +123,7 @@
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example */,
 				607FACE81AFB9204008FA782 /* Tests */,
+				782F16C22313EEB600303AE9 /* cats */,
 				607FACD11AFB9204008FA782 /* Products */,
 				48FCE2E401DE944A519BA3D0 /* Pods */,
 				700C21BFAC9D352216935FE4 /* Frameworks */,
@@ -122,6 +135,7 @@
 			children = (
 				607FACD01AFB9204008FA782 /* PurchaseController_Example.app */,
 				607FACE51AFB9204008FA782 /* PurchaseController_Tests.xctest */,
+				782F16C12313EEB600303AE9 /* cats */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -186,6 +200,19 @@
 				CDDC0AC1089BABDADE951262 /* Pods_PurchaseController_Tests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		782F16C22313EEB600303AE9 /* cats */ = {
+			isa = PBXGroup;
+			children = (
+				782F16C72313EEE000303AE9 /* 76ee1bdde6c3ad494d5304ab63a7f125.jpg */,
+				782F16C82313EEE100303AE9 /* 87bcb5bc45aecf1c0c0a2ec56bf677d511c0c629v2_hq.jpg */,
+				782F16CA2313EEE100303AE9 /* 208.jpg */,
+				782F16C92313EEE100303AE9 /* 16001c75f8dc6ec906bd323f381183e8.jpg */,
+				782F16CB2313EEE100303AE9 /* photo_2019-08-21_19-59-00.jpg */,
+				782F16C32313EEB600303AE9 /* ContentInfo.plist */,
+			);
+			path = cats;
 			sourceTree = "<group>";
 		};
 		E8FDD058221ED2A9004D10AD /* ViewControllers */ = {
@@ -264,6 +291,21 @@
 			productReference = 607FACE51AFB9204008FA782 /* PurchaseController_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		782F16C02313EEB600303AE9 /* cats */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 782F16C62313EEB600303AE9 /* Build configuration list for PBXNativeTarget "cats" */;
+			buildPhases = (
+				782F16BF2313EEB600303AE9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = cats;
+			productName = cats;
+			productReference = 782F16C12313EEB600303AE9 /* cats */;
+			productType = "com.apple.product-type.in-app-purchase-content";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -285,6 +327,11 @@
 						LastSwiftMigration = 0900;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
+					782F16C02313EEB600303AE9 = {
+						CreatedOnToolsVersion = 10.3;
+						DevelopmentTeam = 38NJJC3R8Y;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "PurchaseController" */;
@@ -303,6 +350,7 @@
 			targets = (
 				607FACCF1AFB9204008FA782 /* PurchaseController_Example */,
 				607FACE41AFB9204008FA782 /* PurchaseController_Tests */,
+				782F16C02313EEB600303AE9 /* cats */,
 			);
 		};
 /* End PBXProject section */
@@ -326,6 +374,18 @@
 			files = (
 				2854A6F022930912009D3AA5 /* receipt.json in Resources */,
 				2854A6EF22930906009D3AA5 /* receiptJson.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		782F16BF2313EEB600303AE9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				782F16CF2313EEE100303AE9 /* 208.jpg in Resources */,
+				782F16D02313EEE100303AE9 /* photo_2019-08-21_19-59-00.jpg in Resources */,
+				782F16CC2313EEE100303AE9 /* 76ee1bdde6c3ad494d5304ab63a7f125.jpg in Resources */,
+				782F16CD2313EEE100303AE9 /* 87bcb5bc45aecf1c0c0a2ec56bf677d511c0c629v2_hq.jpg in Resources */,
+				782F16CE2313EEE100303AE9 /* 16001c75f8dc6ec906bd323f381183e8.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -629,6 +689,48 @@
 			};
 			name = Release;
 		};
+		782F16C42313EEB600303AE9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 38NJJC3R8Y;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = cats/ContentInfo.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/InAppPurchaseContent";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = "";
+			};
+			name = Debug;
+		};
+		782F16C52313EEB600303AE9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 38NJJC3R8Y;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = cats/ContentInfo.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/InAppPurchaseContent";
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = "";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -655,6 +757,15 @@
 			buildConfigurations = (
 				607FACF31AFB9204008FA782 /* Debug */,
 				607FACF41AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		782F16C62313EEB600303AE9 /* Build configuration list for PBXNativeTarget "cats" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				782F16C42313EEB600303AE9 /* Debug */,
+				782F16C52313EEB600303AE9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
