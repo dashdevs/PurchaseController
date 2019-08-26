@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 `PurchaseController` adheres to [Semantic Versioning](https://semver.org/).
 
 #### 1.x Releases
-- `1.0.x` Releases - [1.0.0](#100) | [1.0.1](#101) | [1.0.2](#102) | [1.0.3](#103)
+- `1.0.x` Releases - [1.0.0](#100) | [1.0.1](#101) | [1.0.2](#102) | [1.0.3](#103) | [1.0.4](#104) | [1.0.5](#105) | [1.0.6](#106)
 
 #### 0.x Releases
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041) | [0.4.2](#042) | [0.4.3](#043) | [0.4.4](#044) | [0.4.5](#045)
@@ -12,6 +12,33 @@ All notable changes to this project will be documented in this file.
 - `0.1.x` Releases - [0.1.0](#010)
 
 ---
+## [1.0.6](https://github.com/dashdevs/PurchaseController/releases/tag/1.0.6)
+Released on 2019-08-19.
+
+#### Updated
+- Podspec file.
+    - Updated by  [Vlad Arsenyuk](https://github.com/vladarsenyuk) in commit [`8513194`](https://github.com/dashdevs/PurchaseController/commit/45c0bf068fda0337d318481e0fe75f31f8513194).
+#### Updated
+- Fixed product restore implementation.
+    - Updated by  [Vlad Arsenyuk](https://github.com/vladarsenyuk) in commit [`9b7537b`](https://github.com/dashdevs/PurchaseController/commit/aeba4d4fce1d8a60fb0e4ed54936bc8ce9b7537b).
+
+## [1.0.5](https://github.com/dashdevs/PurchaseController/releases/tag/1.0.5)
+Released on 2019-08-05.
+
+#### Updated
+- Fixed 'atomic' purchase flag.
+    - Updated by [Igor Kulik](https://github.com/igor-kulik) in commit [`2050086`](https://github.com/dashdevs/PurchaseController/commit/67b5e43b675d0152f399741f15174257f2050086).
+
+## [1.0.4](https://github.com/dashdevs/PurchaseController/releases/tag/1.0.4)
+Released on 2019-07-31.
+
+#### Updated
+- Podspec file.
+    - Updated by [Valeriy Jefimov](https://github.com/JefimovValeriy) in commit [`c966f2c`](https://github.com/dashdevs/PurchaseController/commit/b2ec8139e30489e79da1df3e8596a7023c966f2c).
+
+#### Added
+- Invalid products ids to PurchaseActionResult.retrieveSuccessInvalidProduct
+    - Added by [Valeriy Jefimov](https://github.com/JefimovValeriy) in commit [`2e22ee4`](https://github.com/dashdevs/PurchaseController/commit/c6fde7320af63a8089e0db092584138502e22ee4).
 
 ## [1.0.3](https://github.com/dashdevs/PurchaseController/releases/tag/1.0.3)
 Released on 2019-07-30.
