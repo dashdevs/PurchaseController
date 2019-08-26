@@ -112,7 +112,7 @@ public struct LocalReceiptValidatorImplementation {
     }
 }
 
-fileprivate struct ReceiptLoader {
+struct ReceiptLoader {
     let receiptUrl = Bundle.main.appStoreReceiptURL
     
     func loadReceipt() throws -> Data {

@@ -102,6 +102,7 @@ final class PurchaseControllerImpl: PaymentQueueObserver, ProductsInfoObserver, 
 }
 
 extension PurchaseControllerImpl: PurchaseControllerInterface {
+
     public func localPurschasedProducts() -> [InAppPurchase] {
         return storage.fetchPurchasedProducts()
     }
@@ -174,5 +175,9 @@ extension PurchaseControllerImpl: PurchaseControllerInterface {
     
     public func completeTransactions() {
         paymentQueueController?.completeTransactions()
+    }
+    
+    func fetchEncryptedReceipt() -> Data? {
+        return try? ReceiptLoader().loadReceipt()
     }
 }
