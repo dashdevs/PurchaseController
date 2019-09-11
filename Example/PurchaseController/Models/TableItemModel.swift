@@ -20,6 +20,7 @@ enum TableItemModel: String {
     case validateReceiptLocally
     case validateReceiptRemotely
     case validateSubscription
+    case manageSubscriptions
     
     var title: String {
         switch self {
@@ -44,6 +45,8 @@ enum TableItemModel: String {
             return "Validate receipt remotely 💴"
         case .validateSubscription:
             return "Validate subscription 💴"
+        case .manageSubscriptions:
+            return "Manage subscriptions 📋"
         }
     }
     
@@ -57,7 +60,6 @@ enum TableItemModel: String {
             return #selector(MainViewController.purchaseAutoRenewSubscription)
         case .nonRenewSubscription:
             return #selector(MainViewController.purchaseNonRenewSubscription)
-            
         case .restore:
             return #selector(MainViewController.restore)
         case .retrieve:
@@ -70,6 +72,8 @@ enum TableItemModel: String {
             return #selector(MainViewController.validateReceiptRemotely)
         case .validateSubscription:
             return #selector(MainViewController.validateSubscription)
+        case .manageSubscriptions:
+            return #selector(MainViewController.manageSubscriptions)
         }
     }
 }

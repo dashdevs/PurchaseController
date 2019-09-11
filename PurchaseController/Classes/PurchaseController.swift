@@ -82,6 +82,7 @@ public protocol PurchaseControllerInterface {
     func completeTransaction(for purchaseItem: InAppPurchase)
     func completeTransactions()
     func fetchEncryptedReceipt() -> Data?
+    func openSubscriptionSettings()
 }
 
 public class PurchaseController {
@@ -292,5 +293,9 @@ extension PurchaseController: PurchaseControllerInterface {
      */
     public func fetchEncryptedReceipt() -> Data? {
         return implementation.fetchEncryptedReceipt()
+    }
+
+    public func openSubscriptionSettings() {
+        implementation.openSubscriptionSettings()
     }
 }

@@ -19,6 +19,7 @@ import PurchaseController
     @objc func validateReceiptLocally()
     @objc func validateReceiptRemotely()
     @objc func validateSubscription()
+     @objc func manageSubscriptions()
 }
 
 class MainViewController: UITableViewController {
@@ -96,5 +97,9 @@ extension MainViewController: MainViewControllerPresentable {
     
     @objc func validateSubscription() {
         purchaseController.validateSubscription { ($0.expiresDate ?? Date()) > Date() }
+    }
+
+    @objc func manageSubscriptions() {
+        purchaseController.openSubscriptionSettings()
     }
 }
