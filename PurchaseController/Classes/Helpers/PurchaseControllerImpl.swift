@@ -102,6 +102,7 @@ final class PurchaseControllerImpl: PaymentQueueObserver, ProductsInfoObserver, 
 }
 
 extension PurchaseControllerImpl: PurchaseControllerInterface {
+
     public func localPurschasedProducts() -> [InAppPurchase] {
         return storage.fetchPurchasedProducts()
     }
@@ -174,5 +175,16 @@ extension PurchaseControllerImpl: PurchaseControllerInterface {
     
     public func completeTransactions() {
         paymentQueueController?.completeTransactions()
+    }
+    
+    func fetchEncryptedReceipt() -> Data? {
+        return try? ReceiptLoader().loadReceipt()
+    }
+
+    func openSubscriptionSettings() {
+        if let url = URL(string: "itms-apps://apps.apple.com/account/subscriptions"),
+            UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:])
+        }
     }
 }
