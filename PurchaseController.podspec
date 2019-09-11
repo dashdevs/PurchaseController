@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'PurchaseController'
-  s.version          = '1.0.6'
+  s.version          = '1.0.7'
   s.summary          = 'A helpful and convenient In-App purchases framework'
 
   s.homepage         = 'http://dashdevs.com'
