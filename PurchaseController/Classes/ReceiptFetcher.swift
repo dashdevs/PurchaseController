@@ -85,7 +85,7 @@ extension ReceiptFetcher: SKRequestDelegate {
     }
     
     func request(_ request: SKRequest, didFailWithError error: Error) {
-        observer?.onError?(PurchaseError.networkError)
+        observer?.onError?(error)
         refreshRequest = nil
     }
 }
