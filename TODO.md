@@ -7,4 +7,3 @@
 * Add unit tests
 * Add downloading content hosted with Apple
 * Find convenient way to manage environments (prod, dev, etc)
-* Implement local subscription validation
