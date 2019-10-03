@@ -214,7 +214,7 @@ private extension PaymentQueueController {
     
     private func handleFailed(transaction: SKPaymentTransaction) -> Error {
         paymentQueue.finishTransaction(transaction)
-        return transaction.error ?? PurchaseError.unknown
+        return transaction.error ?? SKError(.unknown, userInfo: [:])
     }
 }
 

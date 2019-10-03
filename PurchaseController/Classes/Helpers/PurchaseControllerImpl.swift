@@ -60,7 +60,7 @@ final class PurchaseControllerImpl: PaymentQueueObserver, ProductsInfoObserver, 
     }
     
     lazy var onError: ((Error) -> Void)? = { [weak self] error in
-        self?.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
+        self?.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseErrorIfApplies()))
     }
     
     // MARK: - ReceiptFetcherObserver
@@ -103,7 +103,7 @@ final class PurchaseControllerImpl: PaymentQueueObserver, ProductsInfoObserver, 
 
 extension PurchaseControllerImpl: PurchaseControllerInterface {
 
-    public func localPurschasedProducts() -> [InAppPurchase] {
+    public func localPurchasedProducts() -> [InAppPurchase] {
         return storage.fetchPurchasedProducts()
     }
     
@@ -148,7 +148,7 @@ extension PurchaseControllerImpl: PurchaseControllerInterface {
                 try? self.storage.set(receipt: receipt)
                 self.purchaseActionState = .finish(PurchaseActionResult.receiptValidationSuccess)
             case let .error(error):
-                self.purchaseActionState = .finish(PurchaseActionResult.error(error.purchaseError))
+                self.purchaseActionState = .finish(PurchaseActionResult.error(error))
             }
         }
     }

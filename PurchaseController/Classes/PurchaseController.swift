@@ -69,7 +69,7 @@ public protocol PurchaseControllerInterface {
          persistor: PurchasePersistor?,
          productIds: Set<String>,
          subscriptionProductIds: Set<String> )
-    func localPurschasedProducts() -> [InAppPurchase]
+    func localPurchasedProducts() -> [InAppPurchase]
     func localPurschasedProducts(by filter: InAppPurchaseFilter) throws -> [InAppPurchase]
     func localAvailableProducts() -> [SKProduct]
     func localAvailableProducts(by filter: ProductFilter) throws -> [SKProduct]
@@ -143,8 +143,8 @@ extension PurchaseController: PurchaseControllerInterface {
 
      - Returns: An array of `InAppPurchase` objects.
      */
-    public func localPurschasedProducts() -> [InAppPurchase] {
-        return self.implementation.localPurschasedProducts()
+    public func localPurchasedProducts() -> [InAppPurchase] {
+        return self.implementation.localPurchasedProducts()
     }
     
     /**
