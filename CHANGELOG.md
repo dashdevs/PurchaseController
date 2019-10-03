@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 `PurchaseController` adheres to [Semantic Versioning](https://semver.org/).
 
 #### 1.x Releases
-- `1.0.x` Releases - [1.0.0](#100) | [1.0.1](#101) | [1.0.2](#102) | [1.0.3](#103) | [1.0.4](#104) | [1.0.5](#105) | [1.0.6](#106)] | [1.0.7](#107)]
+- `1.0.x` Releases - [1.0.0](#100) | [1.0.1](#101) | [1.0.2](#102) | [1.0.3](#103) | [1.0.4](#104) | [1.0.5](#105) | [1.0.6](#106)] | [1.0.7](#107)] | [1.0.8](#108)]
 
 #### 0.x Releases
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041) | [0.4.2](#042) | [0.4.3](#043) | [0.4.4](#044) | [0.4.5](#045)
@@ -12,6 +12,15 @@ All notable changes to this project will be documented in this file.
 - `0.1.x` Releases - [0.1.0](#010)
 
 ---
+## [1.0.8](https://github.com/dashdevs/PurchaseController/releases/tag/1.0.8)
+Released on 2019-10-03.
+
+#### Updated
+- Podspec file.
+    - Updated by [Igor Kulik](https://github.com/igor-kulik) in commit [`f20bdf3`](https://github.com/dashdevs/PurchaseController/commit/f20bdf33db127deba03e58c6b7065bcfffdef5f7).
+- PurchaseController to return explicit SKError.
+    - Updated by [Igor Kulik](https://github.com/igor-kulik) in commit [`a2f9e3d`](https://github.com/dashdevs/PurchaseController/commit/a2f9e3ddc0a4e99bf813953a4ad4d2fb5dab7a82).    
+
 ## [1.0.7](https://github.com/dashdevs/PurchaseController/releases/tag/1.0.7)
 Released on 2019-09-11.
 
