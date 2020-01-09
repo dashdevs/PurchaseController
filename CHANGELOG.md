@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 `PurchaseController` adheres to [Semantic Versioning](https://semver.org/).
 
 #### 1.x Releases
-- `1.0.x` Releases - [1.0.0](#100) | [1.0.1](#101) | [1.0.2](#102) | [1.0.3](#103) | [1.0.4](#104) | [1.0.5](#105) | [1.0.6](#106)] | [1.0.7](#107)] | [1.0.8](#108)] | [1.0.9](#109)]
+- `1.0.x` Releases - [1.0.0](#100) | [1.0.1](#101) | [1.0.2](#102) | [1.0.3](#103) | [1.0.4](#104) | [1.0.5](#105) | [1.0.6](#106)] | [1.0.7](#107)] | [1.0.8](#108)] | [1.0.9](#109)] | [1.0.10](#1010)]
 
 #### 0.x Releases
 - `0.4.x` Releases - [0.4.0](#040) | [0.4.1](#041) | [0.4.2](#042) | [0.4.3](#043) | [0.4.4](#044) | [0.4.5](#045)
@@ -12,6 +12,13 @@ All notable changes to this project will be documented in this file.
 - `0.1.x` Releases - [0.1.0](#010)
 
 ---
+## [1.0.9](https://github.com/dashdevs/PurchaseController/releases/tag/1.0.10)
+Released on 2020-01-09.
+
+#### Updated
+-  Set `GRKOpenSSLFramework` dependency to the fixed stable version '1.0.2.16'.
+    - Updated by [Igor Kulik](https://github.com/igor-kulik) in commit [`e928bf6`](https://github.com/dashdevs/PurchaseController/commit/e928bf615a7951a0214e902e5400bb47f3c5b671).
+    
 ## [1.0.9](https://github.com/dashdevs/PurchaseController/releases/tag/1.0.9)
 Released on 2019-10-03.
 
