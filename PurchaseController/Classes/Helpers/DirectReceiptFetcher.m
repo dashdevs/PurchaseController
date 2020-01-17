@@ -10,7 +10,7 @@
 @implementation DirectReceiptFetcher
 
 + (NSData *)directReceiptOfTransaction:(SKPaymentTransaction *)transaction {
-    return [transaction transactionReceipt];
+    return [NSData dataWithContentsOfURL:[[NSBundle mainBundle] appStoreReceiptURL]];
 }
 
 @end
