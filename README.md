@@ -1,5 +1,8 @@
 # PurchaseController
 
+[![CI Status](https://travis-ci.com/dashdevs/PurchaseController.svg?branch=master)](https://travis-ci.com/dashdevs/PurchaseController)
+
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
