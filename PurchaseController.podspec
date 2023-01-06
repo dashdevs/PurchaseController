@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   s.source_files = 'PurchaseController/Classes/**/*', 'PurchaseController/Headers/**/*'
 
   s.frameworks = 'StoreKit'
-  s.dependency 'GRKOpenSSLFramework', '1.0.2.16'
+  s.dependency 'OpenSSL-Universal', '1.1.1900'
   s.swift_version = '4.2'
 
 end

@@ -145,7 +145,7 @@
 			<key>License</key>
 			<string>OpenSSL (OpenSSL/SSLeay)</string>
 			<key>Title</key>
-			<string>GRKOpenSSLFramework</string>
+			<string>OpenSSL-Universal</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>

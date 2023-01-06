@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import openssl
+import OpenSSL
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
