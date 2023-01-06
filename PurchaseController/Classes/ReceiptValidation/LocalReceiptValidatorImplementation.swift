@@ -5,7 +5,7 @@
 
 import Foundation
 import StoreKit
-import openssl
+import OpenSSL
 
 // MARK: - Supporting types
 
@@ -171,7 +171,7 @@ fileprivate struct ReceiptSignatureValidator {
         try verifyAuthenticity(appleRootCertificateX509, PKCS7Container: PKCS7Container)
     }
     
-    fileprivate func loadAppleRootCertificate() throws -> UnsafeMutablePointer<X509> {
+    fileprivate func loadAppleRootCertificate() throws -> OpaquePointer {
         guard
             let appleRootCertificateURL = Bundle.main.url(forResource: "AppleIncRootCertificate", withExtension: "cer"),
             let appleRootCertificateData = try? Data(contentsOf: appleRootCertificateURL)
@@ -186,7 +186,7 @@ fileprivate struct ReceiptSignatureValidator {
         return appleRootCertificateX509!
     }
     
-    fileprivate func verifyAuthenticity(_ x509Certificate: UnsafeMutablePointer<X509>, PKCS7Container: UnsafeMutablePointer<PKCS7>) throws {
+    fileprivate func verifyAuthenticity(_ x509Certificate: OpaquePointer, PKCS7Container: UnsafeMutablePointer<PKCS7>) throws {
         let x509CertificateStore = X509_STORE_new()
         X509_STORE_add_cert(x509CertificateStore, x509Certificate)
         
@@ -436,11 +436,17 @@ fileprivate struct ReceiptParser {
             return nil
         }
         
-        let integer = c2i_ASN1_INTEGER(nil, &intPointer, intLength)
-        let result = ASN1_INTEGER_get(integer)
-        ASN1_INTEGER_free(integer)
+//         let integer = c2i_ASN1_INTEGER(nil, &intPointer, intLength)
+//        let result = ASN1_INTEGER_get(integer)
+//        ASN1_INTEGER_free(integer)
+//      return result
+      
+      let integer = d2i_ASN1_UINTEGER(nil, &intPointer, length)
+      let result = ASN1_INTEGER_get(integer)
+      ASN1_INTEGER_free(integer)
+      return result
+      
         
-        return result
     }
     
     func DecodeASN1String(startOfString stringPointer: inout UnsafePointer<UInt8>?, length: Int) -> String? {

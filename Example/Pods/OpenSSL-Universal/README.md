@@ -1,13 +1,23 @@
 # OpenSSL-Universal
 
-OpenSSL CocoaPod and Carthage for iOS and OSX. Complete solution to OpenSSL on iOS and OSX. Package came with precompiled libraries, and include script to build newer version if necessary.
+OpenSSL [CocoaPods](https://cocoapods.org/), [Carthage](https://github.com/Carthage/Carthage) and [Swift Package Manager](https://swift.org/package-manager/) package for iOS and macOS. Complete solution to OpenSSL on iOS and macOS. Package comes with precompiled libraries, and includes a script to build newer versions if necessary.
 
-Current version contains binaries build with SDK iOS 8.0 (target 6.0), and SDK OSX 10.9 (target 10.8) for all supported architectures.
+Current version contains binaries built with latest iOS SDK (target 7.0), and latest macOS SDK (target 10.10) for all supported architectures (including macOS Catalyst).
+
+### Support
+
+It takes some time to keep it all for your convenience, so maybe spare $1, so I can keep working on that. There are more than 8000 clones daily. If I'd get $1/month from each company that uses my work here, I'd say we're even. Hurry up, find the [Sponsorship](https://github.com/users/krzyzanowskim/sponsorship) button, and fulfill your duty.
 
 ### Architectures
 
-- iOS with architectures: armv7, armv7s, arm64 + simulator (i386, x86_64)
-- OSX with architectures: i386, x86_64
+- iOS with architectures: armv7, armv7s, arm64 + simulator (x86_64, arm64)
+- macOS with architectures: x86_64, arm64 (including Catalyst target)
+
+#### Output Formats
+
+- Static library [libcrypto.a, libssl.a](iphoneos/lib/)
+- [OpenSSL.framework](Frameworks/)
+- [OpenSSL.xcframework](Frameworks/)
 
 ### Why?
 
@@ -16,74 +26,61 @@ Current version contains binaries build with SDK iOS 8.0 (target 6.0), and SDK O
 
 ### Installation
 
-#### CocoaPods
+#### Build
+
+You don't have to use pre-built binaries I provide. You can build it locally on your trusted machine.
+
+```
+$ git clone https://github.com/krzyzanowskim/OpenSSL.git
+$ cd OpenSSL
+$ make
+```
+
+The result of a build process is put inside [Frameworks](Frameworks/) directory.
+
+### Hardened Runtime (macOS) and Xcode
+
+Binary `OpenSSL.xcframework` (Used by the Swift Package Manager package integration) won't load properly in your app if the app uses **Sign to Run Locally**  Signing Certificate with Hardened Runtime enabled. It is possible to setup Xcode like this. To solve the problem you have two options:
+- Use proper Signing Certificate, eg. *Development* <- this is the proper action
+- Use `Disable Library Validation` aka `com.apple.security.cs.disable-library-validation` entitlement
+
+### Swift Package Manager
+
+```
+dependencies: [
+    .package(url: "https://github.com/krzyzanowskim/OpenSSL.git", .upToNextMinor(from: "1.1.1700"))
+]
+```
+
+### CocoaPods
 
 ````
 pod 'OpenSSL-Universal'
 ````
 
-Or always latest version
+### Carthage
 
-````
-pod 'OpenSSL-Universal', :git => 'https://github.com/krzyzanowskim/OpenSSL.git', :branch => :master
-````
-
-#### Carthage
-
-Latest stable version:
+* If building from source is preferred:
 
 ```
 github "krzyzanowskim/OpenSSL"
 ```
 
-Latest development version:
+* If using a prebuilt framework is preferred:
 
 ```
-github "krzyzanowskim/OpenSSL" "master"
+binary "https://raw.githubusercontent.com/krzyzanowskim/OpenSSL/master/OpenSSL.json"
 ```
 
 ### Authors
 
 [Marcin Krzyżanowski](https://twitter.com/krzyzanowskim)
 
-## Tutorial
-**This tutorial assumes you want to:** <br>
-  - Write a C application.<br>
-  - Use OpenSSL libraries for some crypto operation.<br>
-  - Use a Mac and Xcode 8+.<br>
-  - Use CocoaPods and the OpenSSL-Universal pod as an elegant way to stay updated with the latest libraries and headers.<br>
-
-#### Step 1 - Create your macOS HelloWorld C app
-If you have not done this before with Xcode, select  `File / New Project / macOS / Command Line Tool`.  Hit build and run.  You just successfully build the default Hello World C project.
-
-#### Step 2 - Setup Cocoa Pods
-Make sure your machine is setup for CocoaPods.
-After CocoaPods is setup, open `Terminal` and navigate to your project folder and run `pod init`.  
-After that has completed, type `open -a Xcode Podfile`.  
-
-#### Step 3 - get the OpenSSL-Universal pod
-Add `pod 'OpenSSL-Universal'` inside the podfile. 
-Save the file.
-Return to `Terminal` and run `Pod Install`.
-After that download completes, make sure to close the C project and open the workspace file that was created.
-
-#### Step 4 - What is inside of the OpenSSL-Universal pod?
-Once this successfully completed, you have now got access to a pre-compiled version of the static OpenSSL libraries and the C header files required to call these functions.  
-
-
-
 ## FAQ etc.
-#### Where can I use OpenSSL-Universal?#
-These libraries work for both iOS and MacOS.  There are two OpenSSL static libraries; `libcrypto.a` and `libssl.a`     ::Do NOT expect these OpenSSL files to work on every CPU architecture in the world. It is your prerogative to check.  Ask yourself, are you trying to write an app for old devices? new devices only? all iOS devices? only macOS?, etc ::
+#### Where can I use OpenSSL-Universal?
+These libraries work for both iOS and macOS. It is your prerogative to check. Ask yourself, are you trying to write an app for old devices? new devices only? all iOS devices? only macOS?, etc ::
 
-#### Fat Binaries
-The OpenSSL-Universal Framework is a Fat Binary. That means it supports multiple CPU architectures in a single file.    To understand this, return to `Terminal`.  Navigate to your OpenSSL-Universal macOS files and run the command `file libcrypto.a`  This will tell you architecture the file is compiled against `x86_64` and `x386`.  If you tried the iOS OpenSSL-Universal files it would have said `armv7`, `armv7s`, `arm64` + Simulators (`i386, x86_64`).  
+#### What is XCFramework?
 
-#### Xcode Setup
-You want to ensure Xcode knows; 
+OpenSSL.xcframework is distributed as a multiplatform XCFramework bundle, for mor information chekout the documentation [Distributing Binary Frameworks as Swift Packages](https://developer.apple.com/documentation/xcode/distributing-binary-frameworks-as-swift-packages)
 
-1. Where the OpenSSL static libraries are located.
-2. Where the OpenSSL header files are located for the C include statements. 
-Inside your workspace, go to the Target (not the Project).  The Target is the C app that is produced after a successful build.  Select `Build Phases` and `Link Binary With Libraries`.    Select `+` and navigate to the static OpenSSL libraries that was included in the framework.  The magical result was, your `Target` and `Building Settings` `Library Search Paths` were populated without you typing anything.  Now go to the  Target.  In `Build Settings` set the `Always Search User Paths` to `Yes`.  Then add a new entry to the `User Header Search Paths`. This should be the location of the OpenSSL header files that were included in OpenSSLUniversal.
-
-##### Test your app builds: include OpenSSL Header file
