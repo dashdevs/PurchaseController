@@ -430,6 +430,7 @@ fileprivate struct ReceiptParser {
         var xclass = Int32(0)
         var intLength = 0
         
+        let ptrBackup = intPointer
         ASN1_get_object(&intPointer, &intLength, &type, &xclass, length)
         
         guard type == V_ASN1_INTEGER else {
@@ -440,6 +441,8 @@ fileprivate struct ReceiptParser {
 //        let result = ASN1_INTEGER_get(integer)
 //        ASN1_INTEGER_free(integer)
 //      return result
+      
+      intPointer = ptrBackup
       
       let integer = d2i_ASN1_UINTEGER(nil, &intPointer, length)
       let result = ASN1_INTEGER_get(integer)
