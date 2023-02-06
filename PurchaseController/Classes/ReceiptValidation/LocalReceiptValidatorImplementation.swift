@@ -424,33 +424,26 @@ fileprivate struct ReceiptParser {
         return purchase
     }
     
-    func DecodeASN1Integer(startOfInt intPointer: inout UnsafePointer<UInt8>?, length: Int) -> Int? {
-        // These will be set by ASN1_get_object
-        var type = Int32(0)
-        var xclass = Int32(0)
-        var intLength = 0
-        
-        let ptrBackup = intPointer
-        ASN1_get_object(&intPointer, &intLength, &type, &xclass, length)
-        
-        guard type == V_ASN1_INTEGER else {
-            return nil
-        }
-        
-//         let integer = c2i_ASN1_INTEGER(nil, &intPointer, intLength)
-//        let result = ASN1_INTEGER_get(integer)
-//        ASN1_INTEGER_free(integer)
-//      return result
-      
-      intPointer = ptrBackup
-      
-      let integer = d2i_ASN1_UINTEGER(nil, &intPointer, length)
-      let result = ASN1_INTEGER_get(integer)
-      ASN1_INTEGER_free(integer)
-      return result
-      
-        
+  func DecodeASN1Integer(startOfInt intPointer: inout UnsafePointer<UInt8>?, length: Int) -> Int? {
+    // These will be set by ASN1_get_object
+    var type = Int32(0)
+    var xclass = Int32(0)
+    var intLength = 0
+    
+    let ptrBackup = intPointer
+    ASN1_get_object(&intPointer, &intLength, &type, &xclass, length)
+    
+    guard type == V_ASN1_INTEGER else {
+      return nil
     }
+    
+    intPointer = ptrBackup
+    
+    let integer = d2i_ASN1_UINTEGER(nil, &intPointer, length)
+    let result = ASN1_INTEGER_get(integer)
+    ASN1_INTEGER_free(integer)
+    return result
+  }
     
     func DecodeASN1String(startOfString stringPointer: inout UnsafePointer<UInt8>?, length: Int) -> String? {
         // These will be set by ASN1_get_object
