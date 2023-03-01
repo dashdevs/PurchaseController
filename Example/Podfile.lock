@@ -1,23 +1,23 @@
 PODS:
-  - GRKOpenSSLFramework (1.0.2.16)
-  - PurchaseController (1.0.7):
-    - GRKOpenSSLFramework
+  - OpenSSL-Universal (1.1.1900)
+  - PurchaseController (1.0.10):
+    - OpenSSL-Universal (= 1.1.1900)
 
 DEPENDENCIES:
   - PurchaseController (from `../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - GRKOpenSSLFramework
+  trunk:
+    - OpenSSL-Universal
 
 EXTERNAL SOURCES:
   PurchaseController:
     :path: "../"
 
 SPEC CHECKSUMS:
-  GRKOpenSSLFramework: 35944e317e6336b2944ad70b059d84db6b2d8532
-  PurchaseController: b99fa2a32eb89ecc14a2454ee352a9419682733a
+  OpenSSL-Universal: 84efb8a29841f2764ac5403e0c4119a28b713346
+  PurchaseController: 97f8ba3d62fac2821316f31823b4319a0eddbd05
 
 PODFILE CHECKSUM: 44cd69fe93e4f6ece8651a2136da8ef9b44b6581
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.11.3
